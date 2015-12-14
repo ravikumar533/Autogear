@@ -30,7 +30,20 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblBookings = _tblBookings ?? DataContext.Bookings.Select(s => new TblBooking { InstructorId = s.InstructorId,BookingId = s.BookingId ,StartTime = s.StartTime, StopTime = s.EndTime,BookingDate = s.BookingDate,StudentId = s.StudentId});
+                _tblBookings = _tblBookings ??
+                               DataContext.Bookings.Select(
+                                   s =>
+                                       new TblBooking
+                                       {
+                                           InstructorId = s.InstructorId,
+                                           BookingId = s.BookingId,
+                                           StartTime = s.StartTime,
+                                           StopTime = s.EndTime,
+                                           BookingDate = s.BookingDate,
+                                           StudentId = s.StudentId,
+                                           StartDate = s.StartDate,
+                                           EndDate = s.EndDate
+                                       });
                 return _tblBookings;
             }
             set { _tblBookings = value; }
@@ -54,16 +67,21 @@ namespace AutogearWeb.Repositories
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
-            foreach (var booking in TblBookings)
+            foreach (var booking in TblBookings.Where(b=> b.StartDate != null && b.EndDate != null))
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
                 if (student != null)
-                    if (booking.StartTime != null)
-                        if (booking.BookingDate != null)
-                        {
-                            var startTime = booking.BookingDate.Value.Add(booking.StartTime.Value);
-                            instuctorBookings.Add(new InstructorBooking { Id = booking.BookingId, Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"), Title = student.FirstName + " " + student.LastName });
-                        }
+                {
+                    var startTime = booking.StartDate.Value.Add(booking.StartTime.Value);
+                    var stopTime = booking.EndDate.Value.Add(booking.StopTime.Value);
+                    instuctorBookings.Add(new InstructorBooking
+                    {
+                        Id = booking.BookingId,
+                        Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                        End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                        Title = student.FirstName + " " + student.LastName
+                    });
+                }
             }
             return await Task.Run(() => instuctorBookings);
         }
@@ -72,6 +90,23 @@ namespace AutogearWeb.Repositories
             return await TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
         }
 
+        public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
+        {
+            var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);
+            var bookingAppointment = new BookingAppointment();
+            bookingAppointment.BookingId = bookingAppointmentId;
+            if (booking != null)
+            {
+                var student = DataContext.Students.FirstOrDefault(s=>s.Id == booking.StudentId);
+                if (student != null)
+                {
+                    bookingAppointment.StudentName = student.FirstName + " " + student.LastName;
+                }
+                booking.StartTime = bookingAppointment.StartTime;
+                booking.StopTime = bookingAppointment.StopTime;
+            }
+            return bookingAppointment;
+        }
         public void AddIntructor(Instructor repo)
         {
             DataContext.Instructors.Add(repo);

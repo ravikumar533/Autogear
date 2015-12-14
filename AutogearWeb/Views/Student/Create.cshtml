@@ -225,14 +225,26 @@
             </div>
             <div class="col-xs-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BookingDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.BookingStartDate, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingDate, new { htmlAttributes = new { @class = "form-control date-pickerBD" } })
+                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
-                            @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.BookingStartDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BookingEndDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        <div class="input-group col-xs-10 col-sm-8">
+                            @Html.EditorFor(model => model.BookingEndDate, new { htmlAttributes = new { @class = "form-control date-pickerBD" } })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.BookingEndDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -386,7 +398,7 @@
                         minLength: 2
                     });
                 });
-                $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingDate,#DrivingTestDate").datepicker({
+                $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
                     minDate: 0,
                     dateFormat: "dd-mm-yy"
                 });

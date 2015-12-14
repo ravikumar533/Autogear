@@ -883,6 +883,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Instructor\Calendar.cshtml" />
+    <Content Include="Views\Instructor\BookingAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

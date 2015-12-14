@@ -2,28 +2,85 @@
 @{
     ViewBag.Title = "Calendar";
 }
-<div id='calendar'></div>
+<div id="Calendar"></div>
 @section Scripts
 {
+    @Scripts.Render("~/bundles/jqueryUI");
     @Scripts.Render("~/bundles/Fullcalendar")
     <script>
         $(function() {
-            $.getJSON("/Api/AutogearApi/GetBookingEvents").success(function(data) {
-                console.log(data);
+            var modalDialog = "";
+            var studentData = "";
+            $.getJSON("/Api/AutogearApi/GetStudentNames").success(function(data) {
+                studentData = data;
             });
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
 
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+            $.ajax({
+                url: "/Instructor/BookingAppointment",
+                method: "POST",
+                dataType: "html",
+                data: { bookingId: 0 }
+            }).success(function(data) {
+                modalDialog = data;
+            });
+            var calendar = $("#Calendar").fullCalendar({
+                header: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "month,agendaWeek,agendaDay"
                 },
-                defaultDate: '2015-12-01',
+                defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))",
+                selectable: true,
+                selectHelper: true,
+                select: function(start, end, allDay) {
+                    var modal = $(modalDialog).appendTo("body");
+                    modal.find("#StartDate").val(start.format());
+                    end = end.add("-1", "day");
+                    modal.find("#EndDate").val(end.format());
+                    modal.find("#StudentName").autocomplete({
+                        source: studentData,
+                        minLength: 2
+                    });
+                    modal.find("#submitForm").on("click", function (ev) {
+                        ev.preventDefault();
+                        var startTime = modal.find("#StartDate").val() + "T" + modal.find("#StartTime").val();
+                        var stopTime = modal.find("#EndDate").val() + "T" + modal.find("#StopTime").val();
+                        var bookingAppointment = {
+                            BookingId : modal.find("#BookingId").val(),
+                            StudentName: modal.find("#StudentName").val(),
+                            StartTime: modal.find("#StartTime").val(),
+                            StopTime: modal.find("#StopTime").val(),
+                            StartDate: modal.find("#StartDate").val(),
+                            EndDate: modal.find("#EndDate").val()
+                        }
+                        $.ajax({
+                            method: "POST",
+                            url: "/Api/AutogearApi/SaveBookingAppointment",
+                            data: bookingAppointment
+                        });
+                        calendar.fullCalendar('renderEvent',
+                            {
+                                title: modal.find("#StudentName").val(),
+                                start: startTime,
+                                end: stopTime,
+                                className: 'label-info'
+                            },
+                            true // make the event "stick"
+                        );
+                        modal.modal("hide");
+                    });
+                    modal.modal("show").on("hidden", function() {
+                        modal.remove();
+                    });
+
+                },
                 editable: true,
 
 
                 events: "/Api/AutogearApi/GetBookingEvents"
             });
+
+
         });
     </script>
 }

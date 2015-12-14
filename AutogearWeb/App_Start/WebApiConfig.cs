@@ -23,7 +23,6 @@ namespace AutogearWeb
                 defaults: new { id = RouteParameter.Optional }
             );
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
-
             if (jsonFormatter != null)
                 jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }

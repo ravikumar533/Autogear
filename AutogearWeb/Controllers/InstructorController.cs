@@ -92,6 +92,12 @@ namespace AutogearWeb.Controllers
             return View("");
         }
 
+        public ActionResult BookingAppointment(int bookingId)
+        {
+            var appointment = _instructorRepo.GetBookingAppointmentById(bookingId);
+            return View(appointment);
+        }
+
         public ActionResult UpdatePostalCodes()
         {
             var reader = new StreamReader(System.IO.File.OpenRead(Server.MapPath("~/Content/PostCodes.csv")));

@@ -47,6 +47,7 @@ namespace AutogearWeb
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Fullcalendar").Include(
+                "~/assets/js/bootstrap.js",
                 "~/assets/js/date-time/moment.js",
                 "~/assets/js/fullcalendar.js"
                 ));

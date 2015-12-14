@@ -134,6 +134,34 @@ namespace AutogearWeb.Repositories
             return TblStates.Select(s => new SelectListItem {Text = s.StateName, Value = s.StateId.ToString()}).ToList();
         }
 
+        public async Task<IList<string>> GetStudentNames()
+        {
+            return await TblStudents.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
+        }
+
+        public void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser)
+        {
+            var bookingDetails =
+                DataContext.Bookings.FirstOrDefault(s => s.BookingId == bookingAppointment.BookingId) ?? new Booking();
+            var studentDetails =
+                TblStudents.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == bookingAppointment.StudentName);
+            if (studentDetails != null)
+            {
+                bookingDetails.InstructorId = currentUser;
+                bookingDetails.BookingDate = DateTime.Now;
+                bookingDetails.StartTime = bookingAppointment.StartTime;
+                bookingDetails.EndTime = bookingAppointment.StopTime;
+                bookingDetails.Status = "Learning";
+                bookingDetails.StudentId = studentDetails.StudentId;
+                bookingDetails.CreatedBy = currentUser;
+                bookingDetails.CreatedDate = DateTime.Now;
+                bookingDetails.StartDate = bookingAppointment.StartDate;
+                bookingDetails.EndDate = bookingAppointment.EndDate;
+                if (bookingAppointment.BookingId == 0)
+                    DataContext.Bookings.Add(bookingDetails);
+                DataContext.SaveChanges();
+            }
+        }
         public void SaveStudent(StudentModel studentModel,string currentUser)
         {
             if (currentUser != null)
@@ -190,7 +218,9 @@ namespace AutogearWeb.Repositories
                             StudentId = student.Id,
                             PackageId = studentModel.PackageId,
                             CreatedDate = DateTime.Now,
-                            BookingDate = studentModel.BookingDate,
+                            BookingDate = DateTime.Now,
+                            StartDate = studentModel.BookingStartDate,
+                            EndDate = studentModel.BookingEndDate,
                             InstructorId = instructor.InstructorId,
                             StartTime = studentModel.StartTime,
                             EndTime = studentModel.StopTime,

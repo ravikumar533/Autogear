@@ -17,6 +17,7 @@ namespace AutogearWeb.Repositories
         Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId);
         Task<IList<string>>  GetInstructorNames(); // Fetch Instructor Names
         Instructor GetInstructorByEmail(string email); // Fetch by Email
+        BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         void AddIntructor(Instructor repo); // Add new instructor
         void SaveInDatabase();  // Save Asynchronous
     }

@@ -40,6 +40,8 @@ namespace AutogearWeb.Models
         public string PickupLocation { get; set; }
         public string DropLocation { get; set; }
         public int? PackageId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
     public class TblStudentLicense
@@ -115,8 +117,10 @@ namespace AutogearWeb.Models
         [Display(Name = "Remarks")]
         public string Remarks { get; set; }
 
-        [Display(Name = "Booking Date")]
-        public DateTime? BookingDate { get; set; }
+        [Display(Name = "Start Date")]
+        public DateTime? BookingStartDate { get; set; }
+        [Display(Name = "End Date")]
+        public DateTime? BookingEndDate { get; set; }
         [Display(Name = "Start Time")]
         public TimeSpan? StartTime { get; set; }
         [Display(Name = "End Time")]
