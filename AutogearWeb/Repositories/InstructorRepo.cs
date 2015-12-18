@@ -67,7 +67,7 @@ namespace AutogearWeb.Repositories
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
-            foreach (var booking in TblBookings.Where(b=> b.StartDate != null && b.EndDate != null))
+            foreach (var booking in TblBookings.Where(b=> b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId))
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
                 if (student != null)
@@ -117,6 +117,10 @@ namespace AutogearWeb.Repositories
             return DataContext.Instructors.SingleOrDefault(s => s.Email == email);
         }
 
+        public Instructor GetInstructorByName(string name)
+        {
+            return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);
+        }
         public void SaveInDatabase()
         {
             DataContext.SaveChangesAsync();
