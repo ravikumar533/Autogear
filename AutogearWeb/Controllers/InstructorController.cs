@@ -148,7 +148,10 @@ namespace AutogearWeb.Controllers
             }
             return Json("ok");
         }
-
+        public ActionResult Lesson()
+        {
+            return View();
+        }
 
     }
 
