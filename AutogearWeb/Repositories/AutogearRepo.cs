@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace AutogearWeb.Repositories
@@ -12,7 +9,11 @@ namespace AutogearWeb.Repositories
         {
             //throw new NotImplementedException();
         }
-
+        public enum Roles
+        {
+            Administrator,
+            SystemAdministrator
+        } 
         public IList<SelectListItem> GenderListItems()
         {
             string[] list = { "", "Male", "Female" };

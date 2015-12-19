@@ -1,18 +1,23 @@
-﻿
+﻿@model AutogearWeb.Models.CalendarModel
 @{
     ViewBag.Title = "Calendar";
 }
-<div class="row">
-    <div class="col-lg-4">
-        <div class="form-group">
-            <label for="InstructorName" class="col-lg-12">Instructor</label>
-            <div class="col-md-10">
-                <input type="text" class="col-xs-10 col-sm-8" id ="InstructorName" />
+@if (Model.IsUserAdmin)
+{
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="InstructorName" class="col-lg-12">Instructor</label>
+                <div class="col-md-10">
+                    <input type="text" class="col-xs-10 col-sm-8" id="InstructorName"/>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
+    <div class="row">
+        <div class="col-lg-12">&nbsp;</div>
+    </div>
+}
 <div id="Calendar"></div>
 @section Scripts
 {
@@ -143,6 +148,7 @@
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor
             });
+
             function fetchCalendarEvents(instructorName) {
                 $.ajax({
                     url: "/Api/AutogearApi/GetBookingEvents",
@@ -153,6 +159,7 @@
                     calendar.fullCalendar('addEventSource', data);
                 });
             }
+
             $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
                 $("#InstructorName").autocomplete({
                     source: data,

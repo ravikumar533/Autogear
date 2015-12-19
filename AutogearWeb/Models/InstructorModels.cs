@@ -39,4 +39,9 @@ namespace AutogearWeb.Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
     }
+
+    public class CalendarModel
+    {
+        public bool IsUserAdmin { get; set; }
+    }
 }
