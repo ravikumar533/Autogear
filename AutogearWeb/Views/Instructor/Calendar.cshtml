@@ -2,6 +2,17 @@
 @{
     ViewBag.Title = "Calendar";
 }
+<div class="row">
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label for="InstructorName" class="col-lg-12">Instructor</label>
+            <div class="col-md-10">
+                <input type="text" class="col-xs-10 col-sm-8" id ="InstructorName" />
+            </div>
+        </div>
+    </div>
+
+</div>
 <div id="Calendar"></div>
 @section Scripts
 {
@@ -11,10 +22,11 @@
         $(function() {
             var modalDialog = "";
             var studentData = "";
-            $.getJSON("/Api/AutogearApi/GetStudentNames").success(function(data) {
+            var baseUrl = "/Api/AutogearApi/";
+            var instructor = "";
+            $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
             });
-
             $.ajax({
                 url: "/Instructor/BookingAppointment",
                 method: "POST",
@@ -41,12 +53,12 @@
                         source: studentData,
                         minLength: 2
                     });
-                    modal.find("#submitForm").on("click", function (ev) {
+                    modal.find("#submitForm").on("click", function(ev) {
                         ev.preventDefault();
                         var startTime = modal.find("#StartDate").val() + "T" + modal.find("#StartTime").val();
                         var stopTime = modal.find("#EndDate").val() + "T" + modal.find("#StopTime").val();
                         var bookingAppointment = {
-                            BookingId : modal.find("#BookingId").val(),
+                            BookingId: modal.find("#BookingId").val(),
                             StudentName: modal.find("#StudentName").val(),
                             StartTime: modal.find("#StartTime").val(),
                             StopTime: modal.find("#StopTime").val(),
@@ -75,11 +87,64 @@
 
                 },
                 editable: true,
+                eventClick: function(calEvent, jsEvent, view) {
+                    $.ajax({
+                        url: "/Instructor/BookingAppointment",
+                        method: "POST",
+                        dataType: "html",
+                        data: { bookingId: calEvent.id }
+                    }).success(function(data) {
+                        modalDialog = data;
+                        var modal = $(modalDialog).appendTo("body");
+                        modal.find("#StartDate").val(calEvent.start.format());
+                        var end = calEvent.end.add("-1", "day");
+                        modal.find("#EndDate").val(end.format());
 
-
-                events: "/Api/AutogearApi/GetBookingEvents"
+                        modal.find("#StudentName").autocomplete({
+                            source: studentData,
+                            minLength: 2
+                        });
+                        modal.find("#submitForm").on("click", function(ev) {
+                            ev.preventDefault();
+                            var startTime = modal.find("#StartDate").val() + "T" + modal.find("#StartTime").val();
+                            var stopTime = modal.find("#EndDate").val() + "T" + modal.find("#StopTime").val();
+                            var bookingAppointment = {
+                                BookingId: modal.find("#BookingId").val(),
+                                StudentName: modal.find("#StudentName").val(),
+                                StartTime: modal.find("#StartTime").val(),
+                                StopTime: modal.find("#StopTime").val(),
+                                StartDate: modal.find("#StartDate").val(),
+                                EndDate: modal.find("#EndDate").val()
+                            }
+                            $.ajax({
+                                method: "POST",
+                                url: "/Api/AutogearApi/SaveBookingAppointment",
+                                data: bookingAppointment
+                            });
+                            calEvent.title = modal.find("#StudentName").val();
+                            calEvent.start = startTime;
+                            calEvent.end = stopTime;
+                            calendar.fullCalendar("updateEvent", calEvent);
+                            modal.modal("hide");
+                        });
+                        modal.modal("show").on("hidden", function() {
+                            modal.remove();
+                        });
+                    });
+                },
+                events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor
             });
-
+            $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
+                $("#InstructorName").autocomplete({
+                    source: data,
+                    select: function (event, ui) {
+                        console.log(ui);
+                        instructor = ui.item.value;
+                        calendar.fullCalendar("renderEvents");
+                    },
+                    minLength: 2
+                });
+            });
 
         });
     </script>
