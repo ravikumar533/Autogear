@@ -30,4 +30,13 @@ namespace AutogearWeb.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
+    public class StudentList
+    {
+        public int BookingId { get; set; }
+        public string StudentName { get; set; }
+        public string StartTime { get; set; }
+        public string StopTime { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+    }
 }

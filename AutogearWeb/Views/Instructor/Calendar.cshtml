@@ -24,17 +24,26 @@
             var studentData = "";
             var baseUrl = "/Api/AutogearApi/";
             var instructor = "";
+
+            function bookingAppointment(bookingId) {
+                $.ajax({
+                    url: "/Instructor/BookingAppointment",
+                    method: "POST",
+                    dataType: "html",
+                    data: { bookingId: bookingId }
+                }).success(function (data) {
+                    return data;
+                });
+            }
+
+            
+
             $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
             });
-            $.ajax({
-                url: "/Instructor/BookingAppointment",
-                method: "POST",
-                dataType: "html",
-                data: { bookingId: 0 }
-            }).success(function(data) {
-                modalDialog = data;
-            });
+
+            modalDialog = bookingAppointment(0);
+
             var calendar = $("#Calendar").fullCalendar({
                 header: {
                     left: "prev,next today",
@@ -134,13 +143,21 @@
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor
             });
+            function fetchCalendarEvents(instructorName) {
+                $.ajax({
+                    url: "/Api/AutogearApi/GetBookingEvents",
+                    data: { instructorName: instructorName },
+                    dataType: "json"
+                }).success(function (data) {
+                    calendar.fullCalendar('removeEvents');
+                    calendar.fullCalendar('addEventSource', data);
+                });
+            }
             $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
                 $("#InstructorName").autocomplete({
                     source: data,
                     select: function (event, ui) {
-                        console.log(ui);
-                        instructor = ui.item.value;
-                        calendar.fullCalendar("renderEvents");
+                       fetchCalendarEvents(ui.item.value);
                     },
                     minLength: 2
                 });
