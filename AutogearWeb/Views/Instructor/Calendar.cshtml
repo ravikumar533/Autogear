@@ -1,18 +1,23 @@
-﻿
+﻿@model AutogearWeb.Models.CalendarModel
 @{
     ViewBag.Title = "Calendar";
 }
-<div class="row">
-    <div class="col-lg-4">
-        <div class="form-group">
-            <label for="InstructorName" class="col-lg-12">Instructor</label>
-            <div class="col-md-10">
-                <input type="text" class="col-xs-10 col-sm-8" id ="InstructorName" />
+@if (Model.IsUserAdmin)
+{
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="InstructorName" class="col-lg-12">Instructor</label>
+                <div class="col-md-10">
+                    <input type="text" class="col-xs-10 col-sm-8" id="InstructorName"/>
+                </div>
             </div>
         </div>
     </div>
-
-</div>
+    <div class="row">
+        <div class="col-lg-12">&nbsp;</div>
+    </div>
+}
 <div id="Calendar"></div>
 @section Scripts
 {
@@ -24,17 +29,23 @@
             var studentData = "";
             var baseUrl = "/Api/AutogearApi/";
             var instructor = "";
+
+            function bookingAppointment(bookingId) {
+                $.ajax({
+                    url: "/Instructor/BookingAppointment",
+                    method: "POST",
+                    dataType: "html",
+                    data: { bookingId: bookingId }
+                }).success(function (data) {
+                    return data;
+                });
+            }
             $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
             });
-            $.ajax({
-                url: "/Instructor/BookingAppointment",
-                method: "POST",
-                dataType: "html",
-                data: { bookingId: 0 }
-            }).success(function(data) {
-                modalDialog = data;
-            });
+
+            modalDialog = bookingAppointment(0);
+
             var calendar = $("#Calendar").fullCalendar({
                 header: {
                     left: "prev,next today",
@@ -134,13 +145,23 @@
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor
             });
+
+            function fetchCalendarEvents(instructorName) {
+                $.ajax({
+                    url: "/Api/AutogearApi/GetBookingEvents",
+                    data: { instructorName: instructorName },
+                    dataType: "json"
+                }).success(function (data) {
+                    calendar.fullCalendar('removeEvents');
+                    calendar.fullCalendar('addEventSource', data);
+                });
+            }
+
             $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
                 $("#InstructorName").autocomplete({
                     source: data,
                     select: function (event, ui) {
-                        console.log(ui);
-                        instructor = ui.item.value;
-                        calendar.fullCalendar("renderEvents");
+                       fetchCalendarEvents(ui.item.value);
                     },
                     minLength: 2
                 });

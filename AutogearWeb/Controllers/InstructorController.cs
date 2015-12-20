@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
@@ -89,7 +90,12 @@ namespace AutogearWeb.Controllers
 
         public ActionResult Calendar()
         {
-            return View("");
+            var currentUser = Request.GetOwinContext().Authentication.User;
+            var model = new CalendarModel
+            {
+                IsUserAdmin = currentUser.IsInRole("Admin")
+            };
+            return View(model);
         }
 
         public ActionResult BookingAppointment(int bookingId)

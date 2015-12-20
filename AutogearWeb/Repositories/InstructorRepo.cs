@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -72,15 +70,46 @@ namespace AutogearWeb.Repositories
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
                 if (student != null)
                 {
-                    var startTime = booking.StartDate.Value.Add(booking.StartTime.Value);
-                    var stopTime = booking.EndDate.Value.Add(booking.StopTime.Value);
-                    instuctorBookings.Add(new InstructorBooking
+                    if (booking.StartDate != null && booking.StartTime != null && booking.EndDate != null &&
+                        booking.StopTime != null)
                     {
-                        Id = booking.BookingId,
-                        Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                        End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                        Title = student.FirstName + " " + student.LastName
-                    });
+                        var startTime = booking.StartDate.Value.Add(booking.StartTime.Value);
+                        var stopTime = booking.EndDate.Value.Add(booking.StopTime.Value);
+                        instuctorBookings.Add(new InstructorBooking
+                        {
+                            Id = booking.BookingId,
+                            Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                            End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                            Title = student.FirstName + " " + student.LastName
+                        });
+                    }
+                }
+            }
+            return await Task.Run(() => instuctorBookings);
+        }
+        public async Task<IList<StudentList>> GetStudentEvents(string currentUser)
+        {
+            var instuctorBookings = new List<StudentList>();
+            foreach (var booking in TblBookings.Where(b => b.StartDate != null && b.EndDate != null))
+            {
+                var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
+                if (student != null)
+                {
+                    if (booking.StartDate != null && booking.StartTime != null && booking.EndDate != null &&
+                        booking.StopTime != null)
+                    {
+                        var startTime = booking.StartDate.Value.Add(booking.StartTime.Value);
+                        var stopTime = booking.EndDate.Value.Add(booking.StopTime.Value);
+                        instuctorBookings.Add(new StudentList
+                        {
+                            BookingId = booking.BookingId,
+                            StartTime = startTime.ToString("HH:mm:ss"),
+                            StopTime = stopTime.ToString("HH:mm:ss"),
+                            StudentName = student.FirstName + " " + student.LastName,
+                            StartDate = startTime.ToString("yyyy-MM-dd"),
+                            EndDate = stopTime.ToString("yyyy-MM-dd"),
+                        });
+                    }
                 }
             }
             return await Task.Run(() => instuctorBookings);
