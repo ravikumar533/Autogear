@@ -32,6 +32,7 @@ namespace AutogearWeb.EFModels
         public Nullable<System.DateTime> Created_Date { get; set; }
         public Nullable<System.DateTime> Modified_Date { get; set; }
         public string Modified_By { get; set; }
+        public string InstructorNumber { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
