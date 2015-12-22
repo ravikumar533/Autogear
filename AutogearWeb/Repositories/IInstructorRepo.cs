@@ -20,6 +20,7 @@ namespace AutogearWeb.Repositories
         Instructor GetInstructorByEmail(string email); // Fetch by Email
         Instructor GetInstructorByName(string name);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
+        int GetLatestInstructorId();
         void AddIntructor(Instructor repo); // Add new instructor
         void SaveInDatabase();  // Save Asynchronous
     }

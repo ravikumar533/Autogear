@@ -144,6 +144,7 @@
           <Property Name="Created_Date" Type="datetime" />
           <Property Name="Modified_Date" Type="datetime" />
           <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="InstructorNumber" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityType Name="Package_Details">
           <Key>
@@ -958,6 +959,7 @@
           <Property Name="Created_Date" Type="DateTime" Precision="3" />
           <Property Name="Modified_Date" Type="DateTime" Precision="3" />
           <Property Name="Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstructorNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="AutogearDBModel.FK_Instructors_AspNetUsers" FromRole="Instructor" ToRole="AspNetUser" />
           <NavigationProperty Name="Bookings" Relationship="AutogearDBModel.FK_Bookings_Instructors" FromRole="Instructor" ToRole="Booking" />
           <NavigationProperty Name="Instructor_Leaves" Relationship="AutogearDBModel.FK_Instructor_Leaves_Instructors" FromRole="Instructor" ToRole="Instructor_Leaves" />
@@ -1383,7 +1385,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1521,6 +1523,7 @@
           <EntitySetMapping Name="Instructors">
             <EntityTypeMapping TypeName="AutogearDBModel.Instructor">
               <MappingFragment StoreEntitySet="Instructors">
+                <ScalarProperty Name="InstructorNumber" ColumnName="InstructorNumber" />
                 <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
                 <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
                 <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />

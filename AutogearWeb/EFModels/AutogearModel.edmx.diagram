@@ -11,19 +11,19 @@
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUserLogin" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUserRole" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUser" Width="1.5" PointX="0.75" PointY="17.25" />
-        <EntityTypeShape EntityType="AutogearDBModel.Booking" Width="1.5" PointX="8.25" PointY="26.75" />
-        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Leaves" Width="1.5" PointX="5.25" PointY="33.5" />
-        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Student" Width="1.5" PointX="5.25" PointY="29.375" />
-        <EntityTypeShape EntityType="AutogearDBModel.Instructor" Width="1.5" PointX="3" PointY="45.375" />
-        <EntityTypeShape EntityType="AutogearDBModel.Package_Details" Width="1.5" PointX="3" PointY="33.875" />
+        <EntityTypeShape EntityType="AutogearDBModel.Booking" Width="1.5" PointX="8.25" PointY="26.375" />
+        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Leaves" Width="1.5" PointX="5.25" PointY="32.125" />
+        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Student" Width="1.5" PointX="5.25" PointY="28" />
+        <EntityTypeShape EntityType="AutogearDBModel.Instructor" Width="1.5" PointX="3" PointY="42.5" />
+        <EntityTypeShape EntityType="AutogearDBModel.Package_Details" Width="1.5" PointX="3" PointY="34" />
         <EntityTypeShape EntityType="AutogearDBModel.PostCode" Width="1.5" PointX="5.25" PointY="1.125" />
-        <EntityTypeShape EntityType="AutogearDBModel.RTA" Width="1.5" PointX="6" PointY="26.25" />
+        <EntityTypeShape EntityType="AutogearDBModel.RTA" Width="1.5" PointX="6" PointY="24.875" />
         <EntityTypeShape EntityType="AutogearDBModel.State" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="AutogearDBModel.Student_Address" Width="1.5" PointX="5.25" PointY="17.75" />
         <EntityTypeShape EntityType="AutogearDBModel.Student_License" Width="1.5" PointX="5.25" PointY="13.625" />
         <EntityTypeShape EntityType="AutogearDBModel.Student" Width="1.5" PointX="3" PointY="12.875" />
         <EntityTypeShape EntityType="AutogearDBModel.Suburb" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="AutogearDBModel.User" Width="1.5" PointX="3" PointY="42.5" />
+        <EntityTypeShape EntityType="AutogearDBModel.User" Width="1.5" PointX="3" PointY="47.375" />
         <AssociationConnector Association="AutogearDBModel.FK_Bookings_AspNetUsers" />
         <AssociationConnector Association="AutogearDBModel.FK_Bookings_AspNetUsers1" />
         <AssociationConnector Association="AutogearDBModel.FK_Instructor_Leaves_AspNetUsers" />

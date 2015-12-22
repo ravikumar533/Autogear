@@ -63,12 +63,14 @@ namespace AutogearWeb.Controllers
                     {
                          _userManager.AddToRole(user.Id, role.Name);
                     }
+                    var lastInstructorId = _instructorRepo.GetLatestInstructorId()  + 1;
                     // Create Instructor account
                     var instructor = new Instructor
                     {
                         Created_Date = DateTime.Now,
                         InstructorId = user.Id,
-                        Created_By = User.Identity.GetUserId()
+                        Created_By = User.Identity.GetUserId(),
+                        InstructorNumber = "INS-"+ lastInstructorId
                     };
                     TryUpdateModel(instructor);
                     _instructorRepo.AddIntructor(instructor);
