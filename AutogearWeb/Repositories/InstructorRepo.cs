@@ -51,10 +51,32 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor {Email = s.Email , FirstName = s.FirstName,LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString()});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor {Email = s.Email , FirstName = s.FirstName,LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString(),InstructorNumber = s.InstructorNumber});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
+        }
+
+        private IQueryable<InstructorLeaveModel> _tblInstructorLeaves;
+
+        public IQueryable<InstructorLeaveModel> TblInstructorLeaves
+        {
+            get
+            {
+                _tblInstructorLeaves = _tblInstructorLeaves ??
+                                       DataContext.Instructor_Leaves.Select(
+                                           s =>
+                                               new InstructorLeaveModel
+                                               {
+                                                   Id=s.Id,
+                                                   InstructorId = s.InstructorId,
+                                                   LeaveReason = s.Reason,
+                                                   StartDate = s.StartDate,
+                                                   EndDate = s.EndDate
+                                               });
+                return _tblInstructorLeaves;
+            }
+            set { _tblInstructorLeaves = value; }
         }
 
         public async Task<IList<TblInstructor>> GetInstructorList()
@@ -150,6 +172,28 @@ namespace AutogearWeb.Repositories
         {
             return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);
         }
+
+        public async Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser)
+        {
+            var instructor = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == currentUser);
+            var listOfLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructor.InstructorId).ToListAsync();
+            return await Task.Run(() => listOfLeaves);
+        }
+
+        public void ApplyInstructorLeave(string userId, InstructorLeaveModel appliedLeave)
+        {
+            var appliedDetails = DataContext.Instructor_Leaves.FirstOrDefault(s => s.Id == appliedLeave.Id) ?? new Instructor_Leaves();
+            appliedDetails.InstructorId = userId;
+            appliedDetails.Reason = appliedLeave.LeaveReason;
+            appliedDetails.StartDate = appliedLeave.StartDate;
+            appliedDetails.EndDate = appliedLeave.EndDate;
+            if (appliedDetails.Id == 0)
+            {
+                DataContext.Instructor_Leaves.Add(appliedDetails);
+            }
+            DataContext.SaveChanges();
+        }
+
         public void SaveInDatabase()
         {
             DataContext.SaveChangesAsync();

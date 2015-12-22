@@ -4,30 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AutogearDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="AutogearDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
             <PropertyRef Name="ContextKey" />
           </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="MigrationId" Nullable="false" MaxLength="150" Type="nvarchar" />
+          <Property Name="ContextKey" Nullable="false" MaxLength="300" Type="nvarchar" />
+          <Property Name="Model" Nullable="false" Type="varbinary(max)" />
+          <Property Name="ProductVersion" Nullable="false" MaxLength="32" Type="nvarchar" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Id" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="Name" Nullable="false" MaxLength="256" Type="nvarchar" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
           <Property Name="ClaimType" Type="nvarchar(max)" />
           <Property Name="ClaimValue" Type="nvarchar(max)" />
         </EntityType>
@@ -37,67 +37,67 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LoginProvider" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="ProviderKey" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="RoleId" Nullable="false" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Nullable="false" MaxLength="128" Type="nvarchar" />
           <Property Name="Hometown" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="Email" MaxLength="256" Type="nvarchar" />
+          <Property Name="EmailConfirmed" Nullable="false" Type="bit" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="PhoneNumberConfirmed" Nullable="false" Type="bit" />
+          <Property Name="TwoFactorEnabled" Nullable="false" Type="bit" />
           <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Jobtitle" Type="nvarchar" MaxLength="100" />
-          <Property Name="Educationlevel" Type="nvarchar" MaxLength="100" />
-          <Property Name="Country" Type="nvarchar" MaxLength="100" />
-          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="LockoutEnabled" Nullable="false" Type="bit" />
+          <Property Name="AccessFailedCount" Nullable="false" Type="int" />
+          <Property Name="UserName" Nullable="false" MaxLength="256" Type="nvarchar" />
+          <Property Name="FirstName" MaxLength="100" Type="nvarchar" />
+          <Property Name="LastName" MaxLength="100" Type="nvarchar" />
+          <Property Name="Jobtitle" MaxLength="100" Type="nvarchar" />
+          <Property Name="Educationlevel" MaxLength="100" Type="nvarchar" />
+          <Property Name="Country" MaxLength="100" Type="nvarchar" />
+          <Property Name="EmployeeId" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Bookings">
           <Key>
             <PropertyRef Name="BookingId" />
           </Key>
-          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="InstructorId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="BookingId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="StudentId" Nullable="false" Type="int" />
+          <Property Name="InstructorId" Nullable="false" MaxLength="128" Type="nvarchar" />
           <Property Name="BookingDate" Type="datetime" />
-          <Property Name="StartTime" Type="time" Precision="7" />
-          <Property Name="EndTime" Type="time" Precision="7" />
-          <Property Name="PickupLocation" Type="nvarchar" MaxLength="150" />
-          <Property Name="DropLocation" Type="nvarchar" MaxLength="150" />
+          <Property Name="StartTime" Precision="7" Type="time" />
+          <Property Name="EndTime" Precision="7" Type="time" />
+          <Property Name="PickupLocation" MaxLength="150" Type="nvarchar" />
+          <Property Name="DropLocation" MaxLength="150" Type="nvarchar" />
           <Property Name="PackageId" Type="int" />
-          <Property Name="Discount" Type="nvarchar" MaxLength="50" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Discount" MaxLength="50" Type="nvarchar" />
+          <Property Name="Status" MaxLength="50" Type="nvarchar" />
           <Property Name="CancelledDate" Type="datetime" />
-          <Property Name="CancelledReason" Type="nvarchar" MaxLength="200" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="CancelledReason" MaxLength="200" Type="nvarchar" />
+          <Property Name="Type" MaxLength="50" Type="nvarchar" />
           <Property Name="RTAId" Type="int" />
-          <Property Name="DrivingTestStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="DrivingTestStatus" MaxLength="50" Type="nvarchar" />
           <Property Name="DrivingTestAttempt" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+          <Property Name="ModifiedBy" MaxLength="128" Type="nvarchar" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
         </EntityType>
@@ -105,151 +105,151 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InstructorId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="InstructorId" Nullable="false" MaxLength="128" Type="nvarchar" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="Reason" Type="nvarchar" MaxLength="200" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Reason" MaxLength="200" Type="nvarchar" />
+          <Property Name="Status" MaxLength="50" Type="nvarchar" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ModifiedBy" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Instructor_Student">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InstructorId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="InstructorId" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="StudentId" Nullable="false" Type="int" />
           <Property Name="DateLinked" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ModifiedBy" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Instructors">
           <Key>
             <PropertyRef Name="InstructorId" />
           </Key>
-          <Property Name="InstructorId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InstructorId" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="FirstName" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="LastName" MaxLength="50" Type="nvarchar" />
+          <Property Name="Gender" Nullable="false" MaxLength="50" Type="nvarchar" />
           <Property Name="Phone" Type="int" />
           <Property Name="Mobile" Type="int" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" MaxLength="50" Type="nvarchar" />
+          <Property Name="Created_By" MaxLength="50" Type="nvarchar" />
           <Property Name="Created_Date" Type="datetime" />
           <Property Name="Modified_Date" Type="datetime" />
-          <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
-          <Property Name="InstructorNumber" Type="nvarchar" MaxLength="8" />
+          <Property Name="Modified_By" MaxLength="50" Type="nvarchar" />
+          <Property Name="InstructorNumber" MaxLength="8" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Package_Details">
           <Key>
             <PropertyRef Name="PackageId" />
           </Key>
-          <Property Name="PackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="150" />
-          <Property Name="NumberOfHours" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PackageId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Name" MaxLength="150" Type="nvarchar" />
+          <Property Name="NumberOfHours" Nullable="false" Type="int" />
+          <Property Name="Cost" Nullable="false" Type="int" />
+          <Property Name="Description" MaxLength="500" Type="nvarchar" />
+          <Property Name="Type" Nullable="false" MaxLength="50" Type="nvarchar" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+          <Property Name="ModifiedBy" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="PostCodes">
           <Key>
             <PropertyRef Name="PostCode" />
             <PropertyRef Name="SuburbID" />
           </Key>
-          <Property Name="PostCode" Type="int" Nullable="false" />
-          <Property Name="SuburbID" Type="int" Nullable="false" />
+          <Property Name="PostCode" Nullable="false" Type="int" />
+          <Property Name="SuburbID" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="RTAs">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Name" MaxLength="50" Type="nvarchar" />
         </EntityType>
         <EntityType Name="States">
           <Key>
             <PropertyRef Name="StateId" />
           </Key>
-          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="State_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="State_Name" MaxLength="50" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Student_Address">
           <Key>
             <PropertyRef Name="AddressId" />
           </Key>
-          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="AddressLine1" Type="nvarchar" MaxLength="150" />
-          <Property Name="AddressLine2" Type="nvarchar" MaxLength="150" />
-          <Property Name="SuburbID" Type="int" Nullable="false" />
-          <Property Name="PostCode" Type="int" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AddressId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="StudentId" Nullable="false" Type="int" />
+          <Property Name="AddressLine1" MaxLength="150" Type="nvarchar" />
+          <Property Name="AddressLine2" MaxLength="150" Type="nvarchar" />
+          <Property Name="SuburbID" Nullable="false" Type="int" />
+          <Property Name="PostCode" Nullable="false" Type="int" />
+          <Property Name="Phone" MaxLength="50" Type="nvarchar" />
+          <Property Name="Mobile" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="CreatedDate" Nullable="false" Type="datetime" />
+          <Property Name="CreatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="ModifiedDate" Nullable="false" Type="datetime" />
+          <Property Name="ModifiedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Student_License">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="LicenseNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="StateId" Type="int" Nullable="false" />
-          <Property Name="ExpiryDate" Type="date" Nullable="false" />
-          <Property Name="Class" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="StudentId" Nullable="false" Type="int" />
+          <Property Name="LicenseNo" MaxLength="50" Type="nvarchar" />
+          <Property Name="StateId" Nullable="false" Type="int" />
+          <Property Name="ExpiryDate" Nullable="false" Type="date" />
+          <Property Name="Class" MaxLength="50" Type="nvarchar" />
           <Property Name="License_passed_Date" Type="date" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
+          <Property Name="Remarks" MaxLength="500" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Students">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="FirstName" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="LastName" Nullable="false" MaxLength="100" Type="nvarchar" />
+          <Property Name="Gender" Nullable="false" Type="int" />
           <Property Name="StartDate" Type="datetime" />
-          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Status" Nullable="false" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="Email" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="ModifiedBy" MaxLength="128" Type="nvarchar" />
+          <Property Name="Email" Nullable="false" MaxLength="300" Type="nvarchar" />
         </EntityType>
         <EntityType Name="Suburbs">
           <Key>
             <PropertyRef Name="SuburbId" />
           </Key>
-          <Property Name="SuburbId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Suburb_Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="SuburbId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Suburb_Name" MaxLength="100" Type="nvarchar" />
+          <Property Name="StateId" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserId" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="Email" Nullable="false" MaxLength="300" Type="nvarchar" />
+          <Property Name="Phone" Nullable="false" MaxLength="50" Type="nvarchar" />
+          <Property Name="Address" Nullable="false" MaxLength="300" Type="nvarchar" />
         </EntityType>
         <Association Name="FK_Bookings_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -260,8 +260,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bookings_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -272,8 +272,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bookings_Instructors">
-          <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.Instructors" Multiplicity="1" Role="Instructors" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="Instructors">
               <PropertyRef Name="InstructorId" />
@@ -284,8 +284,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bookings_Package_Details">
-          <End Role="Package_Details" Type="Self.Package_Details" Multiplicity="0..1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.Package_Details" Multiplicity="0..1" Role="Package_Details" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="Package_Details">
               <PropertyRef Name="PackageId" />
@@ -296,8 +296,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bookings_RTAs">
-          <End Role="RTAs" Type="Self.RTAs" Multiplicity="0..1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.RTAs" Multiplicity="0..1" Role="RTAs" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="RTAs">
               <PropertyRef Name="Id" />
@@ -308,8 +308,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bookings_Students">
-          <End Role="Students" Type="Self.Students" Multiplicity="1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <End Type="Self.Students" Multiplicity="1" Role="Students" />
+          <End Type="Self.Bookings" Multiplicity="*" Role="Bookings" />
           <ReferentialConstraint>
             <Principal Role="Students">
               <PropertyRef Name="Id" />
@@ -320,8 +320,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Instructor_Leaves" Type="Self.Instructor_Leaves" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -332,8 +332,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Instructor_Leaves" Type="Self.Instructor_Leaves" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -344,8 +344,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_Instructors">
-          <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
-          <End Role="Instructor_Leaves" Type="Self.Instructor_Leaves" Multiplicity="*" />
+          <End Type="Self.Instructors" Multiplicity="1" Role="Instructors" />
+          <End Type="Self.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="Instructors">
               <PropertyRef Name="InstructorId" />
@@ -356,8 +356,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Student_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Instructor_Student" Multiplicity="*" Role="Instructor_Student" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -368,8 +368,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Student_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Instructor_Student" Multiplicity="*" Role="Instructor_Student" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -380,8 +380,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Student_Instructors">
-          <End Role="Instructors" Type="Self.Instructors" Multiplicity="1" />
-          <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
+          <End Type="Self.Instructors" Multiplicity="1" Role="Instructors" />
+          <End Type="Self.Instructor_Student" Multiplicity="*" Role="Instructor_Student" />
           <ReferentialConstraint>
             <Principal Role="Instructors">
               <PropertyRef Name="InstructorId" />
@@ -392,8 +392,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Student_Students">
-          <End Role="Students" Type="Self.Students" Multiplicity="1" />
-          <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
+          <End Type="Self.Students" Multiplicity="1" Role="Students" />
+          <End Type="Self.Instructor_Student" Multiplicity="*" Role="Instructor_Student" />
           <ReferentialConstraint>
             <Principal Role="Students">
               <PropertyRef Name="Id" />
@@ -404,8 +404,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructors_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Instructors" Type="Self.Instructors" Multiplicity="0..1" />
+          <End Type="Self.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
+          <End Type="Self.Instructors" Multiplicity="0..1" Role="Instructors" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -416,8 +416,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Package_Details_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Package_Details" Type="Self.Package_Details" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Package_Details" Multiplicity="*" Role="Package_Details" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -428,8 +428,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Package_Details_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Package_Details" Type="Self.Package_Details" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Package_Details" Multiplicity="*" Role="Package_Details" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -440,8 +440,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PostCodes_Suburbs1">
-          <End Role="Suburbs" Type="Self.Suburbs" Multiplicity="1" />
-          <End Role="PostCodes" Type="Self.PostCodes" Multiplicity="*" />
+          <End Type="Self.Suburbs" Multiplicity="1" Role="Suburbs" />
+          <End Type="Self.PostCodes" Multiplicity="*" Role="PostCodes" />
           <ReferentialConstraint>
             <Principal Role="Suburbs">
               <PropertyRef Name="SuburbId" />
@@ -452,8 +452,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Address_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Student_Address" Type="Self.Student_Address" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
+          <End Type="Self.Student_Address" Multiplicity="*" Role="Student_Address" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -464,8 +464,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Address_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Student_Address" Type="Self.Student_Address" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
+          <End Type="Self.Student_Address" Multiplicity="*" Role="Student_Address" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -476,8 +476,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_Address_Students">
-          <End Role="Students" Type="Self.Students" Multiplicity="1" />
-          <End Role="Student_Address" Type="Self.Student_Address" Multiplicity="*" />
+          <End Type="Self.Students" Multiplicity="1" Role="Students" />
+          <End Type="Self.Student_Address" Multiplicity="*" Role="Student_Address" />
           <ReferentialConstraint>
             <Principal Role="Students">
               <PropertyRef Name="Id" />
@@ -488,8 +488,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_License_Students">
-          <End Role="Students" Type="Self.Students" Multiplicity="1" />
-          <End Role="Student_License" Type="Self.Student_License" Multiplicity="*" />
+          <End Type="Self.Students" Multiplicity="1" Role="Students" />
+          <End Type="Self.Student_License" Multiplicity="*" Role="Student_License" />
           <ReferentialConstraint>
             <Principal Role="Students">
               <PropertyRef Name="Id" />
@@ -500,8 +500,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Students_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
+          <End Type="Self.Students" Multiplicity="*" Role="Students" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -512,8 +512,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Students_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="0..1" Role="AspNetUsers" />
+          <End Type="Self.Students" Multiplicity="*" Role="Students" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -524,8 +524,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Suburbs_States">
-          <End Role="States" Type="Self.States" Multiplicity="1" />
-          <End Role="Suburbs" Type="Self.Suburbs" Multiplicity="*" />
+          <End Type="Self.States" Multiplicity="1" Role="States" />
+          <End Type="Self.Suburbs" Multiplicity="*" Role="Suburbs" />
           <ReferentialConstraint>
             <Principal Role="States">
               <PropertyRef Name="StateId" />
@@ -536,8 +536,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <End Type="Self.AspNetUsers" Multiplicity="1" Role="AspNetUsers" />
+          <End Type="Self.Users" Multiplicity="*" Role="Users" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -568,104 +568,104 @@
           <EntitySet Name="Suburbs" EntityType="Self.Suburbs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Bookings_AspNetUsers" Association="Self.FK_Bookings_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_AspNetUsers1" Association="Self.FK_Bookings_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_Instructors" Association="Self.FK_Bookings_Instructors">
-            <End Role="Instructors" EntitySet="Instructors" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="Instructors" Role="Instructors" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_Package_Details" Association="Self.FK_Bookings_Package_Details">
-            <End Role="Package_Details" EntitySet="Package_Details" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="Package_Details" Role="Package_Details" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_RTAs" Association="Self.FK_Bookings_RTAs">
-            <End Role="RTAs" EntitySet="RTAs" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="RTAs" Role="RTAs" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_Students" Association="Self.FK_Bookings_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="Bookings" EntitySet="Bookings" />
+            <End EntitySet="Students" Role="Students" />
+            <End EntitySet="Bookings" Role="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_AspNetUsers" Association="Self.FK_Instructor_Leaves_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_AspNetUsers1" Association="Self.FK_Instructor_Leaves_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_Instructors" Association="Self.FK_Instructor_Leaves_Instructors">
-            <End Role="Instructors" EntitySet="Instructors" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="Instructors" Role="Instructors" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_AspNetUsers" Association="Self.FK_Instructor_Student_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Instructor_Student" Role="Instructor_Student" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_AspNetUsers1" Association="Self.FK_Instructor_Student_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Instructor_Student" Role="Instructor_Student" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_Instructors" Association="Self.FK_Instructor_Student_Instructors">
-            <End Role="Instructors" EntitySet="Instructors" />
-            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
+            <End EntitySet="Instructors" Role="Instructors" />
+            <End EntitySet="Instructor_Student" Role="Instructor_Student" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_Students" Association="Self.FK_Instructor_Student_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
+            <End EntitySet="Students" Role="Students" />
+            <End EntitySet="Instructor_Student" Role="Instructor_Student" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructors_AspNetUsers" Association="Self.FK_Instructors_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructors" EntitySet="Instructors" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Instructors" Role="Instructors" />
           </AssociationSet>
           <AssociationSet Name="FK_Package_Details_AspNetUsers" Association="Self.FK_Package_Details_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Package_Details" EntitySet="Package_Details" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Package_Details" Role="Package_Details" />
           </AssociationSet>
           <AssociationSet Name="FK_Package_Details_AspNetUsers1" Association="Self.FK_Package_Details_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Package_Details" EntitySet="Package_Details" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Package_Details" Role="Package_Details" />
           </AssociationSet>
           <AssociationSet Name="FK_PostCodes_Suburbs1" Association="Self.FK_PostCodes_Suburbs1">
-            <End Role="Suburbs" EntitySet="Suburbs" />
-            <End Role="PostCodes" EntitySet="PostCodes" />
+            <End EntitySet="Suburbs" Role="Suburbs" />
+            <End EntitySet="PostCodes" Role="PostCodes" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Address_AspNetUsers" Association="Self.FK_Student_Address_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Student_Address" EntitySet="Student_Address" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Student_Address" Role="Student_Address" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Address_AspNetUsers1" Association="Self.FK_Student_Address_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Student_Address" EntitySet="Student_Address" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Student_Address" Role="Student_Address" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Address_Students" Association="Self.FK_Student_Address_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="Student_Address" EntitySet="Student_Address" />
+            <End EntitySet="Students" Role="Students" />
+            <End EntitySet="Student_Address" Role="Student_Address" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_License_Students" Association="Self.FK_Student_License_Students">
-            <End Role="Students" EntitySet="Students" />
-            <End Role="Student_License" EntitySet="Student_License" />
+            <End EntitySet="Students" Role="Students" />
+            <End EntitySet="Student_License" Role="Student_License" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_AspNetUsers" Association="Self.FK_Students_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Students" EntitySet="Students" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Students" Role="Students" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_AspNetUsers1" Association="Self.FK_Students_AspNetUsers1">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Students" EntitySet="Students" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Students" Role="Students" />
           </AssociationSet>
           <AssociationSet Name="FK_Suburbs_States" Association="Self.FK_Suburbs_States">
-            <End Role="States" EntitySet="States" />
-            <End Role="Suburbs" EntitySet="Suburbs" />
+            <End EntitySet="States" Role="States" />
+            <End EntitySet="Suburbs" Role="Suburbs" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_AspNetUsers" Association="Self.FK_Users_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Users" EntitySet="Users" />
+            <End EntitySet="AspNetUsers" Role="AspNetUsers" />
+            <End EntitySet="Users" Role="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -701,12 +701,12 @@
             <End Role="Booking" EntitySet="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_AspNetUsers" Association="AutogearDBModel.FK_Instructor_Leaves_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="AspNetUsers" Role="AspNetUser" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_AspNetUsers1" Association="AutogearDBModel.FK_Instructor_Leaves_AspNetUsers1">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="AspNetUsers" Role="AspNetUser" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_AspNetUsers" Association="AutogearDBModel.FK_Instructor_Student_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -765,8 +765,8 @@
             <End Role="Booking" EntitySet="Bookings" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Leaves_Instructors" Association="AutogearDBModel.FK_Instructor_Leaves_Instructors">
-            <End Role="Instructor" EntitySet="Instructors" />
-            <End Role="Instructor_Leaves" EntitySet="Instructor_Leaves" />
+            <End EntitySet="Instructors" Role="Instructor" />
+            <End EntitySet="Instructor_Leaves" Role="Instructor_Leaves" />
           </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_Instructors" Association="AutogearDBModel.FK_Instructor_Student_Instructors">
             <End Role="Instructor" EntitySet="Instructors" />
@@ -913,16 +913,16 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InstructorId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="InstructorId" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="StartDate" Precision="3" Type="DateTime" />
+          <Property Name="EndDate" Precision="3" Type="DateTime" />
+          <Property Name="Reason" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Status" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="CreatedDate" Precision="3" Type="DateTime" />
+          <Property Name="CreatedBy" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="ModifiedDate" Precision="3" Type="DateTime" />
+          <Property Name="ModifiedBy" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="AspNetUser" Relationship="AutogearDBModel.FK_Instructor_Leaves_AspNetUsers" FromRole="Instructor_Leaves" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUser1" Relationship="AutogearDBModel.FK_Instructor_Leaves_AspNetUsers1" FromRole="Instructor_Leaves" ToRole="AspNetUser" />
           <NavigationProperty Name="Instructor" Relationship="AutogearDBModel.FK_Instructor_Leaves_Instructors" FromRole="Instructor_Leaves" ToRole="Instructor" />
@@ -1110,8 +1110,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_AspNetUsers">
-          <End Type="AutogearDBModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="AutogearDBModel.Instructor_Leaves" Role="Instructor_Leaves" Multiplicity="*" />
+          <End Type="AutogearDBModel.AspNetUser" Multiplicity="0..1" Role="AspNetUser" />
+          <End Type="AutogearDBModel.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -1122,8 +1122,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_AspNetUsers1">
-          <End Type="AutogearDBModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="AutogearDBModel.Instructor_Leaves" Role="Instructor_Leaves" Multiplicity="*" />
+          <End Type="AutogearDBModel.AspNetUser" Multiplicity="0..1" Role="AspNetUser" />
+          <End Type="AutogearDBModel.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -1302,8 +1302,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Instructor_Leaves_Instructors">
-          <End Type="AutogearDBModel.Instructor" Role="Instructor" Multiplicity="1" />
-          <End Type="AutogearDBModel.Instructor_Leaves" Role="Instructor_Leaves" Multiplicity="*" />
+          <End Type="AutogearDBModel.Instructor" Multiplicity="1" Role="Instructor" />
+          <End Type="AutogearDBModel.Instructor_Leaves" Multiplicity="*" Role="Instructor_Leaves" />
           <ReferentialConstraint>
             <Principal Role="Instructor">
               <PropertyRef Name="InstructorId" />

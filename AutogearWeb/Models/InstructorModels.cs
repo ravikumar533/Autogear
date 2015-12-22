@@ -11,6 +11,7 @@ namespace AutogearWeb.Models
         public string Phone { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
+        public string InstructorNumber { get; set; }
     }
 
     public class InstructorBooking
@@ -43,5 +44,14 @@ namespace AutogearWeb.Models
     public class CalendarModel
     {
         public bool IsUserAdmin { get; set; }
+    }
+
+    public class InstructorLeaveModel
+    {
+        public int Id { get; set; }
+        public string InstructorId { get; set; }
+        public string LeaveReason { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

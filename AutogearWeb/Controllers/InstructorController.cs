@@ -159,6 +159,17 @@ namespace AutogearWeb.Controllers
             return View();
         }
 
+        public ActionResult InstructorLeaves()
+        {
+            return View();
+        }
+
+        public ActionResult NewLeaveByInstructor(string instructorId)
+        {
+
+            return View();
+        }
+
     }
 
 }

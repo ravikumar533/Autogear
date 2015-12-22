@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUserRole" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUser" Width="1.5" PointX="0.75" PointY="17.25" />
         <EntityTypeShape EntityType="AutogearDBModel.Booking" Width="1.5" PointX="8.25" PointY="26.375" />
-        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Leaves" Width="1.5" PointX="5.25" PointY="32.125" />
+        <EntityTypeShape EntityType="AutogearDBModel.Instructor_Leaves" PointX="5.25" PointY="32.125" Width="1.5" />
         <EntityTypeShape EntityType="AutogearDBModel.Instructor_Student" Width="1.5" PointX="5.25" PointY="28" />
         <EntityTypeShape EntityType="AutogearDBModel.Instructor" Width="1.5" PointX="3" PointY="42.5" />
         <EntityTypeShape EntityType="AutogearDBModel.Package_Details" Width="1.5" PointX="3" PointY="34" />
