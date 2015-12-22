@@ -19,9 +19,17 @@
                 url: baseUrl + "GetStudents",
                 datatype: "json",
                 colModel: [
+                {
+                    label: "StudentId",
+                    name: "studentId",
+                    width: 100,
+                    key: true,
+                    editable: true,
+                    editrules :{required:true}
+                },
                  {
                      label: 'First Name',
-                     name: 'FirstName',
+                     name: 'firstName',
                      width: 100,
                      key: true,
                      editable: true,
@@ -29,19 +37,19 @@
                  },
                  {
                      label: 'Last Name',
-                     name: 'LastName',
+                     name: 'lastName',
                      width: 100,
                      editable: true // must set editable to true if you want to make the field editable
                  },
                  {
                      label: 'Instructor',
-                     name: 'InstructorName',
+                     name: 'instructorName',
                      width: 100,
                      editable: true
                  },
                  {
                      label: 'StartDate',
-                     name: 'StartDate',
+                     name: 'startDate',
                      width: 100,
                      editable: true
                  }
