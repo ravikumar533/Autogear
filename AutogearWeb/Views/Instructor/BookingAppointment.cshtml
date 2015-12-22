@@ -12,56 +12,67 @@
                 @using (Html.BeginForm())
                 {
                     <div class="form-horizontal">
-                        <h4>Lesson Booking</h4>
-                        <hr/>
+                        <h4>BookingAppointment</h4>
+                        <hr />
                         @Html.HiddenFor(model => model.BookingId)
                         <div class="form-group">
-                            @Html.LabelFor(model => model.StudentName, htmlAttributes: new {@class = "control-label col-md-2"})
+                            @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.StudentName, new {htmlAttributes = new {@class = "form-control"}})
-                                @Html.ValidationMessageFor(model => model.StudentName, "", new {@class = "text-danger"})
+                                @Html.EditorFor(model => model.StudentName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-6">
-                                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-8">
+                                <div class="col-lg-6">
+                                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
                                         @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-4" })
-                                    <div class="col-md-8">
+                                <div class="col-lg-6">
+                                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
                                         @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                           
-                        </div>
-                        
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.StartTime, htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control"}})
-                                @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
-                            </div>
+
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.StopTime, htmlAttributes: new {@class = "control-label col-md-2"})
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.StopTime, new {htmlAttributes = new {@class = "form-control"}})
-                                @Html.ValidationMessageFor(model => model.StopTime, "", new {@class = "text-danger"})
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="button" value="Create" class="btn btn-info" id="submitForm" />
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-6 col-md-3">
+                                <input type="button" value="Create" class="btn btn-default" id="submitForm" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="button" value="Cancel" class="btn btn-default" id="cancel" />
                             </div>
                         </div>
                     </div>
