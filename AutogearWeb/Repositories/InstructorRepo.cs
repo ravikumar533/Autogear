@@ -170,7 +170,7 @@ namespace AutogearWeb.Repositories
 
         public int GetLatestInstructorId()
         {
-            var instructorNumber = 0;
+            var instructorNumber = 1000;
             var latestInstructor = TblInstructors.OrderBy(o => o.CreatedDate).FirstOrDefault();
             if (latestInstructor != null)
             {

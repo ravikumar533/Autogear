@@ -1,5 +1,4 @@
-﻿@using System.Collections.Concurrent
-@model AutogearWeb.Models.StudentModel
+﻿@model AutogearWeb.Models.StudentModel
 
 @{
     ViewBag.Title = "Create";
@@ -33,7 +32,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "col-sm-2 control-label no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "" } })
                         @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -41,7 +40,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Last Name" } })
                         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -49,14 +48,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" , placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.Gender, Model.GendersList,  new { @class = "col-xs-10 col-sm-8" } )
+                        @Html.DropDownListFor(model => model.Gender, Model.GendersList, new { @class = "col-xs-10 col-sm-8" })
                         @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -64,7 +63,7 @@
                     @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-sm-2" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD" } })
+                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD", placeholder = "Start Date" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -86,7 +85,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Address1" } })
                         @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -94,21 +93,21 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Address2" } })
                         @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" , placeholder = "Postal Code" } })
                         @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.SuburbName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.SuburbName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.SuburbName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Suburb Name" } })
                         @Html.ValidationMessageFor(model => model.SuburbName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -116,7 +115,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Mobile" } })
                         @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -129,14 +128,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.LicenseNumber, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.LicenseNumber, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.LicenseNumber, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "License Number" } })
                         @Html.ValidationMessageFor(model => model.LicenseNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.StateId, Model.StatesList, new { @class = "col-xs-10 col-sm-8" } )
+                        @Html.DropDownListFor(model => model.StateId, Model.StatesList, new { @class = "col-xs-10 col-sm-8", placeholder = "State" })
                         @Html.ValidationMessageFor(model => model.LicenseNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -144,7 +143,7 @@
                     @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.ExpiryDate, new {htmlAttributes = new {@class = "form-control date-pickerED"}})
+                            @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control date-pickerED", placeholder = "Expiry Date" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -156,7 +155,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.InstructorName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.InstructorName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.InstructorName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Instructor Name" } })
                         @Html.ValidationMessageFor(model => model.InstructorName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -166,7 +165,7 @@
                     @Html.LabelFor(model => model.LicensePassedDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.LicensePassedDate, new { htmlAttributes = new { @class = "form-control date-pickerLPD" } })
+                            @Html.EditorFor(model => model.LicensePassedDate, new { htmlAttributes = new { @class = "form-control date-pickerLPD", placeholder = "License Passed Date" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -177,14 +176,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ClassName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.ClassName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.ClassName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Class Name" } })
                         @Html.ValidationMessageFor(model => model.ClassName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Remarks" } })
                         @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -204,21 +203,21 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageDetails, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.PackageDetails, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.PackageDetails, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Package Details" } })
                         @Html.ValidationMessageFor(model => model.PackageDetails, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageDisacount, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.PackageDisacount, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8"}})
+                        @Html.EditorFor(model => model.PackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Package Disacount" } })
                         @Html.ValidationMessageFor(model => model.PackageDisacount, "", new {@class = "text-danger"})
                     </div>
                 </div>
                 <div class="form-group">
                         @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                         <div class="col-sm-9">
-                            @Html.EditorFor(model => model.PickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                            @Html.EditorFor(model => model.PickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Pickup Location" } })
                             @Html.ValidationMessageFor(model => model.PickupLocation, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -228,7 +227,7 @@
                     @Html.LabelFor(model => model.BookingStartDate, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD" } })
+                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking Startdate"  } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -240,7 +239,7 @@
                     @Html.LabelFor(model => model.BookingEndDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingEndDate, new { htmlAttributes = new { @class = "form-control date-pickerBD" } })
+                            @Html.EditorFor(model => model.BookingEndDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking EndDate" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -251,21 +250,21 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Start Time" } })
                         @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Stop Time" } })
                         @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DropLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DropLocation, new {  htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.DropLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Drop Location" } })
                         @Html.ValidationMessageFor(model => model.DropLocation, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -276,31 +275,32 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="form-group">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DrivingTestPackageId, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                        <div class="col-sm-9">
-                            @Html.DropDownListFor(model => model.DrivingTestPackageId, Model.LearningPackages, new {  @class = "col-xs-10 col-sm-8" } )
-                            @Html.ValidationMessageFor(model => model.DrivingTestPackageId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DrivingTestPackageDetails, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.DrivingTestPackageDetails, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
-                            @Html.ValidationMessageFor(model => model.DrivingTestPackageDetails, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DrivingTestPackageDisacount, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.DrivingTestPackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
-                            @Html.ValidationMessageFor(model => model.DrivingTestPackageDisacount, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    @Html.LabelFor(model => model.DrivingTestPickupLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.DrivingTestPackageId, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestPickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
-                        @Html.ValidationMessageFor(model => model.DrivingTestPickupLocation, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.DrivingTestPackageId, Model.LearningPackages, new { @class = "col-xs-10 col-sm-8" })
+                        @Html.ValidationMessageFor(model => model.DrivingTestPackageId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DrivingTestPackageDetails, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.DrivingTestPackageDetails, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Package Details" } })
+                        @Html.ValidationMessageFor(model => model.DrivingTestPackageDetails, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DrivingTestPackageDisacount, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.DrivingTestPackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.ValidationMessageFor(model => model.DrivingTestPackageDisacount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.DrivingTestPickupLocation, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.DrivingTestPickupLocation, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8", placeholder = "Pickup Location"}})
+                        @Html.ValidationMessageFor(model => model.DrivingTestPickupLocation, "", new {@class = "text-danger"})
                     </div>
                 </div>
 
@@ -310,7 +310,7 @@
                     @Html.LabelFor(model => model.DrivingTestDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.DrivingTestDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD" } })
+                            @Html.EditorFor(model => model.DrivingTestDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Test Date" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -321,54 +321,50 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestStartTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestStartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.DrivingTestStartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Start Time" } })
                         @Html.ValidationMessageFor(model => model.DrivingTestStartTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestStopTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestStopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.DrivingTestStopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Stop Time" } })
                         @Html.ValidationMessageFor(model => model.DrivingTestStopTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestDropLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestDropLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.DrivingTestDropLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Drop Location" } })
                         @Html.ValidationMessageFor(model => model.DrivingTestDropLocation, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-7">
-                <input type="submit" value="Submit" class="btn btn-info" />
+        <div class="=row">
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Submit
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Reset
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="@Url.Action("Index")" class="btn btn-danger">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        @Html.Raw("Back to list")
+                    </a>
+                </div>
             </div>
         </div>
+
     </div>
 }
-<div class="=row">
-    <div class="clearfix form-actions">
-        <div class="col-md-offset-3 col-md-9">
-            <button class="btn btn-info" type="button">
-                <i class="ace-icon fa fa-check bigger-110"></i>
-                Submit
-            </button>
-            &nbsp; &nbsp; &nbsp;
-            <button class="btn" type="reset">
-                <i class="ace-icon fa fa-undo bigger-110"></i>
-                Reset
-            </button>
-            &nbsp; &nbsp; &nbsp;
-            <a href="@Url.Action("Index")" class="btn btn-danger">
-                <i class="ace-icon fa fa-reply icon-only"></i>
-                @Html.Raw("Back to list")
-            </a>
-        </div>
-    </div>
-</div>
 
     @section Scripts
 {
