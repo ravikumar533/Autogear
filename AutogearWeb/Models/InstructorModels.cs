@@ -12,6 +12,8 @@ namespace AutogearWeb.Models
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string InstructorNumber { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
     }
 
     public class InstructorBooking

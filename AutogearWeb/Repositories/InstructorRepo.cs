@@ -51,7 +51,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor {Email = s.Email , FirstName = s.FirstName,LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString(),InstructorNumber = s.InstructorNumber});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString(), InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -168,6 +168,17 @@ namespace AutogearWeb.Repositories
             return DataContext.Instructors.SingleOrDefault(s => s.Email == email);
         }
 
+        public int GetLatestInstructorId()
+        {
+            var instructorNumber = 0;
+            var latestInstructor = TblInstructors.OrderBy(o => o.CreatedDate).FirstOrDefault();
+            if (latestInstructor != null)
+            {
+                var sids = latestInstructor.InstructorNumber.Split('-');
+                instructorNumber = Convert.ToInt32(sids[1]);
+            }
+            return instructorNumber;
+        }
         public Instructor GetInstructorByName(string name)
         {
             return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);
