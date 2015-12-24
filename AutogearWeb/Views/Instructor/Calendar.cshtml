@@ -36,18 +36,19 @@
                     method: "POST",
                     dataType: "html",
                     data: { bookingId: bookingId }
-                }).success(function (data) {
-                    return data;
+                }).success(function(data) {
+                    modalDialog = data;
                 });
             }
+
             $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
             });
 
-            modalDialog = bookingAppointment(0);
+            bookingAppointment(0);
 
             var calendar = $("#Calendar").fullCalendar({
-                defaultView:"agendaWeek",
+                defaultView: "agendaWeek",
                 header: {
                     left: "prev,next today",
                     center: "title",
@@ -93,6 +94,9 @@
                         );
                         modal.modal("hide");
                     });
+                    modal.find("#cancel").on("click", function(ev) {
+                        modal.modal("hide");
+                    });
                     modal.modal("show").on("hidden", function() {
                         modal.remove();
                     });
@@ -127,7 +131,7 @@
                                 StopTime: modal.find("#StopTime").val(),
                                 StartDate: modal.find("#StartDate").val(),
                                 EndDate: modal.find("#EndDate").val()
-                            }
+                            };
                             $.ajax({
                                 method: "POST",
                                 url: "/Api/AutogearApi/SaveBookingAppointment",
@@ -152,7 +156,7 @@
                     url: "/Api/AutogearApi/GetBookingEvents",
                     data: { instructorName: instructorName },
                     dataType: "json"
-                }).success(function (data) {
+                }).success(function(data) {
                     calendar.fullCalendar('removeEvents');
                     calendar.fullCalendar('addEventSource', data);
                 });
@@ -161,8 +165,8 @@
             $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
                 $("#InstructorName").autocomplete({
                     source: data,
-                    select: function (event, ui) {
-                       fetchCalendarEvents(ui.item.value);
+                    select: function(event, ui) {
+                        fetchCalendarEvents(ui.item.value);
                     },
                     minLength: 2
                 });

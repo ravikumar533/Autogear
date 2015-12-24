@@ -1,32 +1,14 @@
 ﻿@model AutogearWeb.Models.StudentModel
 
-@{
-    ViewBag.Title = "Create";
-}
 
-@{
-    ViewBag.Title = "New Student";
-}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Search Student</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="form-field-1" placeholder="StudentID or Student Name" class="col-xs-10 col-sm-8" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-3">
-
-            </div>
-        </div>
-        <h2>Student Personal Details</h2>
+    <h2>Student Personal Details</h2>
+        @Html.HiddenFor(model => model.StudentId)
         <div class="row">
             <div class="col-xs-6">
                 <div class="form-group">
@@ -48,7 +30,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" , placeholder = "Email" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -100,7 +82,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" , placeholder = "Postal Code" } })
+                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Postal Code" } })
                         @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -140,14 +122,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
+                    @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
                             @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control date-pickerED", placeholder = "Expiry Date" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
-                            @Html.ValidationMessageFor(model => model.ExpiryDate, "", new {@class = "text-danger"})
+                            @Html.ValidationMessageFor(model => model.ExpiryDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -196,7 +178,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageId, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.PackageId, Model.LearningPackages, new {  @class = "col-xs-10 col-sm-8"  })
+                        @Html.DropDownListFor(model => model.PackageId, Model.LearningPackages, new { @class = "col-xs-10 col-sm-8" })
                         @Html.ValidationMessageFor(model => model.PackageId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -208,26 +190,26 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PackageDisacount, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
+                    @Html.LabelFor(model => model.PackageDisacount, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         @Html.EditorFor(model => model.PackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Package Disacount" } })
-                        @Html.ValidationMessageFor(model => model.PackageDisacount, "", new {@class = "text-danger"})
+                        @Html.ValidationMessageFor(model => model.PackageDisacount, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                        @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                        <div class="col-sm-9">
-                            @Html.EditorFor(model => model.PickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Pickup Location" } })
-                            @Html.ValidationMessageFor(model => model.PickupLocation, "", new { @class = "text-danger" })
-                        </div>
+                    @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.PickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Pickup Location" } })
+                        @Html.ValidationMessageFor(model => model.PickupLocation, "", new { @class = "text-danger" })
                     </div>
+                </div>
             </div>
             <div class="col-xs-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BookingStartDate, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
+                    @Html.LabelFor(model => model.BookingStartDate, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking Startdate"  } })
+                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking Startdate" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -297,10 +279,10 @@
                 </div>
                 <div class="form-group">
 
-                    @Html.LabelFor(model => model.DrivingTestPickupLocation, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
+                    @Html.LabelFor(model => model.DrivingTestPickupLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestPickupLocation, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8", placeholder = "Pickup Location"}})
-                        @Html.ValidationMessageFor(model => model.DrivingTestPickupLocation, "", new {@class = "text-danger"})
+                        @Html.EditorFor(model => model.DrivingTestPickupLocation, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Pickup Location" } })
+                        @Html.ValidationMessageFor(model => model.DrivingTestPickupLocation, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -342,17 +324,17 @@
             </div>
         </div>
 
-        <div class="=row">
+        <div class="row">
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit">
                         <i class="ace-icon fa fa-check bigger-110"></i>
-                        Submit
+                        Save
                     </button>
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn" type="reset">
+                    <button class="btn" type="button">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
-                        Reset
+                        Cancel
                     </button>
                     &nbsp; &nbsp; &nbsp;
                     <a href="@Url.Action("Index")" class="btn btn-danger">
@@ -366,33 +348,25 @@
     </div>
 }
 
-    @section Scripts
+@section Scripts
 {
-        @Scripts.Render("~/bundles/jqueryUI");
-        <script>
+    @Scripts.Render("~/bundles/jqueryUI");
+    <script>
             $(function () {
                 //  var postalCodes = [], suburbNames = [];
                 var baseUrl = "/Api/AutogearApi/";
                 $.getJSON(baseUrl + "GetPostCodes", { suburbName: $("#SuburbName").val() }).then(function (data) {
                     //    postalCodes = data;
                     $("#PostalCode").autocomplete({
-                        source: function (request, response) {
-                            var results = $.ui.autocomplete.filter(data, request.term);
-
-                            response(results.slice(0, 4));
-                        },
-                        minLength: 1
+                        source: data,
+                        minLength: 2
                     });
                 });
                 $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function (data) {
                     // postalCodes = data;
                     $("#SuburbName").autocomplete({
-                        source: function (request, response) {
-                            var results = $.ui.autocomplete.filter(data.sort(), request.term);
-
-                            response(results.slice(0, 4));
-                        },
-                        minLength: 2
+                        source: data,
+                        minLength: 3
                     });
                 });
                 //SuburbName
@@ -407,5 +381,5 @@
                     dateFormat: "dd-mm-yy"
                 });
             });
-        </script>
-    }
+    </script>
+}

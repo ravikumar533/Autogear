@@ -36,7 +36,7 @@ namespace AutogearWeb.Repositories
             }
             set { _tblPostCodeModels = value; }
         }
-
+        
         public IQueryable<TblSuburbModel> TblSuburbModels
         {
             get
@@ -100,6 +100,10 @@ namespace AutogearWeb.Repositories
         public Suburb GetSuburb(string subUrbName)
         {
             return  DataContext.Suburbs.SingleOrDefault(s => s.Suburb_Name.ToLower() == subUrbName.ToLower());
+        }
+        public TblSuburbModel GetSuburbById(int subUrbId)
+        {
+            return TblSuburbModels.SingleOrDefault(s => s.SuburbId == subUrbId);
         }
 
         public State GetState(string stateName)

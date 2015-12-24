@@ -13,11 +13,12 @@ namespace AutogearWeb.Controllers
     {
         private readonly IStudentRepo _iStudentRepo;
         private readonly IAutogearRepo _iAutogearRepo;
-        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo)
+        private readonly IPostalRepo _iPostalRepo;
+        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo,IPostalRepo ipostalRepo)
         {
             _iStudentRepo = iStudentRepo;
             _iAutogearRepo = autogearRepo;
-
+            _iPostalRepo = ipostalRepo;
         }
         // GET: Student
         public ActionResult Index()
@@ -41,6 +42,7 @@ namespace AutogearWeb.Controllers
         public ActionResult Create(StudentModel model)
         {
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            var packages = _iStudentRepo.GetPackages();
             if (ModelState.IsValid)
             {
                 _iStudentRepo.SaveStudent(model,currentUser);
@@ -49,9 +51,22 @@ namespace AutogearWeb.Controllers
             }
             model.GendersList = _iAutogearRepo.GenderListItems();
             model.StatesList = _iStudentRepo.GetStateList();
-            model.LearningPackages = _iStudentRepo.GetPackages();
-            model.DrivingPackages = _iStudentRepo.GetPackages();
+            model.LearningPackages = packages;
+            model.DrivingPackages = packages;
             return View(model);
+        }
+        public ActionResult Edit(int studentId)
+        {
+            var model = _iStudentRepo.GetStudentById(studentId);
+            model.GendersList = _iAutogearRepo.GenderListItems();
+            
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(StudentModel studentModel)
+        {
+            return View(studentModel);
         }
         public ActionResult Register()
         {
