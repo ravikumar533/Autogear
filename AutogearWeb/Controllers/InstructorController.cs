@@ -156,6 +156,11 @@ namespace AutogearWeb.Controllers
             }
             return Json("ok");
         }
+
+        public ActionResult Edit(string instructorId)
+        {
+            return View();
+        }
         public ActionResult Lesson()
         {
             return View();

@@ -37,14 +37,14 @@
                     dataType: "html",
                     data: { bookingId: bookingId }
                 }).success(function (data) {
-                    return data;
+                    modalDialog = data;
                 });
             }
             $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
             });
 
-            modalDialog = bookingAppointment(0);
+             bookingAppointment(0);
 
             var calendar = $("#Calendar").fullCalendar({
                 defaultView:"agendaWeek",
