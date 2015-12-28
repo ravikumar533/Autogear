@@ -22,8 +22,10 @@ namespace AutogearWeb.Repositories
         IList<SelectListItem> GetPackages();
         IList<SelectListItem> GetStateList();
         Task<IList<string>> GetStudentNames();
+        StudentModel GetStudentById(int studentId);
         void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser);
         void SaveStudent(StudentModel studentModel,string currentUser);
+        TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails);
 
     }
 }

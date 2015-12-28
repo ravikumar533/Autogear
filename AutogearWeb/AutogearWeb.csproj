@@ -888,6 +888,7 @@
     <Content Include="Views\Instructor\InstructorLeaves.cshtml" />
     <Content Include="Views\Instructor\NewLeaveByInstructor.cshtml" />
     <Content Include="Views\Instructor\Edit.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

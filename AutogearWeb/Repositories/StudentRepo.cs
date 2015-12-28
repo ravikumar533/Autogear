@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutogearWeb.EFModels;
@@ -88,7 +89,9 @@ namespace AutogearWeb.Repositories
         private IQueryable<TblBooking> _tblBookings;
         public IQueryable<TblBooking> TblStudentBookings
         {
-            get { _tblBookings = _tblBookings ?? DataContext.Bookings.Select(s => new TblBooking {BookingId = s.BookingId, BookingDate = s.BookingDate , DropLocation = s.DropLocation, PickupLocation = s.PickupLocation , PackageId= s.PackageId, StartTime = s.StartTime, StopTime = s.EndTime,InstructorId = s.InstructorId, StudentId = s.StudentId});
+            get
+            {
+                _tblBookings = _tblBookings ?? DataContext.Bookings.Select(s => new TblBooking { BookingId = s.BookingId, BookingDate = s.BookingDate, DropLocation = s.DropLocation, PickupLocation = s.PickupLocation, PackageId = s.PackageId, StartTime = s.StartTime, StopTime = s.EndTime, InstructorId = s.InstructorId, StudentId = s.StudentId, Type = s.Type, Discount = s.Discount});
                 return _tblBookings;
             }
             set { _tblBookings = value;  }
@@ -139,6 +142,88 @@ namespace AutogearWeb.Repositories
             return await TblStudents.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
         }
 
+        // ReSharper disable once FunctionComplexityOverflow
+        public StudentModel GetStudentById(int studentId)
+        {
+            var student = TblStudents.SingleOrDefault(s => s.StudentId == studentId);
+            var packages = GetPackages();
+            var studentModel = new StudentModel
+            {
+                StatesList = GetStateList(),
+                LearningPackages = packages,
+                DrivingPackages = packages
+            };
+            if (student != null)
+            {
+               // student Info 
+                studentModel.StudentId = student.StudentId;
+                studentModel.FirstName = student.FirstName;
+                studentModel.LastName = student.LastName;
+                studentModel.Email = student.Email;
+                studentModel.Gender = student.Gender;
+                studentModel.StartDate = student.StartDate;
+                studentModel.Status = student.Status;
+                
+                //Student Address
+                var studentAddress = TblStudentAddresses.SingleOrDefault(s => s.StudentId == student.StudentId);
+                if (studentAddress != null)
+                {
+                    studentModel.Address1 = studentAddress.Address1;
+                    studentModel.Address2 = studentAddress.Address2;
+                    studentModel.Mobile = studentAddress.Mobile;
+                    studentModel.PostalCode = studentAddress.PostalCode.ToString();
+                }
+
+                //Student License
+                var studentLicense = TblStudentLicenses.SingleOrDefault(s => s.StudentId == student.StudentId);
+                if (studentLicense != null)
+                {
+                    studentModel.LicenseNumber = studentLicense.LicenseNumber;
+                    studentModel.LicensePassedDate = studentLicense.LicensePassedDate;
+                    studentModel.ExpiryDate = studentLicense.ExpiryDate;
+                    studentModel.ClassName = studentLicense.ClassName;
+                    studentModel.Remarks = studentLicense.Remarks;
+                }
+
+                var studentBooking = TblStudentBookings.SingleOrDefault(s => s.StudentId == student.StudentId && s.Type == "Learning");
+                if (studentBooking != null)
+                {
+                    studentModel.BookingStartDate = studentBooking.StartDate;
+                    studentModel.BookingEndDate = studentBooking.EndDate;
+                    studentModel.PickupLocation = studentBooking.PickupLocation;
+                    studentModel.StartTime = studentBooking.StartTime;
+                    studentModel.StopTime = studentBooking.StopTime;
+                    studentModel.DropLocation = studentBooking.DropLocation;
+                    studentModel.PackageDisacount = studentBooking.Discount;
+                    var package = packages.SingleOrDefault(s => s.Value == studentBooking.PackageId.ToString());
+                    if (package != null)
+                    {
+                        studentModel.PackageId = Convert.ToInt32(package.Value);
+                        studentModel.PackageDetails = package.Text;
+                    } 
+
+                }
+
+                var studentDrivingTestBooking = TblStudentBookings.SingleOrDefault(s => s.StudentId == student.StudentId && s.Type == "Driving");
+                if (studentDrivingTestBooking != null)
+                {
+                    studentModel.DrivingTestDate  = studentDrivingTestBooking.BookingDate;
+                    studentModel.DrivingTestPickupLocation = studentDrivingTestBooking.PickupLocation;
+                    studentModel.DrivingTestStartTime = studentDrivingTestBooking.StartTime;
+                    studentModel.DrivingTestStopTime = studentDrivingTestBooking.StopTime;
+                    studentModel.DrivingTestDropLocation = studentDrivingTestBooking.DropLocation;
+                    studentModel.DrivingTestPackageDisacount = studentDrivingTestBooking.Discount;
+                    var package = packages.SingleOrDefault(s => s.Value == studentDrivingTestBooking.PackageId.ToString());
+                    if (package != null)
+                    {
+                        studentModel.DrivingTestPackageId = Convert.ToInt32(package.Value);
+                        studentModel.DrivingTestPackageDetails = package.Text;
+                    } 
+                }
+                
+            }
+            return studentModel;
+        }
         public void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser)
         {
             var bookingDetails =
@@ -180,6 +265,20 @@ namespace AutogearWeb.Repositories
                 };
                 DataContext.Students.Add(student);
                 DataContext.SaveChanges();
+                //Student Addresses
+                var studentAddress = new Student_Address
+                {
+                    AddressLine1 = studentModel.Address1,
+                    AddressLine2 = studentModel.Address2,
+                    CreatedBy = currentUser,
+                    CreatedDate = DateTime.Now,
+                    Mobile = studentModel.Mobile
+                };
+                if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
+                {
+                    studentAddress.PostCode = Convert.ToInt32(studentModel.PostalCode);
+                   // studentAddress.
+                }
                 //License Information
                 var studentLicense = new Student_License
                 {
@@ -254,6 +353,12 @@ namespace AutogearWeb.Repositories
                    
                 }
             }
+        }
+
+        public TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails)
+        {
+            
+            return studentDetails;
         }
     }
 }

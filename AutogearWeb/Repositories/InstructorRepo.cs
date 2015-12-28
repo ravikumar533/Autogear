@@ -109,6 +109,7 @@ namespace AutogearWeb.Repositories
             }
             return await Task.Run(() => instuctorBookings);
         }
+       
         public async Task<IList<StudentList>> GetStudentEvents(string currentUser)
         {
             var instuctorBookings = new List<StudentList>();
@@ -136,6 +137,7 @@ namespace AutogearWeb.Repositories
             }
             return await Task.Run(() => instuctorBookings);
         }
+   
         public async Task<IList<string>> GetInstructorNames()
         {
             return await TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
@@ -144,8 +146,7 @@ namespace AutogearWeb.Repositories
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
         {
             var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);
-            var bookingAppointment = new BookingAppointment();
-            bookingAppointment.BookingId = bookingAppointmentId;
+            var bookingAppointment = new BookingAppointment {BookingId = bookingAppointmentId};
             if (booking != null)
             {
                 var student = DataContext.Students.FirstOrDefault(s=>s.Id == booking.StudentId);

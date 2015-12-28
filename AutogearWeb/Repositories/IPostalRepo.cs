@@ -22,6 +22,7 @@ namespace AutogearWeb.Repositories
         void SaveChanges();
         PostCode GetPostCode(int postalId,int subUrbId);
         Suburb GetSuburb(string subUrbName);
+        TblSuburbModel GetSuburbById(int subUrbId);
         State GetState(string stateName);
         Task<IList<int>> GetPostcodes(string suburbName);
         Task<IList<string>> GetSuburbNames(int? postCode);
