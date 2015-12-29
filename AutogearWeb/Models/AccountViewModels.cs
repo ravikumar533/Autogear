@@ -37,7 +37,7 @@ namespace AutogearWeb.Models
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; }
     }
@@ -115,7 +115,7 @@ namespace AutogearWeb.Models
         [Display(Name = "Confirm Password")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
+        public string InstructorNumber { get; set; }
         public SelectList GendersList { get; set; }
     }
 
