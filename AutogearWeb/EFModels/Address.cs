@@ -12,11 +12,17 @@ namespace AutogearWeb.EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class Student_Address
+    public partial class Address
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Address()
+        {
+            this.Instructors = new HashSet<Instructor>();
+            this.Students = new HashSet<Student>();
+        }
+    
         public int AddressId { get; set; }
-        public int StudentId { get; set; }
-        public string AddressLine1 { get; set; }
+        public string Address1 { get; set; }
         public string AddressLine2 { get; set; }
         public int SuburbID { get; set; }
         public int PostCode { get; set; }
@@ -29,6 +35,10 @@ namespace AutogearWeb.EFModels
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual Suburb Suburb { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Instructor> Instructors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

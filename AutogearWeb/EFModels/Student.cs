@@ -14,11 +14,11 @@ namespace AutogearWeb.EFModels
     
     public partial class Student
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
         {
             this.Bookings = new HashSet<Booking>();
             this.Instructor_Student = new HashSet<Instructor_Student>();
-            this.Student_Address = new HashSet<Student_Address>();
             this.Student_License = new HashSet<Student_License>();
         }
     
@@ -33,12 +33,16 @@ namespace AutogearWeb.EFModels
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
         public string Email { get; set; }
+        public Nullable<int> AddressId { get; set; }
     
+        public virtual Address Address { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
-        public virtual ICollection<Student_Address> Student_Address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student_License> Student_License { get; set; }
     }
 }

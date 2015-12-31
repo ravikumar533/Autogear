@@ -14,10 +14,9 @@ namespace AutogearWeb.EFModels
     
     public partial class Instructor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Instructor()
         {
-            this.Bookings = new HashSet<Booking>();
-            this.Instructor_Leaves = new HashSet<Instructor_Leaves>();
             this.Instructor_Student = new HashSet<Instructor_Student>();
         }
     
@@ -33,10 +32,11 @@ namespace AutogearWeb.EFModels
         public Nullable<System.DateTime> Modified_Date { get; set; }
         public string Modified_By { get; set; }
         public string InstructorNumber { get; set; }
+        public Nullable<int> AddressId { get; set; }
     
+        public virtual Address Address { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<Instructor_Leaves> Instructor_Leaves { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace AutogearWeb.EFModels
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -39,10 +40,9 @@ namespace AutogearWeb.EFModels
         public virtual DbSet<PostCode> PostCodes { get; set; }
         public virtual DbSet<RTA> RTAs { get; set; }
         public virtual DbSet<State> States { get; set; }
-        public virtual DbSet<Student_Address> Student_Address { get; set; }
-        public virtual DbSet<Student_License> Student_License { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Student_License> Student_License { get; set; }
     }
 }

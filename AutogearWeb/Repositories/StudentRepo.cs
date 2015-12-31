@@ -43,7 +43,7 @@ namespace AutogearWeb.Repositories
                             Gender = student.Gender,
                             StartDate = student.StartDate,
                             Status = student.Status,
-                            InstructorName = instructorStudent.Instructor.FirstName
+                           // InstructorName = instructorStudent.
                         });
                 return _tblStudents;
 
@@ -57,7 +57,8 @@ namespace AutogearWeb.Repositories
             get
             {
                 _tblStudentAddresses = _tblStudentAddresses ??
-                                       DataContext.Student_Address.Select(s => new TblStudentAddress {Address1 = s.AddressLine1,Address2 = s.AddressLine2 , Mobile = s.Mobile, AddressId = s.AddressId ,Phone = s.Phone ,PostalCode = s.PostCode,StudentId = s.StudentId, SuburbId = s.SuburbID});
+                    
+                                       DataContext.Addresses.Select(s => new TblStudentAddress {Address1 = s.Address1,Address2 = s.AddressLine2 , Mobile = s.Mobile, AddressId = s.AddressId ,Phone = s.Phone ,PostalCode = s.PostCode, SuburbId = s.SuburbID});
                 return _tblStudentAddresses;
             }
             set { _tblStudentAddresses = value; }
@@ -79,7 +80,8 @@ namespace AutogearWeb.Repositories
                                 Id = s.Id,
                                 LicenseNumber = s.LicenseNo,
                                 LicensePassedDate = s.License_passed_Date,
-                                Remarks = s.Remarks
+                                Remarks = s.Remarks,
+                                IsInternationalLicensed = s.IsInternationalLicensed
                             });
                 return _tblStudentLicenses;
             }
@@ -251,6 +253,22 @@ namespace AutogearWeb.Repositories
         {
             if (currentUser != null)
             {
+                //Student Addresses
+                var studentAddress = new Address
+                {
+                    Address1 = studentModel.Address1,
+                    AddressLine2 = studentModel.Address2,
+                    CreatedBy = currentUser,
+                    CreatedDate = DateTime.Now,
+                    Mobile = studentModel.Mobile
+                };
+                if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
+                {
+                    studentAddress.PostCode = Convert.ToInt32(studentModel.PostalCode);
+                    // studentAddress.
+                }
+                DataContext.Addresses.Add(studentAddress);
+                DataContext.SaveChanges();
                 // Student Creation
                 var student = new Student
                 {
@@ -262,23 +280,11 @@ namespace AutogearWeb.Repositories
                     CreatedBy = currentUser,
                     CreatedDate = DateTime.Now,
                     StartDate = studentModel.StartDate,
+                    AddressId = studentAddress.AddressId
                 };
                 DataContext.Students.Add(student);
                 DataContext.SaveChanges();
-                //Student Addresses
-                var studentAddress = new Student_Address
-                {
-                    AddressLine1 = studentModel.Address1,
-                    AddressLine2 = studentModel.Address2,
-                    CreatedBy = currentUser,
-                    CreatedDate = DateTime.Now,
-                    Mobile = studentModel.Mobile
-                };
-                if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
-                {
-                    studentAddress.PostCode = Convert.ToInt32(studentModel.PostalCode);
-                   // studentAddress.
-                }
+
                 //License Information
                 var studentLicense = new Student_License
                 {
@@ -289,9 +295,11 @@ namespace AutogearWeb.Repositories
                     LicenseNo = studentModel.LicenseNumber,
                     License_passed_Date =studentModel.LicensePassedDate,
                     Remarks = studentModel.Remarks
+                    //International License details
                 };
                 DataContext.Student_License.Add(studentLicense);
                 DataContext.SaveChanges();
+
                 if (!string.IsNullOrEmpty(studentModel.InstructorName))
                 {
                     var instructor =
@@ -331,6 +339,7 @@ namespace AutogearWeb.Repositories
                         };
                         DataContext.Bookings.Add(studentBooking);
                         DataContext.SaveChanges();
+                     
                         // Driving Test Information
                         var studentDrivingBooking = new Booking
                         {
