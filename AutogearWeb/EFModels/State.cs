@@ -14,6 +14,7 @@ namespace AutogearWeb.EFModels
     
     public partial class State
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public State()
         {
             this.Suburbs = new HashSet<Suburb>();
@@ -22,6 +23,7 @@ namespace AutogearWeb.EFModels
         public int StateId { get; set; }
         public string State_Name { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Suburb> Suburbs { get; set; }
     }
 }

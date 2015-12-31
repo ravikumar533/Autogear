@@ -55,6 +55,7 @@ namespace AutogearWeb.Models
         public string ClassName { get; set; }
         public DateTime? LicensePassedDate { get; set; }
         public string Remarks { get; set; }
+        public bool IsInternationalLicensed { get; set; }
     }
 
     public class TblPackage

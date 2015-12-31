@@ -14,8 +14,10 @@ namespace AutogearWeb.EFModels
     
     public partial class Suburb
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Suburb()
         {
+            this.Addresses = new HashSet<Address>();
             this.PostCodes = new HashSet<PostCode>();
         }
     
@@ -23,6 +25,9 @@ namespace AutogearWeb.EFModels
         public string Suburb_Name { get; set; }
         public int StateId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostCode> PostCodes { get; set; }
         public virtual State State { get; set; }
     }

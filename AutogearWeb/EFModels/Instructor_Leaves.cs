@@ -27,6 +27,5 @@ namespace AutogearWeb.EFModels
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
-        public virtual Instructor Instructor { get; set; }
     }
 }

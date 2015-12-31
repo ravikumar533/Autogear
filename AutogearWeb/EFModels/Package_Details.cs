@@ -14,6 +14,7 @@ namespace AutogearWeb.EFModels
     
     public partial class Package_Details
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Package_Details()
         {
             this.Bookings = new HashSet<Booking>();
@@ -32,6 +33,7 @@ namespace AutogearWeb.EFModels
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
     }
 }

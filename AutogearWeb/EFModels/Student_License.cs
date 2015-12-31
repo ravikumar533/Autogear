@@ -22,6 +22,7 @@ namespace AutogearWeb.EFModels
         public string Class { get; set; }
         public Nullable<System.DateTime> License_passed_Date { get; set; }
         public string Remarks { get; set; }
+        public bool IsInternationalLicensed { get; set; }
     
         public virtual Student Student { get; set; }
     }

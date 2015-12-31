@@ -230,6 +230,9 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="EFModels\Address.cs">
+      <DependentUpon>AutogearModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EFModels\AspNetRole.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
@@ -288,9 +291,6 @@
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EFModels\Student.cs">
-      <DependentUpon>AutogearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EFModels\Student_Address.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EFModels\Student_License.cs">
