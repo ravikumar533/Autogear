@@ -175,8 +175,11 @@ namespace AutogearWeb.Repositories
             var latestInstructor = TblInstructors.OrderBy(o => o.CreatedDate).FirstOrDefault();
             if (latestInstructor != null)
             {
-                var sids = latestInstructor.InstructorNumber.Split('-');
-                instructorNumber = Convert.ToInt32(sids[1]);
+                if (!string.IsNullOrEmpty(latestInstructor.InstructorNumber))
+                {
+                    var sids = latestInstructor.InstructorNumber.Split('-');
+                    instructorNumber = Convert.ToInt32(sids[1]);
+                }
             }
             return instructorNumber;
         }
