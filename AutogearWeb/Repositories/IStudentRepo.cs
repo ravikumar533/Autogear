@@ -26,6 +26,7 @@ namespace AutogearWeb.Repositories
         void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser);
         void SaveStudent(StudentModel studentModel,string currentUser);
         TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails);
+        void SaveExistingStudent(string currentUser, StudentModel studentModel);
 
     }
 }

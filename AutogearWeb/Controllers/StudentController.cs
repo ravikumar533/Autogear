@@ -64,6 +64,13 @@ namespace AutogearWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(StudentModel studentModel)
         {
+            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                _iStudentRepo.SaveExistingStudent(currentUser, studentModel);
+                return RedirectToAction("Index");
+            }
+            
             return View(studentModel);
         }
         public ActionResult Register()

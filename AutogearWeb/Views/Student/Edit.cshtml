@@ -7,7 +7,7 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <h2>Student Personal Details</h2>
+        <h2>Student Personal Details</h2>
         @Html.HiddenFor(model => model.StudentId)
         <div class="row">
             <div class="col-xs-6">
@@ -169,10 +169,23 @@
                         @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.CheckBoxFor(model => model.IsInternationalLicensed, new { htmlAttributes = new { @class = "col-sm-2" } })
+                        @Html.LabelFor(model => model.IsInternationalLicensed, new { @class = "col-sm-4" })
+                    </div>
+                    <div class="col-sm-12 Country">
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right Country" })
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Country" } })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <h2>Lesson Booking</h2>
+        @*<h2>Lesson Booking</h2>
         <div class="row">
             <div class="col-xs-6">
                 <div class="form-group">
@@ -322,25 +335,25 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="row">
             <div class="clearfix form-actions">
-                <div class="col-md-offset-3 col-md-9">
+                <div class="col-md-offset-4 col-md-8">
                     <button class="btn btn-info" type="submit">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Save
                     </button>
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn" type="button">
+                    <a href="@Url.Action("Index")" class="btn">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
-                        Cancel
-                    </button>
-                    &nbsp; &nbsp; &nbsp;
+                        @Html.Raw("Cancel")
+                    </a>
+                    @*&nbsp; &nbsp; &nbsp;
                     <a href="@Url.Action("Index")" class="btn btn-danger">
                         <i class="ace-icon fa fa-reply icon-only"></i>
                         @Html.Raw("Back to list")
-                    </a>
+                    </a>*@
                 </div>
             </div>
         </div>
@@ -352,34 +365,53 @@
 {
     @Scripts.Render("~/bundles/jqueryUI");
     <script>
-            $(function () {
-                //  var postalCodes = [], suburbNames = [];
-                var baseUrl = "/Api/AutogearApi/";
-                $.getJSON(baseUrl + "GetPostCodes", { suburbName: $("#SuburbName").val() }).then(function (data) {
-                    //    postalCodes = data;
-                    $("#PostalCode").autocomplete({
-                        source: data,
-                        minLength: 2
-                    });
-                });
-                $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function (data) {
-                    // postalCodes = data;
-                    $("#SuburbName").autocomplete({
-                        source: data,
-                        minLength: 3
-                    });
-                });
-                //SuburbName
-                $.getJSON(baseUrl + "GetInstructorNames").then(function (data) {
-                    $("#InstructorName").autocomplete({
-                        source: data,
-                        minLength: 2
-                    });
-                });
-                $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
-                    minDate: 0,
-                    dateFormat: "dd-mm-yy"
+        $(function () {
+            //  var postalCodes = [], suburbNames = [];
+            var baseUrl = "/Api/AutogearApi/";
+            $.getJSON(baseUrl + "GetPostCodes", { suburbName: null }).then(function (data) {
+                //    postalCodes = data;
+                $("#PostalCode").autocomplete({
+                    source: data,
+                    minLength: 2
                 });
             });
+            $.getJSON(baseUrl + "GetSubUrbs", { postCode: null }).then(function (data) {
+                // postalCodes = data;
+                $("#SuburbName").autocomplete({
+                    source: data,
+                    minLength: 3
+                });
+            });
+            //SuburbName
+            $.getJSON(baseUrl + "GetInstructorNames").then(function (data) {
+                $("#InstructorName").autocomplete({
+                    source: data,
+                    minLength: 2
+                });
+            });
+            $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
+                minDate: 0,
+                dateFormat: "dd-mm-yy"
+            });
+            
+            
+            if ($("#IsInternationalLicensed").prop("checked") == true) {
+                $("#Country,.Country").css("display", "inline-block");
+                $('#StateId').attr('disabled', 'disabled');
+            } else {
+                $("#Country,.Country").css("display", "none");
+                $('#StateId').removeAttr('disabled');
+            }
+            
+            $("#IsInternationalLicensed").on('change', function () {
+                if ($(this).prop('checked')) {
+                    $('#StateId').attr('disabled', 'disabled');
+                    $("#Country,.Country").css("display", "inline-block");
+                } else {
+                    $('#StateId').removeAttr('disabled');
+                    $("#Country,.Country").css("display", "none");
+                }
+            });
+        });
     </script>
 }

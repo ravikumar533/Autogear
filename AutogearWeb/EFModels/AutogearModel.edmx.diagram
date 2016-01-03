@@ -47,7 +47,7 @@
         <AssociationConnector Association="AutogearDBModel.FK_Instructor_Student_Students" ManuallyRouted="false" />
         <AssociationConnector Association="AutogearDBModel.FK_PostCodes_Suburbs1" ManuallyRouted="false" />
         <AssociationConnector Association="AutogearDBModel.FK_Suburbs_States" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AutogearDBModel.Student_License" Width="1.5" PointX="13.5" PointY="9.625" />
+        <EntityTypeShape EntityType="AutogearDBModel.Student_License" Width="1.5" PointX="13.5" PointY="9.5" />
         <AssociationConnector Association="AutogearDBModel.FK_Student_License_Students" />
       </Diagram>
     </edmx:Diagrams>

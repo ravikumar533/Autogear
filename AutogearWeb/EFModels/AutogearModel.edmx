@@ -207,12 +207,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
           <Property Name="LicenseNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="StateId" Type="int" />
           <Property Name="ExpiryDate" Type="date" Nullable="false" />
           <Property Name="Class" Type="nvarchar" MaxLength="50" />
           <Property Name="License_passed_Date" Type="date" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
           <Property Name="IsInternationalLicensed" Type="bit" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Students">
           <Key>
@@ -1369,12 +1370,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentId" Type="Int32" Nullable="false" />
           <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="StateId" Type="Int32" />
           <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="License_passed_Date" Type="DateTime" Precision="0" />
           <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IsInternationalLicensed" Type="Boolean" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Student" Relationship="AutogearDBModel.FK_Student_License_Students" FromRole="Student_License" ToRole="Student" />
         </EntityType>
         <Association Name="FK_Student_License_Students">
@@ -1641,6 +1643,7 @@
           <EntitySetMapping Name="Student_License">
             <EntityTypeMapping TypeName="AutogearDBModel.Student_License">
               <MappingFragment StoreEntitySet="Student_License">
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="IsInternationalLicensed" ColumnName="IsInternationalLicensed" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="License_passed_Date" ColumnName="License_passed_Date" />

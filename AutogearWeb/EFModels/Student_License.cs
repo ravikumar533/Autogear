@@ -17,12 +17,13 @@ namespace AutogearWeb.EFModels
         public int Id { get; set; }
         public int StudentId { get; set; }
         public string LicenseNo { get; set; }
-        public int StateId { get; set; }
+        public Nullable<int> StateId { get; set; }
         public System.DateTime ExpiryDate { get; set; }
         public string Class { get; set; }
         public Nullable<System.DateTime> License_passed_Date { get; set; }
         public string Remarks { get; set; }
         public bool IsInternationalLicensed { get; set; }
+        public string Country { get; set; }
     
         public virtual Student Student { get; set; }
     }

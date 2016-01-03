@@ -15,6 +15,7 @@ namespace AutogearWeb.Models
         public DateTime? StartDate { get; set; }
         public bool Status { get; set; }
         public string InstructorName { get; set; }
+        public int? AddressId { get; set; }
     }
 
     public class TblStudentAddress
@@ -56,6 +57,7 @@ namespace AutogearWeb.Models
         public DateTime? LicensePassedDate { get; set; }
         public string Remarks { get; set; }
         public bool IsInternationalLicensed { get; set; }
+        public string Country { get; set; }
     }
 
     public class TblPackage
@@ -119,6 +121,10 @@ namespace AutogearWeb.Models
         public DateTime? LicensePassedDate { get; set; }
         [Display(Name = "Remarks")]
         public string Remarks { get; set; }
+        [Display(Name = "International License")]
+        public bool IsInternationalLicensed { get; set; }
+        [Display(Name = "Country")]
+        public string Country { get; set; }
 
         [Display(Name = "Start Date")]
         public DateTime? BookingStartDate { get; set; }
