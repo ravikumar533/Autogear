@@ -276,13 +276,15 @@ namespace AutogearWeb.Repositories
                     AddressLine2 = studentModel.Address2,
                     CreatedBy = currentUser,
                     CreatedDate = DateTime.Now,
-                    Mobile = studentModel.Mobile
+                    Mobile = studentModel.Mobile,
                 };
                 if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
                 {
                     studentAddress.PostCode = Convert.ToInt32(studentModel.PostalCode);
                     // studentAddress.
                 }
+                if (studentModel.SuburbId != 0)
+                    studentAddress.SuburbID = studentModel.SuburbId;
                 DataContext.Addresses.Add(studentAddress);
                 DataContext.SaveChanges();
                 // Student Creation

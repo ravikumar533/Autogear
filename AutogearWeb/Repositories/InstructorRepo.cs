@@ -22,6 +22,26 @@ namespace AutogearWeb.Repositories
             DataContext = new AutogearDBEntities();
         }
 
+        private IQueryable<TblAddress> _tblAddresses;
+
+        public IQueryable<TblAddress> TblAddresses
+        {
+            get
+            {
+                _tblAddresses = _tblAddresses ?? DataContext.Addresses.Select(s => new TblAddress
+                {
+                    AddressId = s.AddressId,
+                    Mobile = s.Mobile,
+                    Phone = s.Phone,
+                    AddressLine1 = s.Address1,
+                    AddressLine2 = s.AddressLine2,
+                    SuburbId = s.SuburbID,
+                    PostalCode = s.PostCode
+                });
+                return _tblAddresses;
+            }
+            set { _tblAddresses = value; }
+        }
 
         private IQueryable<TblBooking> _tblBookings;
         public IQueryable<TblBooking> TblBookings
@@ -46,6 +66,7 @@ namespace AutogearWeb.Repositories
             }
             set { _tblBookings = value; }
         }
+
         private IQueryable<TblInstructor> _tblInstructors;
         public IQueryable<TblInstructor> TblInstructors
         {
@@ -137,7 +158,25 @@ namespace AutogearWeb.Repositories
             }
             return await Task.Run(() => instuctorBookings);
         }
-   
+
+        public InstructorModel GetInstructorByNumber(string instructorNumber)
+        {
+            var instructor = TblInstructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
+            var model = new InstructorModel();
+            if (instructor != null)
+            {
+                
+                model.FirstName = instructor.FirstName;
+                model.LastName = instructor.LastName;
+                model.InstructorNumber = instructor.InstructorNumber;
+                model.Email = instructor.Email;
+                model.Mobile = instructor.Mobile;
+                model.Phone = instructor.Phone;
+
+            }
+            return model;
+        }
+
         public async Task<IList<string>> GetInstructorNames()
         {
             return await TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
@@ -159,11 +198,7 @@ namespace AutogearWeb.Repositories
             }
             return bookingAppointment;
         }
-        public void AddIntructor(Instructor repo)
-        {
-            DataContext.Instructors.Add(repo);
-        }
-
+        
         public Instructor GetInstructorByEmail(string email)
         {
             return DataContext.Instructors.SingleOrDefault(s => s.Email == email);
@@ -180,6 +215,7 @@ namespace AutogearWeb.Repositories
             }
             return instructorNumber;
         }
+
         public Instructor GetInstructorByName(string name)
         {
             return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);
@@ -206,9 +242,42 @@ namespace AutogearWeb.Repositories
             DataContext.SaveChanges();
         }
 
+        public void SaveInstructor(RegisterViewModel model)
+        {
+           
+            // Save Address
+            var instructorAddress = new Address
+            {
+                Address1 = model.AddressLine1,
+                AddressLine2 = model.AddressLine2,
+                Phone = model.Phone,
+                Mobile = model.Mobile,
+                PostCode = Convert.ToInt32(model.PostalCode)
+            };
+            if (model.SuburbId != 0)
+                instructorAddress.SuburbID = model.SuburbId;
+            DataContext.Addresses.Add(instructorAddress);
+            SaveInDatabase();
+            //  _instructorRepo.
+            // Create Instructor account
+            var instructor = new Instructor
+            {
+                Created_Date = DateTime.Now,
+                InstructorId = model.InstructorId,
+                Created_By = model.CreatedUser,
+                InstructorNumber = "INS-" + model.LastInstructor,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Gender = model.Gender.ToString(),
+                AddressId =instructorAddress.AddressId
+            };
+            DataContext.Instructors.Add(instructor);
+          SaveInDatabase();
+        }
         public void SaveInDatabase()
         {
-            DataContext.SaveChangesAsync();
+            DataContext.SaveChanges();
         }
     }
 }

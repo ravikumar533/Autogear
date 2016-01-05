@@ -63,18 +63,15 @@ namespace AutogearWeb.Controllers
                     {
                          _userManager.AddToRole(user.Id, role.Name);
                     }
-                    var lastInstructorId = _instructorRepo.GetLatestInstructorId()  + 1;
-                    // Create Instructor account
-                    var instructor = new Instructor
+                    model.LastInstructor = _instructorRepo.GetLatestInstructorId() + 1;
+                    var suburb = _postalRepo.GetSuburb(model.SuburbName);
+                    if (suburb != null)
                     {
-                        Created_Date = DateTime.Now,
-                        InstructorId = user.Id,
-                        Created_By = User.Identity.GetUserId(),
-                        InstructorNumber = "INS-"+ lastInstructorId
-                    };
-                    TryUpdateModel(instructor);
-                    _instructorRepo.AddIntructor(instructor);
-                    _instructorRepo.SaveInDatabase();
+                        model.SuburbId = suburb.SuburbId;
+                    }
+                    model.InstructorId = user.Id;
+                    model.CreatedUser = User.Identity.GetUserId();
+                   _instructorRepo.SaveInstructor(model);
                     //await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index");
                 }
@@ -159,7 +156,14 @@ namespace AutogearWeb.Controllers
 
         public ActionResult Edit(string instructorId)
         {
-            return View();
+            var model = _instructorRepo.GetInstructorByNumber(instructorId);
+            model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Edit(InstructorModel model)
+        {
+            return View(model);
         }
         public ActionResult Lesson()
         {

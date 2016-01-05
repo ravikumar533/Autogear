@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace AutogearWeb.Models
 {
@@ -55,5 +57,47 @@ namespace AutogearWeb.Models
         public string LeaveReason { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+    }
+
+    public class InstructorModel
+    {
+        public string InstructorId { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        public int Gender { get; set; }
+
+        [Display(Name = "Home Phone")]
+        public string Phone { get; set; }
+
+        public string Mobile { get; set; }
+        public string Password { get; set; }
+        [Display(Name="InstructorId")]
+        public string InstructorNumber { get; set; }
+        public SelectList GendersList { get; set; }
+        [Required]
+         [Display(Name = "Address1")]
+        public string AddressLine1 { get; set; }
+         [Display(Name = "Address2")]
+        public string AddressLine2 { get; set; }
+        [Required]
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+        [Required]
+        [Display(Name = "Suburb Name")]
+        public string SuburbName { get; set; }
+       // [Required]
+        [Display(Name="Area")]
+        public string Areas { get; set; }
     }
 }

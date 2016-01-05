@@ -10,7 +10,8 @@ namespace AutogearWeb.Repositories
     public interface IInstructorRepo : IDisposable
     {
         AutogearDBEntities DataContext { get; set; }
-  
+
+        IQueryable<TblAddress> TblAddresses { get; set; }
         IQueryable<TblInstructor> TblInstructors { get; set; }
         IQueryable<TblBooking> TblBookings { get; set; }
         Task<IList<TblInstructor>> GetInstructorList(); // Fetch List
@@ -19,10 +20,11 @@ namespace AutogearWeb.Repositories
         Task<IList<string>>  GetInstructorNames(); // Fetch Instructor Names
         Instructor GetInstructorByEmail(string email); // Fetch by Email
         Instructor GetInstructorByName(string name);
+        InstructorModel GetInstructorByNumber(string instructorNumber);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         int GetLatestInstructorId();
-        void AddIntructor(Instructor repo); // Add new instructor
+        void SaveInstructor(RegisterViewModel model);
         void SaveInDatabase();  // Save Asynchronous
         void ApplyInstructorLeave(string currentUser, InstructorLeaveModel appliedLeave);
     }

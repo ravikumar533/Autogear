@@ -162,6 +162,7 @@ namespace AutogearWeb.Models
         [Display(Name = "Disacount")]
         public string DrivingTestPackageDisacount { get; set; }
 
+        public int SuburbId { get; set; }
         public IList<SelectListItem> GendersList { get; set; }
         public IList<SelectListItem> StatesList { get; set; }
         public IList<SelectListItem> LearningPackages { get; set; }
