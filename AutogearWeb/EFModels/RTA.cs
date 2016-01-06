@@ -14,7 +14,6 @@ namespace AutogearWeb.EFModels
     
     public partial class RTA
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RTA()
         {
             this.Bookings = new HashSet<Booking>();
@@ -23,7 +22,6 @@ namespace AutogearWeb.EFModels
         public int Id { get; set; }
         public string Name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
     }
 }

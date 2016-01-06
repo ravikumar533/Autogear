@@ -9,12 +9,13 @@ namespace AutogearWeb.Models
         public string InstructorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public string Gender { get; set; }
+        public string Gender { get; set; }
         public string Phone { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string InstructorNumber { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public int AddressId { get; set; }
 
     }
 
@@ -96,8 +97,10 @@ namespace AutogearWeb.Models
         [Required]
         [Display(Name = "Suburb Name")]
         public string SuburbName { get; set; }
+        public int SuburbId { get; set; }
        // [Required]
         [Display(Name="Area")]
         public string Areas { get; set; }
+        public string CreatedUser { get; set; }
     }
 }

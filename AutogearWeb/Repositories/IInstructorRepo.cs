@@ -25,6 +25,7 @@ namespace AutogearWeb.Repositories
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         int GetLatestInstructorId();
         void SaveInstructor(RegisterViewModel model);
+        void UpdateInstructor(InstructorModel model);
         void SaveInDatabase();  // Save Asynchronous
         void ApplyInstructorLeave(string currentUser, InstructorLeaveModel appliedLeave);
     }

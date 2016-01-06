@@ -26,10 +26,10 @@
           <Property Name="PostCode" Type="int" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -153,8 +153,8 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Phone" Type="int" />
-          <Property Name="Mobile" Type="int" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Created_By" Type="nvarchar" MaxLength="50" />
           <Property Name="Created_Date" Type="datetime" />
@@ -251,7 +251,7 @@
           <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <Association Name="FK_Address_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -263,7 +263,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Address_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -696,15 +696,15 @@
           <Property Name="PostCode" Type="Int32" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Address_AspNetUsers" FromRole="Address" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Address_AspNetUsers1" FromRole="Address" ToRole="AspNetUsers" />
           <NavigationProperty Name="Suburb" Relationship="Self.FK_Address_Suburbs" FromRole="Address" ToRole="Suburbs" />
-          <NavigationProperty Name="Instructors" Relationship="Self.FK_Instructors_Address" FromRole="Address" ToRole="Instructors" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Students_Address" FromRole="Address" ToRole="Students" />
+          <NavigationProperty Name="Instructors" Relationship="AutogearDBModel.FK_Instructors_Address" FromRole="Address" ToRole="Instructor" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -771,12 +771,12 @@
           <NavigationProperty Name="Instructor_Leaves1" Relationship="Self.FK_Instructor_Leaves_AspNetUsers1" FromRole="AspNetUsers" ToRole="Instructor_Leaves" />
           <NavigationProperty Name="Instructor_Student" Relationship="Self.FK_Instructor_Student_AspNetUsers" FromRole="AspNetUsers" ToRole="Instructor_Student" />
           <NavigationProperty Name="Instructor_Student1" Relationship="Self.FK_Instructor_Student_AspNetUsers1" FromRole="AspNetUsers" ToRole="Instructor_Student" />
-          <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructors_AspNetUsers" FromRole="AspNetUsers" ToRole="Instructors" />
           <NavigationProperty Name="Package_Details" Relationship="Self.FK_Package_Details_AspNetUsers" FromRole="AspNetUsers" ToRole="Package_Details" />
           <NavigationProperty Name="Package_Details1" Relationship="Self.FK_Package_Details_AspNetUsers1" FromRole="AspNetUsers" ToRole="Package_Details" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Students_AspNetUsers" FromRole="AspNetUsers" ToRole="Students" />
           <NavigationProperty Name="Students1" Relationship="Self.FK_Students_AspNetUsers1" FromRole="AspNetUsers" ToRole="Students" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_AspNetUsers" FromRole="AspNetUsers" ToRole="Users" />
+          <NavigationProperty Name="Instructor" Relationship="AutogearDBModel.FK_Instructors_AspNetUsers" FromRole="AspNetUser" ToRole="Instructor" />
         </EntityType>
         <EntityType Name="Booking">
           <Key>
@@ -842,29 +842,8 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Instructor_Student_AspNetUsers" FromRole="Instructor_Student" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Instructor_Student_AspNetUsers1" FromRole="Instructor_Student" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Instructor" Relationship="Self.FK_Instructor_Student_Instructors" FromRole="Instructor_Student" ToRole="Instructors" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Instructor_Student_Students" FromRole="Instructor_Student" ToRole="Students" />
-        </EntityType>
-        <EntityType Name="Instructor">
-          <Key>
-            <PropertyRef Name="InstructorId" />
-          </Key>
-          <Property Name="InstructorId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="Int32" />
-          <Property Name="Mobile" Type="Int32" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Created_Date" Type="DateTime" Precision="3" />
-          <Property Name="Modified_Date" Type="DateTime" Precision="3" />
-          <Property Name="Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InstructorNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-          <Property Name="AddressId" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_Instructors_Address" FromRole="Instructors" ToRole="Address" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Instructors_AspNetUsers" FromRole="Instructors" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Instructor_Student" Relationship="Self.FK_Instructor_Student_Instructors" FromRole="Instructors" ToRole="Instructor_Student" />
+          <NavigationProperty Name="Instructor" Relationship="AutogearDBModel.FK_Instructor_Student_Instructors" FromRole="Instructor_Student" ToRole="Instructor" />
         </EntityType>
         <EntityType Name="Package_Details">
           <Key>
@@ -909,6 +888,22 @@
           <Property Name="State_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Suburbs" Relationship="Self.FK_Suburbs_States" FromRole="States" ToRole="Suburbs" />
         </EntityType>
+        <EntityType Name="Student_License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="License_passed_Date" Type="DateTime" Precision="0" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsInternationalLicensed" Type="Boolean" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_License_Students" FromRole="Student_License" ToRole="Students" />
+        </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="Id" />
@@ -930,7 +925,7 @@
           <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_Students_AspNetUsers1" FromRole="Students" ToRole="AspNetUsers" />
           <NavigationProperty Name="Bookings" Relationship="Self.FK_Bookings_Students" FromRole="Students" ToRole="Bookings" />
           <NavigationProperty Name="Instructor_Student" Relationship="Self.FK_Instructor_Student_Students" FromRole="Students" ToRole="Instructor_Student" />
-          <NavigationProperty Name="Student_License" Relationship="AutogearDBModel.FK_Student_License_Students" FromRole="Student" ToRole="Student_License" />
+          <NavigationProperty Name="Student_License" Relationship="Self.FK_Student_License_Students" FromRole="Students" ToRole="Student_License" />
         </EntityType>
         <EntityType Name="Suburb">
           <Key>
@@ -955,7 +950,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Users_AspNetUsers" FromRole="Users" ToRole="AspNetUsers" />
         </EntityType>
         <Association Name="FK_Address_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -967,7 +962,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Address_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -987,18 +982,6 @@
             </Principal>
             <Dependent Role="Address">
               <PropertyRef Name="SuburbID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Instructors_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
-          <End Role="Instructors" Type="Self.Instructor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="Instructors">
-              <PropertyRef Name="AddressId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1083,18 +1066,6 @@
             </Principal>
             <Dependent Role="Instructor_Student">
               <PropertyRef Name="ModifiedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Instructors_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="Instructors" Type="Self.Instructor" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Instructors">
-              <PropertyRef Name="InstructorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1194,18 +1165,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Instructor_Student_Instructors">
-          <End Role="Instructors" Type="Self.Instructor" Multiplicity="1" />
-          <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instructors">
-              <PropertyRef Name="InstructorId" />
-            </Principal>
-            <Dependent Role="Instructor_Student">
-              <PropertyRef Name="InstructorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Instructor_Student_Students">
           <End Role="Students" Type="Self.Student" Multiplicity="1" />
           <End Role="Instructor_Student" Type="Self.Instructor_Student" Multiplicity="*" />
@@ -1242,6 +1201,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Student_License_Students">
+          <End Role="Students" Type="Self.Student" Multiplicity="1" />
+          <End Role="Student_License" Type="Self.Student_License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student_License">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AutogearDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="Addresses" EntityType="Self.Address" />
@@ -1253,11 +1224,11 @@
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
           <EntitySet Name="Instructor_Leaves" EntityType="Self.Instructor_Leaves" />
           <EntitySet Name="Instructor_Student" EntityType="Self.Instructor_Student" />
-          <EntitySet Name="Instructors" EntityType="Self.Instructor" />
           <EntitySet Name="Package_Details" EntityType="Self.Package_Details" />
           <EntitySet Name="PostCodes" EntityType="Self.PostCode" />
           <EntitySet Name="RTAs" EntityType="Self.RTA" />
           <EntitySet Name="States" EntityType="Self.State" />
+          <EntitySet Name="Student_License" EntityType="Self.Student_License" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <EntitySet Name="Suburbs" EntityType="Self.Suburb" />
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -1272,10 +1243,6 @@
           <AssociationSet Name="FK_Address_Suburbs" Association="Self.FK_Address_Suburbs">
             <End Role="Suburbs" EntitySet="Suburbs" />
             <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Instructors_Address" Association="Self.FK_Instructors_Address">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Instructors" EntitySet="Instructors" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Address" Association="Self.FK_Students_Address">
             <End Role="Address" EntitySet="Addresses" />
@@ -1304,10 +1271,6 @@
           <AssociationSet Name="FK_Instructor_Student_AspNetUsers1" Association="Self.FK_Instructor_Student_AspNetUsers1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Instructor_Student" EntitySet="Instructor_Student" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Instructors_AspNetUsers" Association="Self.FK_Instructors_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Instructors" EntitySet="Instructors" />
           </AssociationSet>
           <AssociationSet Name="FK_Package_Details_AspNetUsers" Association="Self.FK_Package_Details_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1341,10 +1304,6 @@
             <End Role="Students" EntitySet="Students" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK_Instructor_Student_Instructors" Association="Self.FK_Instructor_Student_Instructors">
-            <End Role="Instructors" EntitySet="Instructors" />
-            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
-          </AssociationSet>
           <AssociationSet Name="FK_Instructor_Student_Students" Association="Self.FK_Instructor_Student_Students">
             <End Role="Students" EntitySet="Students" />
             <End Role="Instructor_Student" EntitySet="Instructor_Student" />
@@ -1357,37 +1316,78 @@
             <End Role="States" EntitySet="States" />
             <End Role="Suburbs" EntitySet="Suburbs" />
           </AssociationSet>
-          <EntitySet Name="Student_License" EntityType="AutogearDBModel.Student_License" />
-          <AssociationSet Name="FK_Student_License_Students" Association="AutogearDBModel.FK_Student_License_Students">
-            <End Role="Student" EntitySet="Students" />
+          <AssociationSet Name="FK_Student_License_Students" Association="Self.FK_Student_License_Students">
+            <End Role="Students" EntitySet="Students" />
             <End Role="Student_License" EntitySet="Student_License" />
           </AssociationSet>
+          <EntitySet Name="Instructors" EntityType="AutogearDBModel.Instructor" />
+          <AssociationSet Name="FK_Instructors_Address" Association="AutogearDBModel.FK_Instructors_Address">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Instructor" EntitySet="Instructors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Instructors_AspNetUsers" Association="AutogearDBModel.FK_Instructors_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Instructor" EntitySet="Instructors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Instructor_Student_Instructors" Association="AutogearDBModel.FK_Instructor_Student_Instructors">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="Instructor_Student" EntitySet="Instructor_Student" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Student_License">
+        <EntityType Name="Instructor">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="InstructorId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateId" Type="Int32" />
-          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="License_passed_Date" Type="DateTime" Precision="0" />
-          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsInternationalLicensed" Type="Boolean" Nullable="false" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Student" Relationship="AutogearDBModel.FK_Student_License_Students" FromRole="Student_License" ToRole="Student" />
+          <Property Name="InstructorId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modified_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InstructorNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="AutogearDBModel.FK_Instructors_Address" FromRole="Instructor" ToRole="Address" />
+          <NavigationProperty Name="AspNetUser" Relationship="AutogearDBModel.FK_Instructors_AspNetUsers" FromRole="Instructor" ToRole="AspNetUser" />
+          <NavigationProperty Name="Instructor_Student" Relationship="AutogearDBModel.FK_Instructor_Student_Instructors" FromRole="Instructor" ToRole="Instructor_Student" />
         </EntityType>
-        <Association Name="FK_Student_License_Students">
-          <End Type="AutogearDBModel.Student" Role="Student" Multiplicity="1" />
-          <End Type="AutogearDBModel.Student_License" Role="Student_License" Multiplicity="*" />
+        <Association Name="FK_Instructors_Address">
+          <End Type="AutogearDBModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="AutogearDBModel.Instructor" Role="Instructor" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Student">
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Instructor">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Instructors_AspNetUsers">
+          <End Type="AutogearDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="AutogearDBModel.Instructor" Role="Instructor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Student_License">
-              <PropertyRef Name="StudentId" />
+            <Dependent Role="Instructor">
+              <PropertyRef Name="InstructorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Instructor_Student_Instructors">
+          <End Type="AutogearDBModel.Instructor" Role="Instructor" Multiplicity="1" />
+          <End Type="AutogearDBModel.Instructor_Student" Role="Instructor_Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorId" />
+            </Principal>
+            <Dependent Role="Instructor_Student">
+              <PropertyRef Name="InstructorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1543,25 +1543,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Instructors">
-            <EntityTypeMapping TypeName="AutogearDBModel.Instructor">
-              <MappingFragment StoreEntitySet="Instructors">
-                <ScalarProperty Name="InstructorId" ColumnName="InstructorId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
-                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
-                <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
-                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
-                <ScalarProperty Name="InstructorNumber" ColumnName="InstructorNumber" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Package_Details">
             <EntityTypeMapping TypeName="AutogearDBModel.Package_Details">
               <MappingFragment StoreEntitySet="Package_Details">
@@ -1599,6 +1580,22 @@
               <MappingFragment StoreEntitySet="States">
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="State_Name" ColumnName="State_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_License">
+            <EntityTypeMapping TypeName="AutogearDBModel.Student_License">
+              <MappingFragment StoreEntitySet="Student_License">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="License_passed_Date" ColumnName="License_passed_Date" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsInternationalLicensed" ColumnName="IsInternationalLicensed" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1640,19 +1637,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Student_License">
-            <EntityTypeMapping TypeName="AutogearDBModel.Student_License">
-              <MappingFragment StoreEntitySet="Student_License">
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="IsInternationalLicensed" ColumnName="IsInternationalLicensed" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="License_passed_Date" ColumnName="License_passed_Date" />
-                <ScalarProperty Name="Class" ColumnName="Class" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="Instructors">
+            <EntityTypeMapping TypeName="AutogearDBModel.Instructor">
+              <MappingFragment StoreEntitySet="Instructors">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="InstructorNumber" ColumnName="InstructorNumber" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="InstructorId" ColumnName="InstructorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

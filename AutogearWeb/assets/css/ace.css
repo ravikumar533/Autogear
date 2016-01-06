@@ -9169,13 +9169,13 @@ input[type=checkbox].ace.ace-switch {
   width: 55px;
   height: 25px;
 }
-input[type=checkbox].ace.ace-switch + .lbl {
+input[type=checkbox].ace.ace-switch + input[type=hidden] + .lbl {
   margin: 0 4px;
   min-height: 24px;
 }
-input[type=checkbox].ace.ace-switch + .lbl::before {
+input[type=checkbox].ace.ace-switch + input[type=hidden] + .lbl::before {
   font-family: 'Open Sans';
-  content: "ON\a0\a0\a0\a0\a0\a0\a0\a0\a0OFF";
+  content: "ACTIVE\a0\a0\a0IN-ACTIVE";
   color: #999;
   text-shadow: 0 0 0 #999;
   font-weight: normal;
@@ -9191,7 +9191,7 @@ input[type=checkbox].ace.ace-switch + .lbl::before {
   text-align: left;
   float: left;
   padding: 0;
-  width: 52px;
+  width: 78px;
   text-indent: -21px;
   margin-right: 0;
   -webkit-transition: text-indent 0.25s ease;
@@ -9199,7 +9199,7 @@ input[type=checkbox].ace.ace-switch + .lbl::before {
   transition: text-indent 0.25s ease;
   top: auto;
 }
-input[type=checkbox].ace.ace-switch + .lbl::after {
+input[type=checkbox].ace.ace-switch + input[type=hidden] + .lbl::after {
   font-family: 'Open Sans';
   content: 'III';
   font-size: 12px;
@@ -9214,7 +9214,7 @@ input[type=checkbox].ace.ace-switch + .lbl::after {
   line-height: 22px;
   text-align: center;
   position: absolute;
-  top: -2px;
+  top: 5px;
   left: -3px;
   -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,.3);
   box-shadow: 0px 1px 1px 1px rgba(0,0,0,.3);
@@ -9222,15 +9222,15 @@ input[type=checkbox].ace.ace-switch + .lbl::after {
   -o-transition: left 0.25s ease;
   transition: left 0.25s ease;
 }
-input[type=checkbox].ace.ace-switch:checked + .lbl::before {
+input[type=checkbox].ace.ace-switch:checked + input[type=hidden] + .lbl::before {
   text-indent: 8px;
   color: #FFF;
   text-shadow: 0 0 0 #FFF;
   background-color: #8ab2c9;
   border-color: #6a8ca8;
 }
-input[type=checkbox].ace.ace-switch:checked + .lbl::after {
-  left: 34px;
+input[type=checkbox].ace.ace-switch:checked + input[type=hidden] + .lbl::after {
+  left: 54px;
   background-color: #FFF;
   color: #98A0A5;
 }

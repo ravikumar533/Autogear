@@ -57,7 +57,10 @@
                     @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-sm-2" })
                     <div class="col-sm-9">
                         <div class="checkbox">
-                            @Html.EditorFor(model => model.Status)
+                            <label>
+                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
+                                <span class="lbl"></span>
+                            </label>
                             @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -165,7 +168,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Remarks" } })
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "col-xs-10 col-sm-8", placeholder = "Remarks" })
                         @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
                     </div>
                 </div>

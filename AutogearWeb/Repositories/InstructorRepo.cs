@@ -72,7 +72,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString(), InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date,Gender = s.Gender, AddressId = s.AddressId ?? 0});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -172,6 +172,16 @@ namespace AutogearWeb.Repositories
                 model.Email = instructor.Email;
                 model.Mobile = instructor.Mobile;
                 model.Phone = instructor.Phone;
+                if (!string.IsNullOrEmpty(instructor.Gender))
+                    model.Gender = Convert.ToInt32(instructor.Gender);
+                var instructorAddress = TblAddresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
+                if (instructorAddress != null)
+                {
+                    model.AddressLine1 = instructorAddress.AddressLine1;
+                    model.AddressLine2 = instructorAddress.AddressLine2;
+                    model.PostalCode = instructorAddress.PostalCode.ToString();
+                    model.SuburbId = instructorAddress.SuburbId;
+                }
 
             }
             return model;
@@ -207,7 +217,7 @@ namespace AutogearWeb.Repositories
         public int GetLatestInstructorId()
         {
             var instructorNumber = 1000;
-            var latestInstructor = TblInstructors.OrderBy(o => o.CreatedDate).FirstOrDefault();
+            var latestInstructor = TblInstructors.OrderByDescending(o => o.CreatedDate).FirstOrDefault();
             if (latestInstructor != null)
             {
                 var sids = latestInstructor.InstructorNumber.Split('-');
@@ -252,7 +262,9 @@ namespace AutogearWeb.Repositories
                 AddressLine2 = model.AddressLine2,
                 Phone = model.Phone,
                 Mobile = model.Mobile,
-                PostCode = Convert.ToInt32(model.PostalCode)
+                PostCode = Convert.ToInt32(model.PostalCode),
+                CreatedDate = DateTime.Now,
+                CreatedBy = model.CreatedUser
             };
             if (model.SuburbId != 0)
                 instructorAddress.SuburbID = model.SuburbId;
@@ -270,10 +282,40 @@ namespace AutogearWeb.Repositories
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Gender = model.Gender.ToString(),
+                Mobile =model.Mobile,
+                Phone = model.Phone,
                 AddressId =instructorAddress.AddressId
             };
             DataContext.Instructors.Add(instructor);
           SaveInDatabase();
+        }
+
+        public void UpdateInstructor(InstructorModel model)
+        {
+            var instructor = DataContext.Instructors.FirstOrDefault(s => s.InstructorNumber == model.InstructorNumber);
+            if (instructor != null)
+            {
+                instructor.FirstName = model.FirstName;
+                instructor.LastName = model.LastName;
+                instructor.Gender = model.Gender.ToString();
+                instructor.Mobile = model.Mobile;
+                instructor.Phone = model.Phone;
+                instructor.Modified_Date = DateTime.Now;
+                instructor.Modified_By = model.CreatedUser;
+                var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
+                if (instructorAddress != null)
+                {
+                    instructorAddress.Address1 = model.AddressLine1;
+                    instructorAddress.AddressLine2 = model.AddressLine2;
+                    instructorAddress.Phone = model.Phone;
+                    instructorAddress.Mobile = model.Mobile;
+                    instructorAddress.PostCode = Convert.ToInt32(model.PostalCode);
+                    instructorAddress.ModifiedDate = DateTime.Now;
+                    instructorAddress.SuburbID = model.SuburbId;
+                    instructorAddress.ModifiedBy = model.CreatedUser;
+                }
+                SaveInDatabase();
+            }
         }
         public void SaveInDatabase()
         {
