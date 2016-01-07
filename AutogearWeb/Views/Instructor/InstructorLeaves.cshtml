@@ -401,11 +401,11 @@
             }).success(function (data) {
                 modalDialog = data;
                 var modal = $(modalDialog).appendTo("body");
-                modal.find("#StartDate").datepicker({
+                modal.find("#StartDate,#EndDate").datepicker({
                     minDate: 0,
                     dateFormat: "dd-mm-yy"
                 });
-                var startDate = $.datepicker.formatDate("yy-mm-dd", new Date());
+                var startDate = $.datepicker.formatDate("dd-mm-yy", new Date());
                 modal.find("#StartDate").val(startDate);
                 modal.find("#EndDate").val(startDate);
                 
