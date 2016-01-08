@@ -22,6 +22,26 @@ namespace AutogearWeb.Repositories
             DataContext = new AutogearDBEntities();
         }
 
+        private IQueryable<TblAddress> _tblAddresses;
+
+        public IQueryable<TblAddress> TblAddresses
+        {
+            get
+            {
+                _tblAddresses = _tblAddresses ?? DataContext.Addresses.Select(s => new TblAddress
+                {
+                    AddressId = s.AddressId,
+                    Mobile = s.Mobile,
+                    Phone = s.Phone,
+                    AddressLine1 = s.Address1,
+                    AddressLine2 = s.AddressLine2,
+                    SuburbId = s.SuburbID,
+                    PostalCode = s.PostCode
+                });
+                return _tblAddresses;
+            }
+            set { _tblAddresses = value; }
+        }
 
         private IQueryable<TblBooking> _tblBookings;
         public IQueryable<TblBooking> TblBookings
@@ -46,12 +66,13 @@ namespace AutogearWeb.Repositories
             }
             set { _tblBookings = value; }
         }
+
         private IQueryable<TblInstructor> _tblInstructors;
         public IQueryable<TblInstructor> TblInstructors
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile.ToString(), Phone = s.Phone.ToString(), InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date,Gender = s.Gender, AddressId = s.AddressId ?? 0});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -137,7 +158,35 @@ namespace AutogearWeb.Repositories
             }
             return await Task.Run(() => instuctorBookings);
         }
-   
+
+        public InstructorModel GetInstructorByNumber(string instructorNumber)
+        {
+            var instructor = TblInstructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
+            var model = new InstructorModel();
+            if (instructor != null)
+            {
+                
+                model.FirstName = instructor.FirstName;
+                model.LastName = instructor.LastName;
+                model.InstructorNumber = instructor.InstructorNumber;
+                model.Email = instructor.Email;
+                model.Mobile = instructor.Mobile;
+                model.Phone = instructor.Phone;
+                if (!string.IsNullOrEmpty(instructor.Gender))
+                    model.Gender = Convert.ToInt32(instructor.Gender);
+                var instructorAddress = TblAddresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
+                if (instructorAddress != null)
+                {
+                    model.AddressLine1 = instructorAddress.AddressLine1;
+                    model.AddressLine2 = instructorAddress.AddressLine2;
+                    model.PostalCode = instructorAddress.PostalCode.ToString();
+                    model.SuburbId = instructorAddress.SuburbId;
+                }
+
+            }
+            return model;
+        }
+
         public async Task<IList<string>> GetInstructorNames()
         {
             return await TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
@@ -159,11 +208,7 @@ namespace AutogearWeb.Repositories
             }
             return bookingAppointment;
         }
-        public void AddIntructor(Instructor repo)
-        {
-            DataContext.Instructors.Add(repo);
-        }
-
+        
         public Instructor GetInstructorByEmail(string email)
         {
             return DataContext.Instructors.SingleOrDefault(s => s.Email == email);
@@ -172,7 +217,7 @@ namespace AutogearWeb.Repositories
         public int GetLatestInstructorId()
         {
             var instructorNumber = 1000;
-            var latestInstructor = TblInstructors.OrderBy(o => o.CreatedDate).FirstOrDefault();
+            var latestInstructor = TblInstructors.OrderByDescending(o => o.CreatedDate).FirstOrDefault();
             if (latestInstructor != null)
             {
                 if (!string.IsNullOrEmpty(latestInstructor.InstructorNumber))
@@ -183,6 +228,7 @@ namespace AutogearWeb.Repositories
             }
             return instructorNumber;
         }
+
         public Instructor GetInstructorByName(string name)
         {
             return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);
@@ -209,9 +255,74 @@ namespace AutogearWeb.Repositories
             DataContext.SaveChanges();
         }
 
+        public void SaveInstructor(RegisterViewModel model)
+        {
+           
+            // Save Address
+            var instructorAddress = new Address
+            {
+                Address1 = model.AddressLine1,
+                AddressLine2 = model.AddressLine2,
+                Phone = model.Phone,
+                Mobile = model.Mobile,
+                PostCode = Convert.ToInt32(model.PostalCode),
+                CreatedDate = DateTime.Now,
+                CreatedBy = model.CreatedUser
+            };
+            if (model.SuburbId != 0)
+                instructorAddress.SuburbID = model.SuburbId;
+            DataContext.Addresses.Add(instructorAddress);
+            SaveInDatabase();
+            //  _instructorRepo.
+            // Create Instructor account
+            var instructor = new Instructor
+            {
+                Created_Date = DateTime.Now,
+                InstructorId = model.InstructorId,
+                Created_By = model.CreatedUser,
+                InstructorNumber = "INS-" + model.LastInstructor,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Gender = model.Gender.ToString(),
+                Mobile =model.Mobile,
+                Phone = model.Phone,
+                AddressId =instructorAddress.AddressId
+            };
+            DataContext.Instructors.Add(instructor);
+          SaveInDatabase();
+        }
+
+        public void UpdateInstructor(InstructorModel model)
+        {
+            var instructor = DataContext.Instructors.FirstOrDefault(s => s.InstructorNumber == model.InstructorNumber);
+            if (instructor != null)
+            {
+                instructor.FirstName = model.FirstName;
+                instructor.LastName = model.LastName;
+                instructor.Gender = model.Gender.ToString();
+                instructor.Mobile = model.Mobile;
+                instructor.Phone = model.Phone;
+                instructor.Modified_Date = DateTime.Now;
+                instructor.Modified_By = model.CreatedUser;
+                var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
+                if (instructorAddress != null)
+                {
+                    instructorAddress.Address1 = model.AddressLine1;
+                    instructorAddress.AddressLine2 = model.AddressLine2;
+                    instructorAddress.Phone = model.Phone;
+                    instructorAddress.Mobile = model.Mobile;
+                    instructorAddress.PostCode = Convert.ToInt32(model.PostalCode);
+                    instructorAddress.ModifiedDate = DateTime.Now;
+                    instructorAddress.SuburbID = model.SuburbId;
+                    instructorAddress.ModifiedBy = model.CreatedUser;
+                }
+                SaveInDatabase();
+            }
+        }
         public void SaveInDatabase()
         {
-            DataContext.SaveChangesAsync();
+            DataContext.SaveChanges();
         }
     }
 }

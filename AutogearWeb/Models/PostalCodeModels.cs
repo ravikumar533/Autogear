@@ -24,4 +24,15 @@
         public int PostCodeId { get; set; }
         public string SuburbName { get; set; }
     }
+
+    public class TblAddress
+    {
+        public int AddressId { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public int PostalCode { get; set; }
+        public int SuburbId { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
+    }
 }

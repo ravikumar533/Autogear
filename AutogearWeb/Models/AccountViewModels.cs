@@ -117,6 +117,25 @@ namespace AutogearWeb.Models
         public string ConfirmPassword { get; set; }
         public string InstructorNumber { get; set; }
         public SelectList GendersList { get; set; }
+        [Required]
+        [Display(Name = "Address1")]
+        public string AddressLine1 { get; set; }
+        [Display(Name = "Address2")]
+        public string AddressLine2 { get; set; }
+        [Required]
+        [Display(Name = "Postal Code")]
+        public string PostalCode { get; set; }
+        [Required]
+        [Display(Name = "Suburb Name")]
+        public string SuburbName { get; set; }
+        //[Required]
+        [Display(Name = "Area")]
+        public string Areas { get; set; }
+
+        public int SuburbId { get; set; }
+        public int LastInstructor { get; set; }
+        public string CreatedUser { get; set; }
+        public string InstructorId { get; set; }
     }
 
     public class ResetPasswordViewModel

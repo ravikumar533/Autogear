@@ -46,8 +46,8 @@ namespace AutogearWeb.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public async Task<ActionResult> Create(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -63,18 +63,15 @@ namespace AutogearWeb.Controllers
                     {
                          _userManager.AddToRole(user.Id, role.Name);
                     }
-                    var lastInstructorId = _instructorRepo.GetLatestInstructorId()  + 1;
-                    // Create Instructor account
-                    var instructor = new Instructor
+                    model.LastInstructor = _instructorRepo.GetLatestInstructorId() + 1;
+                    var suburb = _postalRepo.GetSuburb(model.SuburbName);
+                    if (suburb != null)
                     {
-                        Created_Date = DateTime.Now,
-                        InstructorId = user.Id,
-                        Created_By = User.Identity.GetUserId(),
-                        InstructorNumber = "INS-"+ lastInstructorId
-                    };
-                    TryUpdateModel(instructor);
-                    _instructorRepo.AddIntructor(instructor);
-                    _instructorRepo.SaveInDatabase();
+                        model.SuburbId = suburb.SuburbId;
+                    }
+                    model.InstructorId = user.Id;
+                    model.CreatedUser = User.Identity.GetUserId();
+                   _instructorRepo.SaveInstructor(model);
                     //await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index");
                 }
@@ -106,60 +103,28 @@ namespace AutogearWeb.Controllers
             return View(appointment);
         }
 
-        public ActionResult UpdatePostalCodes()
-        {
-            var reader = new StreamReader(System.IO.File.OpenRead(Server.MapPath("~/Content/PostCodes.csv")));
-            reader.ReadLine();
-            while(!reader.EndOfStream)
-            {
-                string p = reader.ReadLine();
-                if (p != null)
-                {
-                    string[] postalData = p.Split(',');
-                    var postalCode = Convert.ToInt32(postalData[0]);
-                    var suburbName = postalData[1].Replace("\"","");
-                    var stateName = postalData[2].Replace("\"","");
-                    // Creating State
-                    var state = _postalRepo.GetState(stateName);
-                    if (state == null)
-                    {
-                       state = new State
-                        {
-                            State_Name = stateName
-                        };
-                        _postalRepo.SaveState(state);
-                        _postalRepo.SaveChanges();
-                    }
-                    var suburub = _postalRepo.GetSuburb(suburbName);
-                    if (suburub == null)
-                    {
-                      suburub =  new Suburb
-                        {
-                            StateId = state.StateId,
-                            Suburb_Name = suburbName
-                        };
-                        _postalRepo.SaveSubUrb(suburub);
-                        _postalRepo.SaveChanges();
-                    }
-                    var postCode = _postalRepo.GetPostCode(postalCode, suburub.SuburbId);
-                    if (postCode == null)
-                    {
-                       postCode = new PostCode
-                        {
-                            PostCode1 = postalCode,
-                            SuburbID = suburub.SuburbId
-                        };
-                        _postalRepo.SavePostCode(postCode);
-                        _postalRepo.SaveChanges();
-                    }
-                }
-            }
-            return Json("ok");
-        }
-
         public ActionResult Edit(string instructorId)
         {
-            return View();
+            var model = _instructorRepo.GetInstructorByNumber(instructorId);
+            model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
+            var suburb = _postalRepo.GetSuburbById(model.SuburbId);
+            if (suburb != null)
+                model.SuburbName = suburb.Name;
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult Edit(InstructorModel model)
+        {
+            model.CreatedUser = User.Identity.GetUserId();
+            var suburb = _postalRepo.GetSuburb(model.SuburbName);
+            if (suburb != null)
+                model.SuburbId = suburb.SuburbId;
+            _instructorRepo.UpdateInstructor(model);
+            model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
+            model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);
+            return View(model);
         }
         public ActionResult Lesson()
         {
@@ -175,6 +140,56 @@ namespace AutogearWeb.Controllers
         {
 
             return View();
+        }
+        public ActionResult UpdatePostalCodes()
+        {
+            var reader = new StreamReader(System.IO.File.OpenRead(Server.MapPath("~/Content/PostCodes.csv")));
+            reader.ReadLine();
+            while (!reader.EndOfStream)
+            {
+                string p = reader.ReadLine();
+                if (p != null)
+                {
+                    string[] postalData = p.Split(',');
+                    var postalCode = Convert.ToInt32(postalData[0]);
+                    var suburbName = postalData[1].Replace("\"", "");
+                    var stateName = postalData[2].Replace("\"", "");
+                    // Creating State
+                    var state = _postalRepo.GetState(stateName);
+                    if (state == null)
+                    {
+                        state = new State
+                        {
+                            State_Name = stateName
+                        };
+                        _postalRepo.SaveState(state);
+                        _postalRepo.SaveChanges();
+                    }
+                    var suburub = _postalRepo.GetSuburb(suburbName);
+                    if (suburub == null)
+                    {
+                        suburub = new Suburb
+                        {
+                            StateId = state.StateId,
+                            Suburb_Name = suburbName
+                        };
+                        _postalRepo.SaveSubUrb(suburub);
+                        _postalRepo.SaveChanges();
+                    }
+                    var postCode = _postalRepo.GetPostCode(postalCode, suburub.SuburbId);
+                    if (postCode == null)
+                    {
+                        postCode = new PostCode
+                        {
+                            PostCode1 = postalCode,
+                            SuburbID = suburub.SuburbId
+                        };
+                        _postalRepo.SavePostCode(postCode);
+                        _postalRepo.SaveChanges();
+                    }
+                }
+            }
+            return Json("ok");
         }
 
     }

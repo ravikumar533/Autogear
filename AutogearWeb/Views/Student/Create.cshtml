@@ -1,10 +1,6 @@
 ﻿@model AutogearWeb.Models.StudentModel
 
 @{
-    ViewBag.Title = "Create";
-}
-
-@{
     ViewBag.Title = "New Student";
 }
 @using (Html.BeginForm())
@@ -13,19 +9,6 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Search Student</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="form-field-1" placeholder="StudentID or Student Name" class="col-xs-10 col-sm-8" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-3">
-
-            </div>
-        </div>
         <h2>Student Personal Details</h2>
         <div class="row">
             <div class="col-xs-6">
@@ -75,7 +58,10 @@
                     @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-sm-2" })
                     <div class="col-sm-9">
                         <div class="checkbox">
-                            @Html.EditorFor(model => model.Status)
+                            <label>
+                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
+                                <span class="lbl"></span>
+                            </label>
                             @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -111,7 +97,6 @@
                         @Html.ValidationMessageFor(model => model.SuburbName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
@@ -181,10 +166,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.Remarks, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Remarks" } })
-                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                        @Html.TextAreaFor(model => model.Remarks, new  {@class = "col-xs-10 col-sm-8", placeholder = "Remarks"})
+                        @Html.ValidationMessageFor(model => model.Remarks, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        @Html.CheckBoxFor(model => model.IsInternationalLicensed, new { htmlAttributes = new { @class = "col-sm-2" } })
+                        @Html.LabelFor(model => model.IsInternationalLicensed, new { @class = "col-sm-4" })
+                    </div>
+                    <div class="col-sm-12 Country">
+                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right Country" })
+                        <div class="col-sm-9">
+                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Country" } })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,17 +247,27 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
-                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Start Time" } })
-                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-                    </div>
+                    <div class="col-sm-9 bootstrap-timepicker">
+                        <div class="input-group col-xs-10 col-sm-8">
+                            @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time"}})
+                            <span class="input-group-addon">
+                                <i class="fa fa-clock-o bigger-110"></i>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
+                        </div>
+                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Stop Time" } })
-                        @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
-                    </div>
+                        <div class="input-group col-xs-10 col-sm-8">
+                            @Html.EditorFor(model => model.StopTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Stop Time"}})
+                            <span class="input-group-addon">
+                                <i class="fa fa-clock-o bigger-110"></i>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.StopTime, "", new {@class = "text-danger"})
+                        </div>
+                        </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DropLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
@@ -321,16 +329,26 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestStartTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestStartTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Start Time" } })
-                        @Html.ValidationMessageFor(model => model.DrivingTestStartTime, "", new { @class = "text-danger" })
+                        <div class="input-group col-xs-10 col-sm-8">
+                            @Html.EditorFor(model => model.DrivingTestStartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time"}})
+                            <span class="input-group-addon">
+                                <i class="fa fa-clock-o bigger-110"></i>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.DrivingTestStartTime, "", new {@class = "text-danger"})
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestStopTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestStopTime, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Stop Time" } })
-                        @Html.ValidationMessageFor(model => model.DrivingTestStopTime, "", new { @class = "text-danger" })
-                    </div>
+                        <div class="input-group col-xs-10 col-sm-8">
+                            @Html.EditorFor(model => model.DrivingTestStopTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Stop Time"}})
+                            <span class="input-group-addon">
+                                <i class="fa fa-clock-o bigger-110"></i>
+                            </span>
+                            @Html.ValidationMessageFor(model => model.DrivingTestStopTime, "", new {@class = "text-danger"})
+                        </div>
+                        </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestDropLocation, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
@@ -347,12 +365,12 @@
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit">
                         <i class="ace-icon fa fa-check bigger-110"></i>
-                        Submit
+                        Save
                     </button>
                     &nbsp; &nbsp; &nbsp;
                     <button class="btn" type="reset">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
-                        Reset
+                        Clear
                     </button>
                     &nbsp; &nbsp; &nbsp;
                     <a href="@Url.Action("Index")" class="btn btn-danger">
@@ -367,7 +385,9 @@
 }
 
     @section Scripts
-{
+    {
+@Scripts.Render("~/bundles/bootstrap");
+@Scripts.Render("~/bundles/bootstrappicker");
         @Scripts.Render("~/bundles/jqueryUI");
         <script>
             $(function () {
@@ -405,6 +425,36 @@
                 $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
                     minDate: 0,
                     dateFormat: "dd-mm-yy"
+                });
+
+                $("#Country,.Country").css("display", "none");
+                $("#IsInternationalLicensed").on('change', function () {
+                    if ($(this).prop('checked')) {
+                        $('#StateId').attr('disabled', 'disabled');
+                        $("#Country,.Country").css("display", "inline-block");
+                    } else {
+                        $('#StateId').removeAttr('disabled');
+                        $("#Country,.Country").css("display","none");
+                    }
+                });
+                $("#StartTime,#StopTime,#DrivingTestStopTime,#DrivingTestStartTime").timepicker({
+                    minuteStep: 1,
+                    showSeconds: false,
+                    showMeridian: false,
+                    disableFocus: true
+                }).on("focus", function () {
+                    $(this).timepicker("showWidget");
+                }).on("changeTime.timepicker", function(e) {
+                    var self = this;
+                    var newhour = (e.time.hours) + 1;
+                    var newTime = newhour + ":" + e.time.minutes ;
+                    if (self.id.indexOf("StartTime") > -1) {
+                        if (self.id.indexOf("DrivingTest") > -1) {
+                            $("#DrivingTestStopTime").val(newTime);
+                        } else {
+                            $("#StopTime").val(newTime);
+                        }
+                    }
                 });
             });
         </script>

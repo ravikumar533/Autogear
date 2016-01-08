@@ -11,9 +11,10 @@
 
                 <b class="arrow"></b>
             </li>
-
+        @if (User.IsInRole("Admin"))
+        {
             <li id="liInstructor">
-                <a href="@Url.Action("Index","Instructor")">
+                <a href="@Url.Action("Index", "Instructor")">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text">
                         Instructors
@@ -22,6 +23,7 @@
 
                 <b class="arrow"></b>
             </li>
+        }
             <li class="">
                 <a href="@Url.Action("Index","Student")" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
@@ -49,7 +51,7 @@
                     <i class="menu-icon fa fa-calendar"></i>
 
                     <span class="menu-text">
-                        My Calendar
+                        Calendar
                     </span>
                 </a>
 

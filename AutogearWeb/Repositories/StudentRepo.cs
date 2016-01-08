@@ -43,6 +43,8 @@ namespace AutogearWeb.Repositories
                             Gender = student.Gender,
                             StartDate = student.StartDate,
                             Status = student.Status,
+                            AddressId = student.AddressId,
+                            Email = student.Email
                            // InstructorName = instructorStudent.
                         });
                 return _tblStudents;
@@ -70,19 +72,20 @@ namespace AutogearWeb.Repositories
             get
             {
                 _tblStudentLicenses = _tblStudentLicenses ??
-                    DataContext.Student_License.Select(
-                        s =>
-                            new TblStudentLicense
-                            {
-                                StudentId = s.StudentId,
-                                ClassName = s.Class,
-                                ExpiryDate = s.ExpiryDate,
-                                Id = s.Id,
-                                LicenseNumber = s.LicenseNo,
-                                LicensePassedDate = s.License_passed_Date,
-                                Remarks = s.Remarks,
-                                IsInternationalLicensed = s.IsInternationalLicensed
-                            });
+                                      DataContext.Student_License.Select(
+                                          s =>
+                                              new TblStudentLicense
+                                              {
+                                                  StudentId = s.StudentId,
+                                                  ClassName = s.Class,
+                                                  ExpiryDate = s.ExpiryDate,
+                                                  Id = s.Id,
+                                                  LicenseNumber = s.LicenseNo,
+                                                  LicensePassedDate = s.License_passed_Date,
+                                                  Remarks = s.Remarks,
+                                                  IsInternationalLicensed = s.IsInternationalLicensed,
+                                                  Country = s.Country
+                                              });
                 return _tblStudentLicenses;
             }
             set { _tblStudentLicenses = value; }
@@ -167,13 +170,18 @@ namespace AutogearWeb.Repositories
                 studentModel.Status = student.Status;
                 
                 //Student Address
-                var studentAddress = TblStudentAddresses.SingleOrDefault(s => s.StudentId == student.StudentId);
+                var studentAddress = TblStudentAddresses.SingleOrDefault(s => s.AddressId == student.AddressId);
                 if (studentAddress != null)
                 {
                     studentModel.Address1 = studentAddress.Address1;
                     studentModel.Address2 = studentAddress.Address2;
                     studentModel.Mobile = studentAddress.Mobile;
                     studentModel.PostalCode = studentAddress.PostalCode.ToString();
+                    var subUrb = DataContext.Suburbs.SingleOrDefault(s => s.SuburbId == studentAddress.SuburbId);
+                    if (subUrb != null)
+                    {
+                        studentModel.SuburbName = subUrb.Suburb_Name;
+                    }
                 }
 
                 //Student License
@@ -185,6 +193,14 @@ namespace AutogearWeb.Repositories
                     studentModel.ExpiryDate = studentLicense.ExpiryDate;
                     studentModel.ClassName = studentLicense.ClassName;
                     studentModel.Remarks = studentLicense.Remarks;
+                    studentModel.IsInternationalLicensed = studentLicense.IsInternationalLicensed;
+                    studentModel.Country = studentLicense.Country;
+                    var instructor = DataContext.Instructor_Student.SingleOrDefault(s => s.StudentId == student.StudentId);
+                    var instructorDetails = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == instructor.InstructorId);
+                    if (instructorDetails != null)
+                    {
+                        studentModel.InstructorName = instructorDetails.FirstName + " " + instructorDetails.LastName;
+                    }
                 }
 
                 var studentBooking = TblStudentBookings.SingleOrDefault(s => s.StudentId == student.StudentId && s.Type == "Learning");
@@ -260,13 +276,15 @@ namespace AutogearWeb.Repositories
                     AddressLine2 = studentModel.Address2,
                     CreatedBy = currentUser,
                     CreatedDate = DateTime.Now,
-                    Mobile = studentModel.Mobile
+                    Mobile = studentModel.Mobile,
                 };
                 if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
                 {
                     studentAddress.PostCode = Convert.ToInt32(studentModel.PostalCode);
                     // studentAddress.
                 }
+                if (studentModel.SuburbId != 0)
+                    studentAddress.SuburbID = studentModel.SuburbId;
                 DataContext.Addresses.Add(studentAddress);
                 DataContext.SaveChanges();
                 // Student Creation
@@ -294,8 +312,10 @@ namespace AutogearWeb.Repositories
                     Class = studentModel.ClassName,
                     LicenseNo = studentModel.LicenseNumber,
                     License_passed_Date =studentModel.LicensePassedDate,
-                    Remarks = studentModel.Remarks
+                    Remarks = studentModel.Remarks,
                     //International License details
+                    IsInternationalLicensed = studentModel.IsInternationalLicensed,
+                    Country = studentModel.Country
                 };
                 DataContext.Student_License.Add(studentLicense);
                 DataContext.SaveChanges();
@@ -362,6 +382,80 @@ namespace AutogearWeb.Repositories
                    
                 }
             }
+        }
+
+        public void SaveExistingStudent(string currentUser, StudentModel studentModel)
+        {
+            var studentDetails = DataContext.Students.FirstOrDefault(s => s.Id == studentModel.StudentId) ??
+                                 new Student();
+            var addressDetails = DataContext.Addresses.FirstOrDefault(s => s.AddressId == studentDetails.AddressId) ?? new Address();
+            addressDetails.Address1 = studentModel.Address1;
+            addressDetails.AddressLine2 = studentModel.Address2;
+            addressDetails.Mobile = studentModel.Mobile;
+            addressDetails.PostCode = Convert.ToInt32(studentModel.PostalCode);
+            addressDetails.ModifiedDate = DateTime.Now;
+            addressDetails.ModifiedBy = currentUser;
+            var subUrb = DataContext.Suburbs.FirstOrDefault(s => s.Suburb_Name == studentModel.SuburbName);
+            if (subUrb != null)
+            {
+                addressDetails.SuburbID = subUrb.SuburbId;
+            }
+            if (addressDetails.AddressId == 0)
+            {
+                addressDetails.CreatedBy = currentUser;
+                addressDetails.CreatedDate = DateTime.Now;
+                DataContext.Addresses.Add(addressDetails);
+            }
+            DataContext.SaveChanges();
+
+            
+            studentDetails.FirstName = studentModel.FirstName;
+            studentDetails.LastName = studentModel.LastName;
+            studentDetails.Email = studentModel.Email;
+            studentDetails.StartDate = studentModel.StartDate;
+            studentDetails.Status = studentModel.Status;
+            studentDetails.Gender = studentModel.Gender;
+            studentDetails.AddressId = addressDetails.AddressId;
+            if (studentDetails.Id == 0)
+            {
+                DataContext.Students.Add(studentDetails);
+            }
+            DataContext.SaveChanges();
+
+            var studentLicenseDetails =
+                DataContext.Student_License.FirstOrDefault(s => s.StudentId == studentModel.StudentId) ??
+                new Student_License();
+            studentLicenseDetails.LicenseNo = studentModel.LicenseNumber;
+            studentLicenseDetails.License_passed_Date = studentModel.LicensePassedDate;
+            studentLicenseDetails.Class = studentModel.ClassName;
+            if (studentModel.ExpiryDate != null) studentLicenseDetails.ExpiryDate = (DateTime) studentModel.ExpiryDate;
+            studentLicenseDetails.Remarks = studentModel.Remarks;
+            if (studentModel.IsInternationalLicensed)
+            {
+                studentLicenseDetails.IsInternationalLicensed = studentModel.IsInternationalLicensed;
+                studentLicenseDetails.Country = studentModel.Country;
+                studentLicenseDetails.StateId = null;
+            }
+            else
+            {
+                studentLicenseDetails.IsInternationalLicensed = studentModel.IsInternationalLicensed;
+                studentLicenseDetails.Country = null;
+                studentLicenseDetails.StateId = studentModel.StateId;
+            }
+            if (studentLicenseDetails.StudentId == 0)
+            {
+                DataContext.Student_License.Add(studentLicenseDetails);
+            }
+            DataContext.SaveChanges();
+
+            //var instructor = DataContext.Instructors.SingleOrDefault(s => (s.FirstName + " " + s.LastName) == studentModel.InstructorName);
+            //var instructorDetails = DataContext.Instructor_Student.FirstOrDefault(s => s.StudentId == studentModel.StudentId);
+            //if (instructorDetails != null)
+            //{
+            //    if (instructor != null) instructorDetails.InstructorId = instructor.InstructorId;
+            //    instructorDetails.ModifiedBy = currentUser;
+            //    instructorDetails.ModifiedDate = DateTime.Now;
+            //}
         }
 
         public TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails)

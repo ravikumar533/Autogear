@@ -13,10 +13,12 @@ namespace AutogearWeb.Controllers
     {
         private readonly IStudentRepo _iStudentRepo;
         private readonly IAutogearRepo _iAutogearRepo;
-        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo)
+        private readonly IPostalRepo _iPostalRepo;
+        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo,IPostalRepo postalRepo)
         {
             _iStudentRepo = iStudentRepo;
             _iAutogearRepo = autogearRepo;
+            _iPostalRepo = postalRepo;
         }
         // GET: Student
         public ActionResult Index()
@@ -43,6 +45,9 @@ namespace AutogearWeb.Controllers
             var packages = _iStudentRepo.GetPackages();
             if (ModelState.IsValid)
             {
+                var suburb = _iPostalRepo.GetSuburb(model.SuburbName);
+                if (suburb != null)
+                    model.SuburbId = suburb.SuburbId;
                 _iStudentRepo.SaveStudent(model,currentUser);
                 return RedirectToAction("Index");
                 //AddErrors(result);
@@ -64,6 +69,13 @@ namespace AutogearWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(StudentModel studentModel)
         {
+            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                _iStudentRepo.SaveExistingStudent(currentUser, studentModel);
+                return RedirectToAction("Index");
+            }
+            
             return View(studentModel);
         }
         public ActionResult Register()
