@@ -104,11 +104,13 @@ namespace AutogearWeb.Repositories
         {
             return await TblInstructors.ToListAsync();
         }
-        
+
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
-            foreach (var booking in TblBookings.Where(b=> b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId))
+            foreach (
+                var booking in
+                    TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId))
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
                 if (student != null)
@@ -130,7 +132,7 @@ namespace AutogearWeb.Repositories
             }
             return await Task.Run(() => instuctorBookings);
         }
-       
+
         public async Task<IList<StudentList>> GetStudentEvents(string currentUser)
         {
             var instuctorBookings = new List<StudentList>();
