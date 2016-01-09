@@ -103,5 +103,35 @@ namespace AutogearWeb.Controllers
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             _studentRepo.UpdateStudentDetails(currentUser, studentDetails);
         }
+
+        #region Packages
+
+        public async Task<IList<PackageModel>> GetPackages()
+        {
+            return await _instructorRepo.GetPackages();
+        }
+
+        public void CreateNewPackage(PackageModel packageDetails)
+        {
+            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            _instructorRepo.CreateNewPackage(currentUser, packageDetails);
+        }
+
+        public void UpdatePackageDetails(PackageModel packageDetails)
+        {
+            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            _instructorRepo.UpdatePackageDetails(currentUser, packageDetails);
+        }
+
+        #endregion
+
+        #region Area
+
+        public async Task<IList<AreaModel>> GetArea()
+        {
+            return await _instructorRepo.GetArea();
+        }
+
+        #endregion
     }
 }

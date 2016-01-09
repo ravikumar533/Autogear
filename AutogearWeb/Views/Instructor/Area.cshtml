@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Area";
+}
+
+<p>
+    @Html.ActionLink("Create New", "CreateArea", null, new { @class = "btn btn-success" })
+    @*<a class="btn btn-success" id="createNewArea">Create New</a>*@
+</p>
+<table id="jqGrid"></table>
+<div id="jqGridPager"></div>
+@section Scripts{
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/jqGrid");
+    @Scripts.Render("~/bundles/jqueryUI");
+    @Scripts.Render("~/bundles/jqueryval");
+    <script>
+        $(function() {
+            var baseUrl = "/Api/AutogearApi/";
+            var packages = "";
+            $("#jqGrid").jqGrid({
+                url: baseUrl + "GetArea",
+                datatype: "json",
+                colModel: [
+                {
+                    label: "AreaId",
+                    name: "areaId",
+                    width: 25,
+                    key: true,
+                    editable: true,
+                    editrules :{required:true}
+                },
+                 {
+                     label: 'Name',
+                     name: 'name',
+                     width: 100,
+                     key: true,
+                     editable: true,
+                     editrules: { required: true }
+                 },
+                 {
+                     label: 'Description',
+                     name: 'description',
+                     width: 100,
+                     editable: true // must set editable to true if you want to make the field editable
+                 }
+                ],
+                sortname: 'Name',
+                sortorder: 'asc',
+                loadonce: true,
+                viewrecords: true,
+                width: 780,
+                height: 200,
+                rowNum: 10,
+                pager: "#jqGridPager"
+            });
+
+            
+        });
+    </script>
+}

@@ -24,9 +24,15 @@ namespace AutogearWeb.Repositories
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         int GetLatestInstructorId();
+        Task<IList<PackageModel>> GetPackages();
+        Task<IList<AreaModel>> GetArea();
         void SaveInstructor(RegisterViewModel model);
         void UpdateInstructor(InstructorModel model);
         void SaveInDatabase();  // Save Asynchronous
         void ApplyInstructorLeave(string currentUser, InstructorLeaveModel appliedLeave);
+        void CreateNewPackage(string currentUser, PackageModel packageDetails);
+        void UpdatePackageDetails(string currentUser, PackageModel packageDetails);
+        void CreateNewArea(string currentUser, AreaModel areaDetails);
+        void UpdateArea(string currentUser, AreaModel areaDetails);
     }
 }

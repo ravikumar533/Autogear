@@ -1,3 +1,9 @@
 ﻿li.white a { color: white !important;}
 .ui-autocomplete,.ui-datepicker { z-index: 1100 !important;}
 .checkbox label { padding-left: 0 !important;}
+.ui-jqgrid tr.ui-row-ltr td {
+    -moz-text-overflow: ellipsis !important;
+    -ms-text-overflow: ellipsis !important;
+    -o-text-overflow: ellipsis !important;
+    text-overflow: ellipsis !important;
+}

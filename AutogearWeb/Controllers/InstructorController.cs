@@ -200,6 +200,90 @@ namespace AutogearWeb.Controllers
             return Json("ok");
         }
 
+        #region Packages
+
+        public ActionResult Packages()
+        {
+            return View();
+        }
+
+        public ActionResult CreatePackage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreatePackage(PackageModel packageDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                _instructorRepo.CreateNewPackage(currentUser, packageDetails);
+                return View("Packages");
+            }
+            return View();
+        }
+
+        public ActionResult EditPackage()
+        {
+            return View();
+        }
+
+        public ActionResult EditPackage(PackageModel packageDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                _instructorRepo.UpdatePackageDetails(currentUser, packageDetails);
+                return View("Packages");
+            }
+            return View();
+        }
+
+        #endregion
+
+        #region Area
+
+        public ActionResult Area()
+        {
+            return View();
+        }
+
+        public ActionResult CreateArea()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateArea(AreaModel areaDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                _instructorRepo.CreateNewArea(currentUser, areaDetails);
+                return View("Area");
+            }
+            return View();
+        }
+
+        public ActionResult EditArea()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EditArea(AreaModel areaDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                _instructorRepo.UpdateArea(currentUser, areaDetails);
+                return View("Area");
+            }
+            return View();
+        }
+
+        #endregion
+
     }
 
 }

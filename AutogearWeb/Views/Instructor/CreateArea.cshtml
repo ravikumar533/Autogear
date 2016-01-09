@@ -1,0 +1,54 @@
+﻿@model AutogearWeb.Models.AreaModel
+@{
+    ViewBag.Title = "New Area";
+}
+
+@using (Html.BeginForm("CreateArea", "Instructor", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-horizontal">
+        <h4>Create Area</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { cols = "52%", htmlAttributes = new { @class = "form-control" }, style = "resize:none;" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="=row">
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Save
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Clear
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="@Url.Action("Area")" class="btn btn-danger">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        @Html.Raw("Back to list")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

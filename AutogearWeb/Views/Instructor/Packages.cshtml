@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Packages";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "CreatePackage", null, new { @class = "btn btn-success", @id = "createNewPackage" })
+    @*<a class="btn btn-success" id="createNewPackage">Create New</a>*@
+</p>
+<table id="jqGrid"></table>
+<div id="jqGridPager"></div>
+@section Scripts{
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/jqGrid");
+    @Scripts.Render("~/bundles/jqueryUI");
+    @Scripts.Render("~/bundles/jqueryval");
+    <script>
+        $(function() {
+            var baseUrl = "/Api/AutogearApi/";
+            var packages = "";
+            $("#jqGrid").jqGrid({
+                url: baseUrl + "GetPackages",
+                datatype: "json",
+                colModel: [
+                    {
+                        label: "PackageId",
+                        name: "packageId",
+                        width: 100,
+                        key: true,
+                        editable: true,
+                        editrules: { required: true }
+                    },
+                    {
+                        label: 'First Name',
+                        name: 'name',
+                        width: 100,
+                        key: true,
+                        editable: true,
+                        editrules: { required: true }
+                    },
+                    {
+                        label: 'Description',
+                        name: 'description',
+                        width: 100,
+                        editable: true // must set editable to true if you want to make the field editable
+                    },
+                    {
+                        label: 'Cost',
+                        name: 'cost',
+                        width: 100,
+                        editable: true
+                    },
+                    {
+                        label: 'Hours',
+                        name: 'hours',
+                        width: 100,
+                        editable: true
+                    }
+                ],
+                sortname: 'Name',
+                sortorder: 'asc',
+                loadonce: true,
+                viewrecords: true,
+                width: 780,
+                height: 200,
+                rowNum: 10,
+                pager: "#jqGridPager"
+            });
+
+        });
+    </script>
+}

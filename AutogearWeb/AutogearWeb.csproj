@@ -233,6 +233,9 @@
     <Compile Include="EFModels\Address.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EFModels\Area.cs">
+      <DependentUpon>AutogearModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EFModels\AspNetRole.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
@@ -890,6 +893,11 @@
     <Content Include="Views\Instructor\NewLeaveByInstructor.cshtml" />
     <Content Include="Views\Instructor\Edit.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Instructor\Area.cshtml" />
+    <Content Include="Views\Instructor\CreateArea.cshtml" />
+    <Content Include="Views\Instructor\CreatePackage.cshtml" />
+    <Content Include="Views\Instructor\EditPackage.cshtml" />
+    <Content Include="Views\Instructor\Packages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

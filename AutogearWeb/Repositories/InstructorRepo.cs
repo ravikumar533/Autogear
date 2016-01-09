@@ -100,6 +100,46 @@ namespace AutogearWeb.Repositories
             set { _tblInstructorLeaves = value; }
         }
 
+        private IQueryable<PackageModel> _tblPackages;
+        public IQueryable<PackageModel> TblPackages
+        {
+            get
+            {
+                _tblPackages = _tblPackages ??
+                               DataContext.Package_Details.Select(
+                                   s =>
+                                       new PackageModel
+                                       {
+                                           PackageId = s.PackageId,
+                                           Name = s.Name,
+                                           Description = s.Description,
+                                           Cost = s.Cost,
+                                           Hours = s.NumberOfHours
+                                       });
+                return _tblPackages;
+            }
+            set { _tblPackages = value; }
+        }
+
+        private IQueryable<AreaModel> _tblArea;
+        public IQueryable<AreaModel> TblArea
+        {
+            get
+            {
+                _tblArea = _tblArea ??
+                           DataContext.Areas.Select(
+                               s =>
+                                   new AreaModel
+                                   {
+                                       AreaId = s.AreaId,
+                                       Name = s.Name,
+                                       Description = s.Description
+                                   });
+                return _tblArea;
+            }
+            set { _tblArea = value; }
+        }
+
         public async Task<IList<TblInstructor>> GetInstructorList()
         {
             return await TblInstructors.ToListAsync();
@@ -326,6 +366,104 @@ namespace AutogearWeb.Repositories
                 SaveInDatabase();
             }
         }
+
+        #region Packages
+
+        public async Task<IList<PackageModel>> GetPackages()
+        {
+            return await TblPackages.ToListAsync();
+        }
+
+        public void CreateNewPackage(string userId, PackageModel package)
+        {
+            var packageDetails = new Package_Details
+            {
+                ModifiedBy = userId,
+                ModifiedDate = DateTime.Now,
+                Name = package.Name,
+                Description = package.Description,
+                NumberOfHours = package.Hours,
+                Cost = package.Cost,
+                Type = string.Empty,
+            };
+
+            if (packageDetails.PackageId == 0)
+            {
+                packageDetails.CreatedDate = DateTime.Now;
+                packageDetails.CreatedBy = userId;
+                DataContext.Package_Details.Add(packageDetails);
+            }
+
+            SaveInDatabase();
+        }
+
+        public void UpdatePackageDetails(string userId, PackageModel package)
+        {
+            var packageDetails = DataContext.Package_Details.FirstOrDefault(s => s.PackageId == package.PackageId) ??
+                                 new Package_Details();
+            packageDetails.ModifiedBy = userId;
+            packageDetails.ModifiedDate = DateTime.Now;
+            packageDetails.Name = package.Name;
+            packageDetails.Description = package.Description;
+            packageDetails.NumberOfHours = package.Hours;
+            packageDetails.Cost = package.Cost;
+            packageDetails.Type = string.Empty;
+
+
+            if (packageDetails.PackageId == 0)
+            {
+                packageDetails.CreatedDate = DateTime.Now;
+                packageDetails.CreatedBy = userId;
+                DataContext.Package_Details.Add(packageDetails);
+            }
+
+            SaveInDatabase();
+        }
+
+        #endregion
+
+        #region Area
+
+        public async Task<IList<AreaModel>> GetArea()
+        {
+            return await TblArea.ToListAsync();
+        }
+
+        public void CreateNewArea(string userId, AreaModel area)
+        {
+            var areaDetails = DataContext.Areas.FirstOrDefault(s => s.AreaId == area.AreaId) ??
+                                 new Area();
+            areaDetails.Name = area.Name;
+            areaDetails.Description = area.Description;
+            if (areaDetails.AreaId == 0)
+            {
+                areaDetails.CreatedDate = DateTime.Now;
+                areaDetails.CreatedBy = userId;
+                DataContext.Areas.Add(areaDetails);
+            }
+
+            SaveInDatabase();
+        }
+
+        public void UpdateArea(string userId, AreaModel area)
+        {
+            var areaDetails = DataContext.Areas.FirstOrDefault(s => s.AreaId == area.AreaId) ??
+                                 new Area();
+            areaDetails.Name = area.Name;
+            areaDetails.Description = area.Description;
+            if (areaDetails.AreaId == 0)
+            {
+                areaDetails.CreatedDate = DateTime.Now;
+                areaDetails.CreatedBy = userId;
+                DataContext.Areas.Add(areaDetails);
+            }
+
+            SaveInDatabase();
+        }
+
+        #endregion
+
+
         public void SaveInDatabase()
         {
             DataContext.SaveChanges();

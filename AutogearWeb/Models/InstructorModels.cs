@@ -103,4 +103,34 @@ namespace AutogearWeb.Models
         public string Areas { get; set; }
         public string CreatedUser { get; set; }
     }
+
+    public class PackageModel
+    {
+        public int PackageId { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+        [Required]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Hours must be numeric")]
+        [Display(Name = "Hours")]
+        public int Hours { get; set; }
+        [Required]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Cost must be numeric")]
+        [Display(Name = "Cost")]
+        public int Cost { get; set; }
+    }
+
+    public class AreaModel
+    {
+        public int AreaId { get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+    }
 }
