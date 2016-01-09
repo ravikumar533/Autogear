@@ -122,7 +122,15 @@ namespace AutogearWeb.Controllers
             {
                 if (!string.IsNullOrEmpty(model.Password))
                 {
-                   
+                    var user = _userManager.FindByEmail(model.Email);
+                    var provider = Startup.DataProtectionProvider;
+                    _userManager.UserTokenProvider =
+                       new DataProtectorTokenProvider<ApplicationUser>(provider.Create("ASP.NET Identity"))
+                       {
+                           TokenLifespan = TimeSpan.FromHours(1)
+                       };
+                    string code =  _userManager.GeneratePasswordResetToken(user.Id);
+                    var result = _userManager.ResetPassword(user.Id, code, model.Password);
                 }
                 model.CreatedUser = User.Identity.GetUserId();
                 var suburb = _postalRepo.GetSuburb(model.SuburbName);
