@@ -92,12 +92,6 @@ namespace AutogearWeb.Controllers
             return await _instructorRepo.GetInstructorLeaves(currentUser);
         }
 
-        public void ApplyInstructorLeave(InstructorLeaveModel appliedLeave)
-        {
-            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
-            _instructorRepo.ApplyInstructorLeave(currentUser, appliedLeave);
-        }
-
         public void UpdateStudentDetails(TblStudent studentDetails)
         {
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();

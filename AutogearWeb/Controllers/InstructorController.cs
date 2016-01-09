@@ -157,6 +157,20 @@ namespace AutogearWeb.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult NewLeaveByInstructor(InstructorLeaveModel appliedLeave)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                _instructorRepo.ApplyInstructorLeave(currentUser, appliedLeave);
+                return View("InstructorLeaves");
+            }
+
+            return View();
+        }
+
         public ActionResult UpdatePostalCodes()
         {
             var reader = new StreamReader(System.IO.File.OpenRead(Server.MapPath("~/Content/PostCodes.csv")));

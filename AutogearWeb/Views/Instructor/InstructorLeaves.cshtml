@@ -4,7 +4,7 @@
 }
 
 <p>
-    @Html.ActionLink("Apply Leave", "NewLeaveInstructor", new { @class = "btn btn-success" })
+    @Html.ActionLink("Apply Leave", "NewLeaveByInstructor",null, new { @class = "btn btn-success" })
     @*<a class="btn btn-success" id="applyLeave">Apply Leave</a>*@
 </p>
 <table id="jqGrid"></table>
@@ -389,50 +389,6 @@
             });
 
         });
-    $(function () {
-        var modalDialog = "";
-        
-        $("#applyLeave").on("click", function() {
-            $.ajax({
-                url: "/Instructor/NewLeaveByInstructor",
-                method: "POST",
-                dataType: "html",
-                data: { bookingId: 0 }
-            }).success(function (data) {
-                modalDialog = data;
-                var modal = $(modalDialog).appendTo("body");
-                modal.find("#StartDate,#EndDate").datepicker({
-                    minDate: 0,
-                    dateFormat: "dd-mm-yy"
-                });
-                var startDate = $.datepicker.formatDate("dd-mm-yy", new Date());
-                modal.find("#StartDate").val(startDate);
-                modal.find("#EndDate").val(startDate);
-                
-                modal.find("#submitForm").on("click", function (ev) {
-                    ev.preventDefault();
-                    var bookingLeave = {
-                        LeaveId: modal.find("#Id").val(),
-                        LeaveReason: modal.find("#LeaveReason").val(),
-                        StartDate: modal.find("#StartDate").val(),
-                        EndDate: modal.find("#EndDate").val()
-                    }
-                    $.ajax({
-                        method: "POST",
-                        url: "/Api/AutogearApi/ApplyInstructorLeave",
-                        data: bookingLeave
-                    });
-                    
-                    modal.modal("hide");
-                });
-                modal.modal("show").on("hidden", function () {
-                    modal.remove();
-                });
-                modal.find("#cancel").on("click", function () {
-                    modal.modal("hide");
-                });
-            });
-        });
-    });
+    
     </script>
 }

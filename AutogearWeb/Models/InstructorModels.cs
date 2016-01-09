@@ -56,8 +56,16 @@ namespace AutogearWeb.Models
     {
         public int Id { get; set; }
         public string InstructorId { get; set; }
+        [Required]
+        [Display(Name = "Leave Reason")]
         public string LeaveReason { get; set; }
+        [Required]
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
         public DateTime? StartDate { get; set; }
+        [Required]
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
     }
 
