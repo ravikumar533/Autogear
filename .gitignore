@@ -1,3 +1,6 @@
 /AutogearWeb/bin
 /AutogearWeb/obj/Debug/
+/AutogearWeb/Properties/
+/AutogearWeb/Properties/PublishProfiles
+/AutogearWeb/obj/
 /Autogear.v12
