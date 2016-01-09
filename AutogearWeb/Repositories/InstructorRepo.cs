@@ -205,8 +205,12 @@ namespace AutogearWeb.Repositories
                 {
                     bookingAppointment.StudentName = student.FirstName + " " + student.LastName;
                 }
-                booking.StartTime = bookingAppointment.StartTime;
-                booking.StopTime = bookingAppointment.StopTime;
+                if (booking.StartTime != null)
+                    bookingAppointment.StartTime = booking.StartTime.Value;
+                if (booking.StopTime != null)
+                    bookingAppointment.StopTime = booking.StopTime.Value;
+                bookingAppointment.StartDate = booking.StartDate;
+                bookingAppointment.EndDate = booking.EndDate;
             }
             return bookingAppointment;
         }

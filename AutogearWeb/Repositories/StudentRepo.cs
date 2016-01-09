@@ -244,25 +244,35 @@ namespace AutogearWeb.Repositories
         }
         public void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser)
         {
-            var bookingDetails =
-                DataContext.Bookings.FirstOrDefault(s => s.BookingId == bookingAppointment.BookingId) ?? new Booking();
+            
             var studentDetails =
                 TblStudents.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == bookingAppointment.StudentName);
             if (studentDetails != null)
             {
-                bookingDetails.InstructorId = currentUser;
-                bookingDetails.BookingDate = DateTime.Now;
-                bookingDetails.StartTime = bookingAppointment.StartTime;
-                bookingDetails.EndTime = bookingAppointment.StopTime;
-                bookingDetails.Status = "Learning";
-                bookingDetails.StudentId = studentDetails.StudentId;
-                bookingDetails.CreatedBy = currentUser;
-                bookingDetails.CreatedDate = DateTime.Now;
-                bookingDetails.StartDate = bookingAppointment.StartDate;
-                bookingDetails.EndDate = bookingAppointment.EndDate;
-                if (bookingAppointment.BookingId == 0)
-                    DataContext.Bookings.Add(bookingDetails);
-                DataContext.SaveChanges();
+                var startDate = Convert.ToDateTime(bookingAppointment.StartDate);
+                var endDate = Convert.ToDateTime( bookingAppointment.EndDate);
+                var days =endDate.Subtract(startDate).Days;
+                for (var i = 0; i < days; i++)
+                {
+                    var bookingDate = new DateTime(startDate.Year, startDate.Month, startDate.Day + i);
+                    var bookingDetails =
+                        DataContext.Bookings.FirstOrDefault(s => s.BookingId == bookingAppointment.BookingId && s.StartDate == bookingAppointment.StartDate ) ??
+                        new Booking();
+
+                    bookingDetails.InstructorId = currentUser;
+                    bookingDetails.BookingDate = DateTime.Now;
+                    bookingDetails.StartTime = bookingAppointment.StartTime;
+                    bookingDetails.EndTime = bookingAppointment.StopTime;
+                    bookingDetails.Status = "Learning";
+                    bookingDetails.StudentId = studentDetails.StudentId;
+                    bookingDetails.CreatedBy = currentUser;
+                    bookingDetails.CreatedDate = DateTime.Now;
+                    bookingDetails.StartDate = bookingDate;
+                    bookingDetails.EndDate = bookingDate;
+                    if (bookingAppointment.BookingId == 0)
+                        DataContext.Bookings.Add(bookingDetails);
+                    DataContext.SaveChanges();
+                }
             }
         }
         public void SaveStudent(StudentModel studentModel,string currentUser)

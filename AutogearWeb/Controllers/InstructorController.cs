@@ -7,6 +7,7 @@ using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 using AutogearWeb.Repositories;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AutogearWeb.Controllers
 {
@@ -117,13 +118,20 @@ namespace AutogearWeb.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(InstructorModel model)
         {
-            model.CreatedUser = User.Identity.GetUserId();
-            var suburb = _postalRepo.GetSuburb(model.SuburbName);
-            if (suburb != null)
-                model.SuburbId = suburb.SuburbId;
-            _instructorRepo.UpdateInstructor(model);
-            model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
+            if (ModelState.IsValid)
+            {
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                   
+                }
+                model.CreatedUser = User.Identity.GetUserId();
+                var suburb = _postalRepo.GetSuburb(model.SuburbName);
+                if (suburb != null)
+                    model.SuburbId = suburb.SuburbId;
+                _instructorRepo.UpdateInstructor(model);
+            }
             model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);
+            model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             return View(model);
         }
         public ActionResult Lesson()
