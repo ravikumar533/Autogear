@@ -132,6 +132,8 @@ namespace AutogearWeb.Models
         [Display(Name = "Area")]
         public string Areas { get; set; }
 
+        public bool Status { get; set; }
+
         public int SuburbId { get; set; }
         public int LastInstructor { get; set; }
         public string CreatedUser { get; set; }

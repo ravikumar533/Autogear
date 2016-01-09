@@ -22,6 +22,7 @@
 @section Scripts
 {
 @Scripts.Render("~/bundles/bootstrap");
+@Scripts.Render("~/bundles/bootstrappicker");
     @Scripts.Render("~/bundles/jqueryUI");
     @Scripts.Render("~/bundles/Fullcalendar")
     <script>
@@ -48,20 +49,34 @@
             });
             bookingAppointment(0);
             var calendar = $("#Calendar").fullCalendar({
-                defaultView:"agendaWeek",
+                defaultView: "agendaWeek",
+                
                 header: {
                     left: "prev,next today",
                     center: "title",
                     right: "month,agendaWeek,agendaDay"
                 },
+
+                allDaySlot: false,
+                slotDuration: "00:15:01",
+                //minTime: "06:00:00",
+                //maxTime: "24:00:00",
+                
                 defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))",
                 selectable: true,
                 selectHelper: true,
                 select: function(start, end, allDay) {
                     var modal = $(modalDialog).appendTo("body");
-                    modal.find("#StartDate").val(start.format());
+                    console.log(end);
+                    console.log(start);
+                    var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(start));
                     end = end.add("-1", "day");
-                    modal.find("#EndDate").val(end.format());
+                    var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(end));
+                    modal.find("#StartDate").val(startDate);                    
+                    modal.find("#EndDate").val(endDate);
+                    var stDate = new Date(start);
+                    var eDate = new Date(end);
+
                     modal.find("#StudentName").autocomplete({
                         source: studentData,
                         minLength: 2
@@ -111,7 +126,7 @@
                         data: { bookingId: calEvent.id }
                     }).success(function(data) {
                         modalDialog = data;
-                        var modal = $(modalDialog).appendTo("body");
+                        var modal = $(modalDialog).appendTo("body");                                                
                         modal.find("#StartDate").val(calEvent.start.format());
                         var end = calEvent.end.add("-1", "day");
                         modal.find("#EndDate").val(end.format());

@@ -16,6 +16,7 @@ namespace AutogearWeb.Models
         public string InstructorNumber { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int AddressId { get; set; }
+        public bool Status { get; set; }
 
     }
 
@@ -101,6 +102,9 @@ namespace AutogearWeb.Models
        // [Required]
         [Display(Name="Area")]
         public string Areas { get; set; }
+
+        public bool Status { get; set; }
+
         public string CreatedUser { get; set; }
     }
 

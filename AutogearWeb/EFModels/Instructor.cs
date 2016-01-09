@@ -32,6 +32,8 @@ namespace AutogearWeb.EFModels
         public string Modified_By { get; set; }
         public string InstructorNumber { get; set; }
         public Nullable<int> AddressId { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public string Areas { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

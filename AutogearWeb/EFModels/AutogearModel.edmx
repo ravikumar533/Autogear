@@ -172,6 +172,8 @@
           <Property Name="Modified_By" Type="nvarchar" MaxLength="50" />
           <Property Name="InstructorNumber" Type="nvarchar" MaxLength="8" />
           <Property Name="AddressId" Type="int" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Areas" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Package_Details">
           <Key>
@@ -1331,6 +1333,7 @@
             <End Role="Students" EntitySet="Students" />
             <End Role="Student_License" EntitySet="Student_License" />
           </AssociationSet>
+          <EntitySet Name="Areas" EntityType="AutogearDBModel.Area" />
           <EntitySet Name="Instructors" EntityType="AutogearDBModel.Instructor" />
           <AssociationSet Name="FK_Instructors_Address" Association="AutogearDBModel.FK_Instructors_Address">
             <End Role="Address" EntitySet="Addresses" />
@@ -1344,8 +1347,17 @@
             <End Role="Instructor" EntitySet="Instructors" />
             <End Role="Instructor_Student" EntitySet="Instructor_Student" />
           </AssociationSet>
-          <EntitySet Name="Areas" EntityType="AutogearDBModel.Area" />
         </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="AreaId" />
+          </Key>
+          <Property Name="AreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Instructor">
           <Key>
             <PropertyRef Name="InstructorId" />
@@ -1363,6 +1375,8 @@
           <Property Name="Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InstructorNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="AddressId" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Areas" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Address" Relationship="AutogearDBModel.FK_Instructors_Address" FromRole="Instructor" ToRole="Address" />
           <NavigationProperty Name="AspNetUser" Relationship="AutogearDBModel.FK_Instructors_AspNetUsers" FromRole="Instructor" ToRole="AspNetUser" />
           <NavigationProperty Name="Instructor_Student" Relationship="AutogearDBModel.FK_Instructor_Student_Instructors" FromRole="Instructor" ToRole="Instructor_Student" />
@@ -1403,16 +1417,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Area">
-          <Key>
-            <PropertyRef Name="AreaId" />
-          </Key>
-          <Property Name="AreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1659,9 +1663,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="AutogearDBModel.Area">
+              <MappingFragment StoreEntitySet="Areas">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Instructors">
             <EntityTypeMapping TypeName="AutogearDBModel.Instructor">
               <MappingFragment StoreEntitySet="Instructors">
+                <ScalarProperty Name="Areas" ColumnName="Areas" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
                 <ScalarProperty Name="InstructorNumber" ColumnName="InstructorNumber" />
                 <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
@@ -1675,17 +1692,6 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="InstructorId" ColumnName="InstructorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Areas">
-            <EntityTypeMapping TypeName="AutogearDBModel.Area">
-              <MappingFragment StoreEntitySet="Areas">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

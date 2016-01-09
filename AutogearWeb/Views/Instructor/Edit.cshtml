@@ -103,6 +103,25 @@
                         @Html.ValidationMessageFor(model => model.SuburbName, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Areas, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        @Html.EditorFor(model => model.Areas, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Areas" } })
+                        @Html.ValidationMessageFor(model => model.Areas, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
+                                <span class="lbl"></span>
+                            </label>
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

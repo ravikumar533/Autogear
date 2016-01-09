@@ -45,11 +45,11 @@
         <AssociationConnector Association="AutogearDBModel.FK_PostCodes_Suburbs1" ManuallyRouted="false" />
         <AssociationConnector Association="AutogearDBModel.FK_Suburbs_States" ManuallyRouted="false" />
         <AssociationConnector Association="AutogearDBModel.FK_Student_License_Students" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AutogearDBModel.Instructor" Width="1.5" PointX="8.25" PointY="13.25" />
+        <EntityTypeShape EntityType="AutogearDBModel.Area" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AutogearDBModel.Instructor" Width="1.5" PointX="8.25" PointY="13.125" />
         <AssociationConnector Association="AutogearDBModel.FK_Instructors_Address" />
         <AssociationConnector Association="AutogearDBModel.FK_Instructors_AspNetUsers" />
         <AssociationConnector Association="AutogearDBModel.FK_Instructor_Student_Instructors" />
-        <EntityTypeShape EntityType="AutogearDBModel.Area" Width="1.5" PointX="5.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -43,7 +43,7 @@ namespace AutogearWeb.EFModels
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date,Gender = s.Gender, AddressId = s.AddressId ?? 0});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date,Gender = s.Gender, AddressId = s.AddressId ?? 0 ,Status = s.Status ?? false});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -214,6 +214,7 @@ namespace AutogearWeb.Repositories
                 model.Email = instructor.Email;
                 model.Mobile = instructor.Mobile;
                 model.Phone = instructor.Phone;
+                model.Status = instructor.Status;
                 if (!string.IsNullOrEmpty(instructor.Gender))
                     model.Gender = Convert.ToInt32(instructor.Gender);
                 var instructorAddress = TblAddresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
@@ -333,7 +334,8 @@ namespace AutogearWeb.Repositories
                 Gender = model.Gender.ToString(),
                 Mobile =model.Mobile,
                 Phone = model.Phone,
-                AddressId =instructorAddress.AddressId
+                AddressId =instructorAddress.AddressId,
+                Status = model.Status
             };
             DataContext.Instructors.Add(instructor);
           SaveInDatabase();
@@ -349,6 +351,7 @@ namespace AutogearWeb.Repositories
                 instructor.Gender = model.Gender.ToString();
                 instructor.Mobile = model.Mobile;
                 instructor.Phone = model.Phone;
+                instructor.Status = model.Status;
                 instructor.Modified_Date = DateTime.Now;
                 instructor.Modified_By = model.CreatedUser;
                 var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
