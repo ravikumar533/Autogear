@@ -257,11 +257,13 @@ namespace AutogearWeb.Controllers
             return View();
         }
 
-        public ActionResult EditPackage()
+        public ActionResult EditPackage(int packageId)
         {
-            return View();
+            var model = _instructorRepo.GetPackagesById(packageId);
+            return View(model);
         }
 
+        [HttpPost]
         public ActionResult EditPackage(PackageModel packageDetails)
         {
             if (ModelState.IsValid)
@@ -299,9 +301,10 @@ namespace AutogearWeb.Controllers
             return View();
         }
 
-        public ActionResult EditArea()
+        public ActionResult EditArea(int areaId)
         {
-            return View();
+            var model = _instructorRepo.GetAreaById(areaId);
+            return View(model);
         }
         [HttpPost]
         public ActionResult EditArea(AreaModel areaDetails)

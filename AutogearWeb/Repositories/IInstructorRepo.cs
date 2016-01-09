@@ -25,7 +25,9 @@ namespace AutogearWeb.Repositories
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         int GetLatestInstructorId();
         Task<IList<PackageModel>> GetPackages();
+        PackageModel GetPackagesById(int packageId);
         Task<IList<AreaModel>> GetArea();
+        AreaModel GetAreaById(int areaId);
         void SaveInstructor(RegisterViewModel model);
         void UpdateInstructor(InstructorModel model);
         void SaveInDatabase();  // Save Asynchronous
@@ -34,5 +36,6 @@ namespace AutogearWeb.Repositories
         void UpdatePackageDetails(string currentUser, PackageModel packageDetails);
         void CreateNewArea(string currentUser, AreaModel areaDetails);
         void UpdateArea(string currentUser, AreaModel areaDetails);
+
     }
 }

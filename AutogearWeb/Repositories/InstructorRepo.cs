@@ -377,6 +377,11 @@ namespace AutogearWeb.Repositories
             return await TblPackages.ToListAsync();
         }
 
+        public PackageModel GetPackagesById(int packageId)
+        {
+            return TblPackages.SingleOrDefault(s => s.PackageId == packageId);
+        }
+
         public void CreateNewPackage(string userId, PackageModel package)
         {
             var packageDetails = new Package_Details
@@ -430,6 +435,11 @@ namespace AutogearWeb.Repositories
         public async Task<IList<AreaModel>> GetArea()
         {
             return await TblArea.ToListAsync();
+        }
+
+        public AreaModel GetAreaById(int areaId)
+        {
+            return TblArea.SingleOrDefault(s => s.AreaId == areaId);
         }
 
         public void CreateNewArea(string userId, AreaModel area)
