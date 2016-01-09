@@ -100,7 +100,7 @@ namespace AutogearWeb.Models
         public string AddressLine1 { get; set; }
          [Display(Name = "Address2")]
         public string AddressLine2 { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
         [Required]

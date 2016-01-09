@@ -65,7 +65,9 @@ namespace AutogearWeb.Controllers
                          _userManager.AddToRole(user.Id, role.Name);
                     }
                     model.LastInstructor = _instructorRepo.GetLatestInstructorId() + 1;
-                    var suburb = _postalRepo.GetSuburb(model.SuburbName);
+                    string[] addressInfo = model.SuburbName.Split(',');
+                    var suburb = _postalRepo.GetSuburb(addressInfo[0]);
+                    model.PostalCode = addressInfo[2];
                     if (suburb != null)
                     {
                         model.SuburbId = suburb.SuburbId;
@@ -110,7 +112,12 @@ namespace AutogearWeb.Controllers
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             var suburb = _postalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
+            {
                 model.SuburbName = suburb.Name;
+                var state = _postalRepo.GetStateById(suburb.StateId);
+                if (state != null)
+                    model.SuburbName += "," + state.Name + "," + model.PostalCode;
+            }
             return View(model);
         }
         [HttpPost]
@@ -133,9 +140,13 @@ namespace AutogearWeb.Controllers
                      _userManager.ResetPassword(user.Id, code, model.Password);
                 }
                 model.CreatedUser = User.Identity.GetUserId();
-                var suburb = _postalRepo.GetSuburb(model.SuburbName);
+                string[] addressInfo = model.SuburbName.Split(',');
+                var suburb = _postalRepo.GetSuburb(addressInfo[0]);
+                model.PostalCode = addressInfo[2];
                 if (suburb != null)
+                {
                     model.SuburbId = suburb.SuburbId;
+                }
                 _instructorRepo.UpdateInstructor(model);
             }
             model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);

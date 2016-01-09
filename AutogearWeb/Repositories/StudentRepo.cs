@@ -252,6 +252,8 @@ namespace AutogearWeb.Repositories
                 var startDate = Convert.ToDateTime(bookingAppointment.StartDate);
                 var endDate = Convert.ToDateTime( bookingAppointment.EndDate);
                 var days =endDate.Subtract(startDate).Days;
+                if (startDate == endDate)
+                    days += 1;
                 for (var i = 0; i < days; i++)
                 {
                     var bookingDate = new DateTime(startDate.Year, startDate.Month, startDate.Day + i);

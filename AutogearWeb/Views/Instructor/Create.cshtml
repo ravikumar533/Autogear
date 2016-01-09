@@ -90,17 +90,17 @@
                         @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
                         @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Postal Code" } })
                         @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group">
                     @Html.LabelFor(model => model.SuburbName, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.SuburbName, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8", placeholder = "Suburb Name"}})
+                        @Html.EditorFor(model => model.SuburbName, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8", placeholder = "Suburb Name or Postal code"}})
                         @Html.ValidationMessageFor(model => model.SuburbName, "", new {@class = "text-danger"})
                     </div>
                 </div>
@@ -159,18 +159,8 @@
             $(function () {
                 //  var postalCodes = [], suburbNames = [];
                 var baseUrl = "/Api/AutogearApi/";
-                $.getJSON(baseUrl + "GetPostCodes", { suburbName: $("#SuburbName").val() }).then(function (data) {
-                    //    postalCodes = data;
-                    $("#PostalCode").autocomplete({
-                        source: function (request, response) {
-                            var results = $.ui.autocomplete.filter(data, request.term);
-
-                            response(results.slice(0, 4));
-                        },
-                        minLength: 1
-                    });
-                });
-                $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function (data) {
+              
+                $.getJSON(baseUrl + "GetSubUrbs", {  }).then(function (data) {
                     // postalCodes = data;
                     $("#SuburbName").autocomplete({
                         source: function (request, response) {

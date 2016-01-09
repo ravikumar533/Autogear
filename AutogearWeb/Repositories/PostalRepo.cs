@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Optimization;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -124,17 +125,41 @@ namespace AutogearWeb.Repositories
             return await TblPostCodeModels.Select(s => s.PostCodeId).ToListAsync();
         }
 
-        public async Task<IList<string>> GetSuburbNames(int? postalCode)
+        public async Task<IList<string>> GetSuburbNames()
         {
-            var postCode = postalCode ?? 0;
-            if (postCode == 0)
-                return await TblSuburbModels.Select(s => s.Name).ToListAsync();
-            return await (from p in TblPostCodeModels
-                from q in TblSuburbModels
-                where p.PostCodeId == postCode && p.SuburbId == q.SuburbId
-                select q.Name).Distinct().ToListAsync();
+            var names = new List<string>();
+            var suburbName = "";
+            var suburbId = 0;
+            int stateId = 0;
+            var stateName = "";
+            foreach (var post in TblPostCodeModels)
+            {
+                if (suburbId != post.SuburbId)
+                {
+                    suburbId = post.SuburbId;
+                    var suburb = TblSuburbModels.FirstOrDefault(s => s.SuburbId == post.SuburbId);
+                    if (suburb != null)
+                    {
+                        suburbName = suburb.Name;
+                        if (stateId != suburb.StateId)
+                        {
+                            var state = TblStateModels.FirstOrDefault(s => s.StateId == suburb.StateId);
+                            if (state != null)
+                                stateName = state.Name;
+                        }
+                    }
+                }
+                names.Add(suburbName + "," + stateName + "," + post.PostCodeId);
+
+            }
+
+            return await Task.Run(() => names);
         }
 
+        public TblStateModel GetStateById(int stateId)
+        {
+            return TblStateModels.FirstOrDefault(s => s.StateId == stateId);
+        }
         public async Task<IList<TblPostCodeSuburbModel>> GetPostCodeWithSuburbs()
         {
             var postCodeSuburbModel = new List<TblPostCodeSuburbModel>();

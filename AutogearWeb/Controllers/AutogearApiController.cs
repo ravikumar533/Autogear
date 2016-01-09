@@ -42,9 +42,9 @@ namespace AutogearWeb.Controllers
             return await _postalRepo.GetPostcodes(suburbName);
         }
 
-        public async Task<IList<string>> GetSubUrbs(int? postCode)
+        public async Task<IList<string>> GetSubUrbs()
         {
-            return await _postalRepo.GetSuburbNames(postCode);
+            return await _postalRepo.GetSuburbNames();
         }
 
         public async Task<IList<TblPostCodeSuburbModel>> GetPostalCodewithSuburbs()
