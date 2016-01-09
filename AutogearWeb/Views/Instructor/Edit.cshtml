@@ -75,30 +75,30 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AddressLine1, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
+                    @Html.LabelFor(model => model.AddressLine1, htmlAttributes: new { @class = "control-label col-md-2 no-padding-right" })
+                    <div class="col-md-10">
                         @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Address1" } })
                         @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AddressLine2, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
+                    @Html.LabelFor(model => model.AddressLine2, htmlAttributes: new { @class = "control-label col-md-2 no-padding-right" })
+                    <div class="col-md-10">
                         @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Address2" } })
                         @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
+                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-md-2 no-padding-right" })
+                    <div class="col-md-10">
                         @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Postal Code" } })
                         @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SuburbName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
+                    @Html.LabelFor(model => model.SuburbName, htmlAttributes: new { @class = "control-label col-md-2 no-padding-right" })
+                    <div class="col-md-10">
                         @Html.EditorFor(model => model.SuburbName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Suburb Name" } })
                         @Html.ValidationMessageFor(model => model.SuburbName, "", new { @class = "text-danger" })
                     </div>
@@ -150,3 +150,43 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+@section scripts{
+@Scripts.Render("~/bundles/jqueryUI");
+@Scripts.Render("~/bundles/jqueryval");
+    <script>
+        $(function() {
+            var baseUrl = "/Api/AutogearApi/";
+            var postalCode = $("#PostalCode");
+            var suburbNames = $("#SuburbName");
+           
+            $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
+                // postalCodes = data;
+                suburbNames.autocomplete({
+                    source: function(request, response) {
+                        var results = $.ui.autocomplete.filter(data.sort(), request.term);
+
+                        response(results.slice(0, 4));
+                    },
+                    minLength: 2
+                });
+            });
+            $("#SuburbName").change(function() {
+                $.getJSON(baseUrl + "GetPostCodes", { suburbName: $(this).val() }).then(function (data) {
+                    //    postalCodes = data;
+                    postalCode.autocomplete({
+                        source: function (request, response) {
+                            var results = $.ui.autocomplete.filter(data, request.term);
+                            response(results.slice(0, 4));
+                        },
+                        minLength: 1
+                    });
+                });
+            });
+            $("#PostalCode").change(function() {
+                $.getJSON(baseUrl + "GetSubUrbs", { postCode: $(this).val() }).then(function(data) {
+                    suburbNames.autocomplete("option", "source", data);
+                });
+            });
+        });
+    </script>
+}

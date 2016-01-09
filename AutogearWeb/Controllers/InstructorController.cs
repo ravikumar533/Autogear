@@ -130,7 +130,7 @@ namespace AutogearWeb.Controllers
                            TokenLifespan = TimeSpan.FromHours(1)
                        };
                     string code =  _userManager.GeneratePasswordResetToken(user.Id);
-                    var result = _userManager.ResetPassword(user.Id, code, model.Password);
+                     _userManager.ResetPassword(user.Id, code, model.Password);
                 }
                 model.CreatedUser = User.Identity.GetUserId();
                 var suburb = _postalRepo.GetSuburb(model.SuburbName);
