@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -17,7 +18,7 @@ namespace AutogearWeb.Repositories
         Task<IList<TblInstructor>> GetInstructorList(); // Fetch List
         Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId);
         Task<IList<StudentList>> GetStudentEvents(string currentUser); //Fetch Student List
-        Task<IList<string>>  GetInstructorNames(); // Fetch Instructor Names
+        IList<SelectListItem>  GetInstructorNames(); // Fetch Instructor Names
         Instructor GetInstructorByEmail(string email); // Fetch by Email
         Instructor GetInstructorByName(string name);
         InstructorModel GetInstructorByNumber(string instructorNumber);

@@ -50,6 +50,7 @@ namespace AutogearWeb.Models
     public class CalendarModel
     {
         public bool IsUserAdmin { get; set; }
+        public SelectList InstructorList { get; set; }
     }
 
     public class InstructorLeaveModel

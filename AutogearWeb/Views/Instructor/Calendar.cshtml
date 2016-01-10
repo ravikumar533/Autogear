@@ -12,7 +12,7 @@
 
             <div class="widget-body">
                 <div class="widget-main padding-6">
-                    <input type="text" id="InstructorName" placeholder="Search for Instructor" />
+                    @Html.DropDownList("InstructorName", Model.InstructorList, new { @class = "chosen-select form-control" , data_placeholder="Choose a Instructor..."})
                 </div>
             </div>
         </div>
@@ -23,14 +23,18 @@
     </div>
 }
 <div id="Calendar"></div>
+
+
 @section Scripts
 {
-@Scripts.Render("~/bundles/bootstrap");
-@Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/chosenjs");
     @Scripts.Render("~/bundles/jqueryUI");
     @Scripts.Render("~/bundles/Fullcalendar")
     <script>
         $(function() {
+            $(".chosen-select").chosen();
             var modalDialog = "";
             var studentData = "";
             var baseUrl = "/Api/AutogearApi/";
@@ -54,7 +58,7 @@
             bookingAppointment(0);
             var calendar = $("#Calendar").fullCalendar({
                 defaultView: "agendaWeek",
-                
+
                 header: {
                     left: "prev,next today",
                     center: "title",
@@ -65,18 +69,18 @@
                 slotDuration: "00:15:01",
                 //minTime: "06:00:00",
                 //maxTime: "24:00:00",
-                
+
                 defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))",
                 selectable: true,
                 selectHelper: true,
-                select: function (start, end, allDay) {
+                select: function(start, end, allDay) {
                     var modal = $(modalDialog).appendTo("body");
                     var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(start));
                     var view = calendar.fullCalendar("getView");
                     if (view.name === "month")
                         end = end.add("-1", "day");
                     var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(end));
-                    modal.find("#StartDate").val(startDate);                    
+                    modal.find("#StartDate").val(startDate);
                     modal.find("#EndDate").val(endDate);
                     modal.find("#StartTime").val(start.hours() + ":" + start.minutes());
                     modal.find("#StopTime").val(end.hours() + ":" + end.minutes());
@@ -103,9 +107,9 @@
                             method: "POST",
                             url: "/Api/AutogearApi/SaveBookingAppointment",
                             data: bookingAppointment
-                        }).success(function (data) {
+                        }).success(function(data) {
                             //calendar.fullCalendar('refetchEvents'); // use this if render event is not working                            
-                        });                        
+                        });
                         calendar.fullCalendar('renderEvent',
                             {
                                 title: modal.find("#StudentName").val(),
@@ -114,7 +118,7 @@
                                 className: 'label-info'
                             },
                             true // make the event "stick"
-                        );                        
+                        );
                         modal.modal("hide");
                     });
                     modal.find("#cancel").on("click", function(ev) {
@@ -134,7 +138,7 @@
                         data: { bookingId: calEvent.id }
                     }).success(function(data) {
                         modalDialog = data;
-                        var modal = $(modalDialog).appendTo("body");                                                
+                        var modal = $(modalDialog).appendTo("body");
                         modal.find("#StartDate").val(calEvent.start.format());
                         var end = calEvent.end.add("-1", "day");
                         modal.find("#EndDate").val(end.format());
@@ -172,8 +176,8 @@
                     });
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor,
-               // ignoreTimezone: false,
-                timezone:"local"
+                // ignoreTimezone: false,
+                timezone: "local"
             });
 
             function fetchCalendarEvents(instructorName) {
@@ -187,15 +191,19 @@
                 });
             }
 
-            $.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
-                $("#InstructorName").autocomplete({
-                    source: data,
-                    select: function(event, ui) {
-                        fetchCalendarEvents(ui.item.value);
-                    },
-                    minLength: 2
-                });
+            $("#InstructorName").change(function () {
+                console.log($(this).val());
+                fetchCalendarEvents($(this).val());
             });
+            //$.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
+            //    $("#InstructorName").autocomplete({
+            //        source: data,
+            //        select: function(event, ui) {
+            //            fetchCalendarEvents(ui.item.value);
+            //        },
+            //        minLength: 2
+            //    });
+            //});
 
         });
     </script>

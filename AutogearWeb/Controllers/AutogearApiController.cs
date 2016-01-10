@@ -51,11 +51,11 @@ namespace AutogearWeb.Controllers
         {
             return await _postalRepo.GetPostCodeWithSuburbs();
         }
-
-        public async Task<IList<string>> GetInstructorNames()
-        {
-            return await _instructorRepo.GetInstructorNames();
-        }
+        //commented by RK
+        //public async Task<IList<string>> GetInstructorNames()
+        //{
+        //    return await _instructorRepo.GetInstructorNames();
+        //}
        
         public async Task<IList<StudentList>> GetStudentEvents()
         {

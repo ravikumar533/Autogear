@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -230,9 +231,15 @@ namespace AutogearWeb.Repositories
             return model;
         }
 
-        public async Task<IList<string>> GetInstructorNames()
+        public IList<SelectListItem> GetInstructorNames()
         {
-            return await TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
+            var instructors = new List<SelectListItem> {new SelectListItem {Value = "", Text = ""}};
+            foreach (var instructor in TblInstructors)
+            {
+                var name = instructor.FirstName + " " + instructor.LastName;
+                instructors.Add(new SelectListItem { Value = name , Text = name });
+            }
+            return instructors;
         }
 
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)

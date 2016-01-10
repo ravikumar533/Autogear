@@ -27,6 +27,7 @@ namespace AutogearWeb
                       "~/Content/Site.css"));
             bundles.Add(new StyleBundle("~/Content/AceCss").Include(
                       "~/assets/css/font-awesome.css",
+                     "~/assets/css/chosen.css",
                       "~/assets/css/jquery-ui.css",
                       "~/assets/css/bootstrap-datepicker3.css",
                       "~/assets/css/bootstrap-timepicker.css",
@@ -34,6 +35,8 @@ namespace AutogearWeb
                       "~/assets/css/ace-fonts.css",
                       "~/assets/css/ace.css","~/assets/css/fullcalendar.css"
                       ));
+            bundles.Add(new StyleBundle("~/Content/chosencss").Include(
+                      "~/assets/css/chosen.css"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                 "~/Scripts/jquery-2.1.4.js"
                 ));
@@ -53,6 +56,9 @@ namespace AutogearWeb
             bundles.Add(new ScriptBundle("~/bundles/Fullcalendar").Include(
                 "~/assets/js/date-time/moment.js",
                 "~/assets/js/fullcalendar.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/chosenjs").Include(
+                "~/assets/js/chosen.jquery.js"
                 ));
             BundleTable.EnableOptimizations = true;
         }
