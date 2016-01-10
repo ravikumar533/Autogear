@@ -4,16 +4,20 @@
 }
 @if (Model.IsUserAdmin)
 {
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label for="InstructorName" class="col-lg-12">Instructor</label>
-                <div class="col-md-10">
-                    <input type="text" class="col-xs-10 col-sm-8" id="InstructorName"/>
+    <div class="col-xs-12 col-sm-3 widget-container-col">
+        <div class="widget-box widget-color-dark light-border">
+            <div class="widget-header">
+                <h5 class="widget-title smaller">Search for Instructor</h5>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    <input type="text" id="InstructorName" placeholder="Search for Instructor" />
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-lg-12">&nbsp;</div>
     </div>
@@ -76,8 +80,8 @@
                     modal.find("#EndDate").val(endDate);
                     modal.find("#StartTime").val(start.hours() + ":" + start.minutes());
                     modal.find("#StopTime").val(end.hours() + ":" + end.minutes());
-                    var stDate = new Date(start);
-                    var eDate = new Date(end);
+                    //var stDate = new Date(start);
+                    //var eDate = new Date(end);
 
                     modal.find("#StudentName").autocomplete({
                         source: studentData,
@@ -99,16 +103,18 @@
                             method: "POST",
                             url: "/Api/AutogearApi/SaveBookingAppointment",
                             data: bookingAppointment
-                        });
+                        }).success(function (data) {
+                            //calendar.fullCalendar('refetchEvents'); // use this if render event is not working                            
+                        });                        
                         calendar.fullCalendar('renderEvent',
                             {
                                 title: modal.find("#StudentName").val(),
-                                start: startTime,
-                                end: stopTime,
+                                start: start,
+                                end: end,
                                 className: 'label-info'
                             },
                             true // make the event "stick"
-                        );
+                        );                        
                         modal.modal("hide");
                     });
                     modal.find("#cancel").on("click", function(ev) {
