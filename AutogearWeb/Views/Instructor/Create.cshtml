@@ -135,7 +135,7 @@
                     &nbsp; &nbsp; &nbsp;
                     <button class="btn" type="reset">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
-                        Reset
+                        Clear
                     </button>
                     &nbsp; &nbsp; &nbsp;
                     <a href="@Url.Action("Index")" class="btn btn-danger">
@@ -166,7 +166,7 @@
                         source: function (request, response) {
                             var results = $.ui.autocomplete.filter(data.sort(), request.term);
 
-                            response(results.slice(0, 4));
+                            response(results.slice(0, 10));
                         },
                         minLength: 2
                     });
@@ -178,7 +178,7 @@
                         source: function (request, response) {
                             var results = $.ui.autocomplete.filter(data, request.term);
 
-                            //response(results.slice(0, 4));
+                            response(results.slice(0, 10));
                         },
                         minLength: 1
                     });

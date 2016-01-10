@@ -45,9 +45,13 @@ namespace AutogearWeb.Controllers
             var packages = _iStudentRepo.GetPackages();
             if (ModelState.IsValid)
             {
-                var suburb = _iPostalRepo.GetSuburb(model.SuburbName);
+                string[] addressInfo = model.SuburbName.Split(',');
+                var suburb = _iPostalRepo.GetSuburb(addressInfo[0]);
+                model.PostalCode = addressInfo[2];
                 if (suburb != null)
+                {
                     model.SuburbId = suburb.SuburbId;
+                }
                 _iStudentRepo.SaveStudent(model,currentUser);
                 return RedirectToAction("Index");
                 //AddErrors(result);
@@ -62,7 +66,14 @@ namespace AutogearWeb.Controllers
         {
             var model = _iStudentRepo.GetStudentById(studentId);
             model.GendersList = _iAutogearRepo.GenderListItems();
-            
+            var suburb = _iPostalRepo.GetSuburbById(model.SuburbId);
+            if (suburb != null)
+            {
+                model.SuburbName = suburb.Name;
+                var state = _iPostalRepo.GetStateById(suburb.StateId);
+                if (state != null)
+                    model.SuburbName += "," + state.Name + "," + model.PostalCode;
+            }
             return View(model);
         }
         [HttpPost]
@@ -72,6 +83,13 @@ namespace AutogearWeb.Controllers
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
+                string[] addressInfo = studentModel.SuburbName.Split(',');
+                var suburb = _iPostalRepo.GetSuburb(addressInfo[0]);
+                studentModel.PostalCode = addressInfo[2];
+                if (suburb != null)
+                {
+                    studentModel.SuburbId = suburb.SuburbId;
+                }
                 _iStudentRepo.SaveExistingStudent(currentUser, studentModel);
                 return RedirectToAction("Index");
             }
