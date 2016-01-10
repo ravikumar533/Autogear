@@ -290,9 +290,13 @@ namespace AutogearWeb.Repositories
 
         public async Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser)
         {
-            var instructor = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == currentUser);
-            var listOfLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructor.InstructorId).ToListAsync();
+            var listOfLeaves = TblInstructorLeaves.Where(s => s.InstructorId == currentUser).ToListAsync();
             return await Task.Run(() => listOfLeaves);
+        }
+
+        public InstructorLeaveModel GetInstructorLeaveById(int leaveId)
+        {
+            return TblInstructorLeaves.SingleOrDefault(s => s.Id == leaveId);
         }
 
         public void ApplyInstructorLeave(string userId, InstructorLeaveModel appliedLeave)
@@ -302,11 +306,33 @@ namespace AutogearWeb.Repositories
             appliedDetails.Reason = appliedLeave.LeaveReason;
             appliedDetails.StartDate = appliedLeave.StartDate;
             appliedDetails.EndDate = appliedLeave.EndDate;
+            appliedDetails.ModifiedDate = DateTime.Now;
+            appliedDetails.ModifiedBy = userId;
             if (appliedDetails.Id == 0)
             {
+                appliedDetails.CreatedDate = DateTime.Now;
+                appliedDetails.CreatedBy = userId;
                 DataContext.Instructor_Leaves.Add(appliedDetails);
             }
-            DataContext.SaveChanges();
+            SaveInDatabase();
+        }
+
+        public void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave)
+        {
+            var appliedDetails = DataContext.Instructor_Leaves.FirstOrDefault(s => s.Id == updateLeave.Id) ?? new Instructor_Leaves();
+            appliedDetails.InstructorId = currentUser;
+            appliedDetails.Reason = updateLeave.LeaveReason;
+            appliedDetails.StartDate = updateLeave.StartDate;
+            appliedDetails.EndDate = updateLeave.EndDate;
+            appliedDetails.ModifiedDate = DateTime.Now;
+            appliedDetails.ModifiedBy = currentUser;
+            if (appliedDetails.Id == 0)
+            {
+                appliedDetails.CreatedDate = DateTime.Now;
+                appliedDetails.CreatedBy = currentUser;
+                DataContext.Instructor_Leaves.Add(appliedDetails);
+            }
+            SaveInDatabase();
         }
 
         public void SaveInstructor(RegisterViewModel model)

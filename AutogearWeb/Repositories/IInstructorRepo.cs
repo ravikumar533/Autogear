@@ -22,6 +22,7 @@ namespace AutogearWeb.Repositories
         Instructor GetInstructorByEmail(string email); // Fetch by Email
         Instructor GetInstructorByName(string name);
         InstructorModel GetInstructorByNumber(string instructorNumber);
+        InstructorLeaveModel GetInstructorLeaveById(int leaveId);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         int GetLatestInstructorId();
@@ -37,6 +38,8 @@ namespace AutogearWeb.Repositories
         void UpdatePackageDetails(string currentUser, PackageModel packageDetails);
         void CreateNewArea(string currentUser, AreaModel areaDetails);
         void UpdateArea(string currentUser, AreaModel areaDetails);
+        void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
+
 
     }
 }
