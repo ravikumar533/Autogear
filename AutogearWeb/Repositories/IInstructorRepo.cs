@@ -21,6 +21,7 @@ namespace AutogearWeb.Repositories
         IList<SelectListItem>  GetInstructorNames(); // Fetch Instructor Names
         Instructor GetInstructorByEmail(string email); // Fetch by Email
         Instructor GetInstructorByName(string name);
+        Instructor GetInstructorById(string instructorNumber);
         InstructorModel GetInstructorByNumber(string instructorNumber);
         InstructorLeaveModel GetInstructorLeaveById(int leaveId);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);

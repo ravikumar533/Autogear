@@ -80,11 +80,24 @@
                     if (view.name === "month")
                         end = end.add("-1", "day");
                     var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(end));
+                    modal.find("#StartTime,#StopTime").timepicker({
+                        minuteStep: 1,
+                        showSeconds: false,
+                        showMeridian: false,
+                        disableFocus: true
+                    }).on("focus", function () {
+                        $(this).timepicker("showWidget");
+                    });
+                    modal.find("#StartDate,#EndDate").datepicker({
+                        minDate: 0,
+                        dateFormat: "yy-mm-dd"
+                    });
                     modal.find("#StartDate").val(startDate);
                     modal.find("#EndDate").val(endDate);
                     modal.find("#StartTime").val(start.hours() + ":" + start.minutes());
                     modal.find("#StopTime").val(end.hours() + ":" + end.minutes());
-                    modal.find("#InstructorName").val($("#InstructorName").val());
+                    modal.find("#InstructorName").val($("#InstructorName option:selected").text());
+                    modal.find("#InstructorNumber").val($("#InstructorName").val());
                     //var stDate = new Date(start);
                     //var eDate = new Date(end);
 
@@ -94,15 +107,16 @@
                     });
                     modal.find("#submitForm").on("click", function(ev) {
                         ev.preventDefault();
-                        var startTime = modal.find("#StartDate").val() + "T" + modal.find("#StartTime").val();
-                        var stopTime = modal.find("#EndDate").val() + "T" + modal.find("#StopTime").val();
+                        modal.find("#StartDate").removeAttr("readonly");
+                        modal.find("#EndDate").removeAttr("readonly");
                         var bookingAppointment = {
                             BookingId: modal.find("#BookingId").val(),
                             StudentName: modal.find("#StudentName").val(),
                             StartTime: modal.find("#StartTime").val(),
                             StopTime: modal.find("#StopTime").val(),
                             StartDate: modal.find("#StartDate").val(),
-                            EndDate: modal.find("#EndDate").val()
+                            EndDate: modal.find("#EndDate").val(),
+                            InstructorNumber: $("#InstructorName").val()
                         }
                         $.ajax({
                             method: "POST",
@@ -176,7 +190,7 @@
                         });
                     });
                 },
-                events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor,
+                events: "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
                 // ignoreTimezone: false,
                 timezone: "local"
             });
@@ -184,7 +198,7 @@
             function fetchCalendarEvents(instructorName) {
                 $.ajax({
                     url: "/Api/AutogearApi/GetBookingEvents",
-                    data: { instructorName: instructorName },
+                    data: { instructorNumber: instructorName },
                     dataType: "json"
                 }).success(function(data) {
                     calendar.fullCalendar("removeEvents");
@@ -193,7 +207,6 @@
             }
 
             $("#InstructorName").change(function () {
-                console.log($(this).val());
                 fetchCalendarEvents($(this).val());
             });
             //$.getJSON(baseUrl + "GetInstructorNames").then(function(data) {

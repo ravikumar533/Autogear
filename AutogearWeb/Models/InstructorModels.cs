@@ -33,6 +33,8 @@ namespace AutogearWeb.Models
         public int BookingId { get; set; }
         public string StudentName { get; set; }
         public string InstructorName { get; set; }
+        public string InstructorNumber { get; set; }
+        public string InstructorId { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan StopTime { get; set; }
         public DateTime? StartDate { get; set; }
