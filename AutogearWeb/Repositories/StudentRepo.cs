@@ -261,7 +261,7 @@ namespace AutogearWeb.Repositories
                         DataContext.Bookings.FirstOrDefault(s => s.BookingId == bookingAppointment.BookingId && s.StartDate == bookingAppointment.StartDate ) ??
                         new Booking();
 
-                    bookingDetails.InstructorId = currentUser;
+                    bookingDetails.InstructorId = bookingAppointment.InstructorId;
                     bookingDetails.BookingDate = DateTime.Now;
                     bookingDetails.StartTime = bookingAppointment.StartTime;
                     bookingDetails.EndTime = bookingAppointment.StopTime;

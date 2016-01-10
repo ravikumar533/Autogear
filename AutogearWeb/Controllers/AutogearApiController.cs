@@ -83,6 +83,12 @@ namespace AutogearWeb.Controllers
         public void SaveBookingAppointment(BookingAppointment bookingAppointment)
         {
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(bookingAppointment.InstructorNumber))
+            {
+                var instructor = _instructorRepo.GetInstructorById(bookingAppointment.InstructorNumber);
+                if (instructor != null)
+                    bookingAppointment.InstructorId  = instructor.InstructorId;
+            }
             _studentRepo.SaveStudentAppointment(bookingAppointment, currentUser);
         }
 
