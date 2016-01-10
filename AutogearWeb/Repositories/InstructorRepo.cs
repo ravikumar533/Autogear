@@ -253,6 +253,9 @@ namespace AutogearWeb.Repositories
                 {
                     bookingAppointment.StudentName = student.FirstName + " " + student.LastName;
                 }
+                var instructor = TblInstructors.FirstOrDefault(s => s.InstructorId == booking.InstructorId);
+                if (instructor != null)
+                    bookingAppointment.InstructorName = instructor.FirstName + " " + instructor.LastName;
                 if (booking.StartTime != null)
                     bookingAppointment.StartTime = booking.StartTime.Value;
                 if (booking.StopTime != null)
