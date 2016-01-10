@@ -41,7 +41,8 @@ namespace AutogearWeb.Controllers
         {
             var model = new RegisterViewModel
             {
-                GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text")
+                GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text"),
+                Areas = new SelectList(_instructorRepo.GetAreasList(), "Value", "Text")
             };
             return View(model);
         }
