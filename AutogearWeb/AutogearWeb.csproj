@@ -900,6 +900,7 @@
     <Content Include="Views\Instructor\Packages.cshtml" />
     <Content Include="Views\Instructor\EditArea.cshtml" />
     <Content Include="Views\Instructor\UpdateLeave.cshtml" />
+    <Content Include="Views\Instructor\AllLeaves.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

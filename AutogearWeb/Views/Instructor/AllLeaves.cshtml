@@ -1,41 +1,55 @@
-﻿
+﻿@model AutogearWeb.Models.CalendarModel
 @{
-    ViewBag.Title = "Leave For Instructor";
+    ViewBag.Title = "All Leaves";
 }
 
-<p>
-    @Html.ActionLink("Apply Leave", "NewLeaveByInstructor",null, new { @class = "btn btn-success" })
-    @Html.ActionLink("Update", "UpdateLeave", new object { }, new { @class = "btn btn-info", id = "UpdateLeave" })
-</p>
+@if (Model.IsUserAdmin)
+{
+    <div class="col-xs-12 col-sm-3 widget-container-col">
+        <div class="widget-box widget-color-dark light-border">
+            <div class="widget-header">
+                <h5 class="widget-title smaller">Search for Instructor</h5>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-6">
+                    @Html.DropDownList("InstructorName", Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">&nbsp;</div>
+    </div>
+}
 <table id="jqGrid"></table>
 <div id="jqGridPager"></div>
 @section Scripts{
     @Scripts.Render("~/bundles/bootstrap");
     @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/chosenjs");
     @Scripts.Render("~/bundles/jqGrid");
     @Scripts.Render("~/bundles/jqueryUI");
-
-
+    @Scripts.Render("~/bundles/jqueryval");
     <script>
-        $(function() {
+        $(function () {
+            $(".chosen-select").chosen();
             var baseUrl = "/Api/AutogearApi/";
             var gridSelector = "#jqGrid";
             var pagerSelector = "#jqGridPager";
-            var updateInstructor = $("#UpdateLeave");
-
-
-            updateInstructor.hide();
+            
             var parentColumn = $(gridSelector).closest("[class*='col-']");
             //resize to fit page size
-            $(window).on("resize.jqGrid", function() {
+            $(window).on("resize.jqGrid", function () {
                 $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
             });
 
             //resize on sidebar collapse/expand
-            $(document).on("settings.ace.jqGrid", function(ev, eventName, collapsed) {
+            $(document).on("settings.ace.jqGrid", function (ev, eventName, collapsed) {
                 if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
                     //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
                     }, 0);
                 }
@@ -65,7 +79,7 @@
                     "ui-icon-seek-next": "ace-icon fa fa-angle-right bigger-140",
                     "ui-icon-seek-end": "ace-icon fa fa-angle-double-right bigger-140"
                 };
-                $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function() {
+                $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function () {
                     var icon = $(this);
                     var $class = $.trim(icon.attr("class").replace("ui-icon", ""));
 
@@ -79,10 +93,10 @@
             }
 
             jQuery(gridSelector).jqGrid({
-                url: baseUrl + "GetInstructorLeaves",
+                url: baseUrl + "GetAllInstructorsLeaves",
                 datatype: "json",
                 height: 250,
-                colNames: ["Id","Reason", "Start Date", "End Date"],
+                colNames: ["Id","Instructor Name", "Reason", "Start Date", "End Date"],
                 colModel: [
                     {
                         label: 'Id',
@@ -95,15 +109,22 @@
                         editrules: { required: true }
                     },
                     {
+                        label: 'InstructorName',
+                        name: 'instructorName',
+                        width: 100,
+                        editable: true,
+                        editrules: { required: true }
+                    },
+                    {
                         label: 'Reason',
-                        name: 'leaveReason',
+                        name: 'instructorDetails.leaveReason',
                         width: 100,
                         editable: true,
                         editrules: { required: true }
                     },
                     {
                         label: 'StartDate',
-                        name: 'startDate',
+                        name: 'instructorDetails.startDate',
                         width: 50,
                         editable: true,
                         formatter: "date",
@@ -111,7 +132,7 @@
                     },
                     {
                         label: 'EndDate',
-                        name: 'endDate',
+                        name: 'instructorDetails.endDate',
                         width: 50,
                         editable: true,
                         formatter: "date",
@@ -127,14 +148,12 @@
                 multiselect: false,
                 //multikey: "ctrlKey",
                 multiboxonly: true,
-                onSelectRow: function() {
+                onSelectRow: function () {
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
-                    $("#UpdateLeave").show();
-                    $("#UpdateLeave").attr("href", "@Url.Action("UpdateLeave")?leaveId=" + rowKey);
                 },
-                loadComplete: function() {
+                loadComplete: function () {
                     var table = this;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         styleCheckbox(table);
 
                         updateActionIcons(table);
@@ -189,12 +208,12 @@
                 {
                     //search form
                     recreateForm: true,
-                    afterShowSearch: function(e) {
+                    afterShowSearch: function (e) {
                         var form = $(e[0]);
                         form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
                         styleSearchForm(form);
                     },
-                    afterRedraw: function() {
+                    afterRedraw: function () {
                         styleSearchFilters($(this));
                     },
                     multipleSearch: true
@@ -202,17 +221,31 @@
                 {
                     //view record form
                     recreateForm: true,
-                    beforeShowForm: function(e) {
+                    beforeShowForm: function (e) {
                         var form = $(e[0]);
                         form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
                     }
                 }
             );
-            $(document).one("ajaxloadstart.page", function(e) {
+            $(document).one("ajaxloadstart.page", function (e) {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();
             });
+
+            function fetchCalendarEvents(instructorName) {
+                $.ajax({
+                    url: "/Api/AutogearApi/GetInstructorLeaveByName",
+                    data: { instructorNumber: instructorName },
+                    dataType: "json"
+                }).success(function (data) {
+                    jQuery(gridSelector).setGridParam({ postData: data, page: 1 }).trigger('reloadGrid');
+                });
+            };
+
+            $("#InstructorName").change(function () {
+                fetchCalendarEvents($(this).val());
+            });
         });
 
-    </script>
+</script>
 }

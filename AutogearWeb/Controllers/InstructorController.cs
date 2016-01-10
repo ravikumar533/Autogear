@@ -201,6 +201,17 @@ namespace AutogearWeb.Controllers
             return View();
         }
 
+        public ActionResult AllLeaves()
+        {
+            var currentUser = Request.GetOwinContext().Authentication.User;
+            var model = new CalendarModel
+            {
+                IsUserAdmin = currentUser.IsInRole("Admin"),
+                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text")
+            };
+            return View(model);
+        }
+
         public ActionResult UpdatePostalCodes()
         {
             var reader = new StreamReader(System.IO.File.OpenRead(Server.MapPath("~/Content/PostCodes.csv")));

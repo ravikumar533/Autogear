@@ -26,6 +26,8 @@ namespace AutogearWeb.Repositories
         InstructorLeaveModel GetInstructorLeaveById(int leaveId);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
+        Task<IList<AllInstructorsLeavesModel>> GetAllInstructorsLeaves();
+        Task<IList<AllInstructorsLeavesModel>> GetInstructorLeavesByName(string instructorNumber);
         int GetLatestInstructorId();
         Task<IList<PackageModel>> GetPackages();
         PackageModel GetPackagesById(int packageId);

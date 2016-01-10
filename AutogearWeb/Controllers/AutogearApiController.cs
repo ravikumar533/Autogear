@@ -98,6 +98,16 @@ namespace AutogearWeb.Controllers
             return await _instructorRepo.GetInstructorLeaves(currentUser);
         }
 
+        public async Task<IList<AllInstructorsLeavesModel>> GetAllInstructorsLeaves()
+        {
+            return await _instructorRepo.GetAllInstructorsLeaves();
+        }
+
+        public async Task<IList<AllInstructorsLeavesModel>> GetInstructorLeaveByName(string instructorNumber)
+        {
+            return await _instructorRepo.GetInstructorLeavesByName(instructorNumber);
+        }
+
         public void UpdateStudentDetails(TblStudent studentDetails)
         {
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
