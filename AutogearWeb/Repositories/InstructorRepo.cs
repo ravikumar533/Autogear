@@ -237,7 +237,8 @@ namespace AutogearWeb.Repositories
             foreach (var instructor in TblInstructors)
             {
                 var name = instructor.FirstName + " " + instructor.LastName;
-                instructors.Add(new SelectListItem { Value = name , Text = name });
+                var instructorNumber = instructor.InstructorNumber;
+                instructors.Add(new SelectListItem { Value = instructorNumber , Text = name + " "+ instructorNumber });
             }
             return instructors;
         }
@@ -286,6 +287,10 @@ namespace AutogearWeb.Repositories
             return instructorNumber;
         }
 
+        public Instructor GetInstructorById(string instructorNumber)
+        {
+            return DataContext.Instructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
+        }
         public Instructor GetInstructorByName(string name)
         {
             return DataContext.Instructors.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == name);

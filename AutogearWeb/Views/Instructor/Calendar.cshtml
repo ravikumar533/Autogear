@@ -84,7 +84,7 @@
                     modal.find("#EndDate").val(endDate);
                     modal.find("#StartTime").val(start.hours() + ":" + start.minutes());
                     modal.find("#StopTime").val(end.hours() + ":" + end.minutes());
-                    modal.find("#InstructorName").val($("#InstructorName").val());
+                    modal.find("#InstructorName").val($("#InstructorName option:selected").text());
                     //var stDate = new Date(start);
                     //var eDate = new Date(end);
 
@@ -176,7 +176,7 @@
                         });
                     });
                 },
-                events: "/Api/AutogearApi/GetBookingEvents?instructorName=" + instructor,
+                events: "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
                 // ignoreTimezone: false,
                 timezone: "local"
             });
@@ -184,7 +184,7 @@
             function fetchCalendarEvents(instructorName) {
                 $.ajax({
                     url: "/Api/AutogearApi/GetBookingEvents",
-                    data: { instructorName: instructorName },
+                    data: { instructorNumber: instructorName },
                     dataType: "json"
                 }).success(function(data) {
                     calendar.fullCalendar("removeEvents");
@@ -193,7 +193,6 @@
             }
 
             $("#InstructorName").change(function () {
-                console.log($(this).val());
                 fetchCalendarEvents($(this).val());
             });
             //$.getJSON(baseUrl + "GetInstructorNames").then(function(data) {

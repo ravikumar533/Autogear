@@ -63,12 +63,12 @@ namespace AutogearWeb.Controllers
             return await _instructorRepo.GetStudentEvents(currentUser);
         }
 
-        public async Task<IList<InstructorBooking>> GetBookingEvents(string instructorName)
+        public async Task<IList<InstructorBooking>> GetBookingEvents(string instructorNumber)
         {
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
-            if (!string.IsNullOrEmpty(instructorName))
+            if (!string.IsNullOrEmpty(instructorNumber))
             {
-                var instructor = _instructorRepo.GetInstructorByName(instructorName);
+                var instructor = _instructorRepo.GetInstructorById(instructorNumber);
                 if (instructor != null)
                     currentUser = instructor.InstructorId;
             }
