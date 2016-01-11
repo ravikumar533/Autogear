@@ -14,11 +14,13 @@ namespace AutogearWeb.Controllers
         private readonly IStudentRepo _iStudentRepo;
         private readonly IAutogearRepo _iAutogearRepo;
         private readonly IPostalRepo _iPostalRepo;
-        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo,IPostalRepo postalRepo)
+        private readonly IInstructorRepo _instructorRepo;
+        public StudentController(IStudentRepo iStudentRepo,IAutogearRepo autogearRepo,IPostalRepo postalRepo,IInstructorRepo instructorRepo)
         {
             _iStudentRepo = iStudentRepo;
             _iAutogearRepo = autogearRepo;
             _iPostalRepo = postalRepo;
+            _instructorRepo = instructorRepo;
         }
         // GET: Student
         public ActionResult Index()
@@ -34,6 +36,7 @@ namespace AutogearWeb.Controllers
                 StatesList = _iStudentRepo.GetStateList(),
                 LearningPackages = _iStudentRepo.GetPackages(),
                 DrivingPackages = _iStudentRepo.GetPackages(),
+                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text"),
                 Status = true
             };
             return View(model);
