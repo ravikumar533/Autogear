@@ -59,7 +59,7 @@
                     <div class="col-sm-9">
                         <div class="checkbox">
                             <label>
-                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
+                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch", @checked = "checked" })
                                 <span class="lbl"></span>
                             </label>
                             @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })

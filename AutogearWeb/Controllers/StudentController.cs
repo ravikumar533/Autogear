@@ -33,7 +33,8 @@ namespace AutogearWeb.Controllers
                 GendersList = _iAutogearRepo.GenderListItems(),
                 StatesList = _iStudentRepo.GetStateList(),
                 LearningPackages = _iStudentRepo.GetPackages(),
-                DrivingPackages = _iStudentRepo.GetPackages()
+                DrivingPackages = _iStudentRepo.GetPackages(),
+                Status = true
             };
             return View(model);
         }
