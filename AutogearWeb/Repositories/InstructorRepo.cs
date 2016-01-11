@@ -302,6 +302,48 @@ namespace AutogearWeb.Repositories
             return await Task.Run(() => listOfLeaves);
         }
 
+        public async Task<IList<AllInstructorsLeavesModel>> GetAllInstructorsLeaves()
+        {
+            var allLeaves = new List<AllInstructorsLeavesModel>();
+            var listOfLeaves = TblInstructorLeaves.ToList();
+            foreach (var leave in listOfLeaves)
+            {
+                var instructor = TblInstructors.SingleOrDefault(s => s.InstructorId == leave.InstructorId);
+                if (instructor != null)
+                {
+                    var instructorLeave = new AllInstructorsLeavesModel
+                    {
+                        InstructorName = instructor.FirstName+" "+instructor.LastName,
+                        InstructorDetails = leave
+                    };
+                    allLeaves.Add(instructorLeave);
+                }
+            }
+            
+            return await Task.Run(() => allLeaves);
+        }
+
+        public async Task<IList<AllInstructorsLeavesModel>> GetInstructorLeavesByName(string instructorNumber)
+        {
+            var allLeaves = new List<AllInstructorsLeavesModel>();
+            var instructorDetail = TblInstructors.SingleOrDefault(s => s.InstructorNumber == instructorNumber);
+            var listOfLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorDetail.InstructorId).ToList();
+            foreach (var leave in listOfLeaves)
+            {
+                if (instructorDetail != null)
+                {
+                    var instructorLeave = new AllInstructorsLeavesModel
+                    {
+                        InstructorName = instructorDetail.FirstName+" "+instructorDetail.LastName,
+                        InstructorDetails = leave
+                    };
+                    allLeaves.Add(instructorLeave);
+                }
+            }
+            
+            return await Task.Run(() => allLeaves);
+        }
+
         public InstructorLeaveModel GetInstructorLeaveById(int leaveId)
         {
             return TblInstructorLeaves.SingleOrDefault(s => s.Id == leaveId);

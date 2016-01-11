@@ -73,6 +73,12 @@ namespace AutogearWeb.Models
         public DateTime? EndDate { get; set; }
     }
 
+    public class AllInstructorsLeavesModel
+    {
+        public string InstructorName { get; set; }
+        public InstructorLeaveModel InstructorDetails { get; set; }
+    }
+
     public class InstructorModel
     {
         public string InstructorId { get; set; }
