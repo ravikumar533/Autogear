@@ -138,10 +138,9 @@
 
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.InstructorName, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
-                        @Html.EditorFor(model => model.InstructorName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Instructor Name" } })
-                        @Html.ValidationMessageFor(model => model.InstructorName, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.InstructorNumber, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
                     </div>
                 </div>
             </div>
@@ -370,6 +369,7 @@
     <script>
         $(function () {
             //  var postalCodes = [], suburbNames = [];
+            $(".chosen-select").chosen();
             var baseUrl = "/Api/AutogearApi/";
             $.getJSON(baseUrl + "GetPostCodes", { suburbName: null }).then(function (data) {
                 //    postalCodes = data;

@@ -70,6 +70,7 @@ namespace AutogearWeb.Controllers
         {
             var model = _iStudentRepo.GetStudentById(studentId);
             model.GendersList = _iAutogearRepo.GenderListItems();
+            model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             var suburb = _iPostalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
             {
