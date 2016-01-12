@@ -44,8 +44,8 @@ namespace AutogearWeb.Repositories
                             StartDate = student.StartDate,
                             Status = student.Status,
                             AddressId = student.AddressId,
-                            Email = student.Email
-                           // InstructorName = instructorStudent.
+                            Email = student.Email,
+                            InstructorName = instructorStudent.Instructor.FirstName+ " " + instructorStudent.Instructor.LastName
                         });
                 return _tblStudents;
 
@@ -359,7 +359,6 @@ namespace AutogearWeb.Repositories
                             StudentId = student.Id,
                             CreatedBy = currentUser,
                             CreatedDate = DateTime.Now,
-                            
                         };
                         DataContext.Instructor_Student.Add(instructorStudent);
                         DataContext.SaveChanges();
@@ -471,14 +470,16 @@ namespace AutogearWeb.Repositories
             }
             DataContext.SaveChanges();
 
-            //var instructor = DataContext.Instructors.SingleOrDefault(s => (s.FirstName + " " + s.LastName) == studentModel.InstructorName);
-            //var instructorDetails = DataContext.Instructor_Student.FirstOrDefault(s => s.StudentId == studentModel.StudentId);
-            //if (instructorDetails != null)
-            //{
-            //    if (instructor != null) instructorDetails.InstructorId = instructor.InstructorId;
-            //    instructorDetails.ModifiedBy = currentUser;
-            //    instructorDetails.ModifiedDate = DateTime.Now;
-            //}
+            var instructor = DataContext.Instructors.SingleOrDefault(s => s.InstructorNumber == studentModel.InstructorNumber);
+            var instructorDetails = DataContext.Instructor_Student.FirstOrDefault(s => s.StudentId == studentModel.StudentId);
+            if (instructorDetails != null)
+            {
+                if (instructor != null) instructorDetails.InstructorId = instructor.InstructorId;
+                instructorDetails.ModifiedBy = currentUser;
+                instructorDetails.ModifiedDate = DateTime.Now;
+                DataContext.SaveChanges();
+            }
+
         }
 
         public TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails)
