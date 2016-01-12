@@ -166,7 +166,8 @@ namespace AutogearWeb.Repositories
                             Id = booking.BookingId,
                             Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                            Title = student.FirstName + " " + student.LastName
+                            Title = student.FirstName + " " + student.LastName,
+                            className = "label-success"
                         });
                     }
                 }

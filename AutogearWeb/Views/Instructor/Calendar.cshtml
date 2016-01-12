@@ -64,7 +64,8 @@
                     center: "title",
                     right: "month,agendaWeek,agendaDay"
                 },
-
+                editable: false,                
+                eventDurationEditable:false,
                 allDaySlot: false,
                 slotDuration: "00:15:01",
                 //minTime: "06:00:00",
@@ -144,7 +145,7 @@
                     });
 
                 },
-                editable: true,
+                //editable: true,
                 eventClick: function(calEvent, jsEvent, view) {
                     $.ajax({
                         url: "/Instructor/BookingAppointment",
