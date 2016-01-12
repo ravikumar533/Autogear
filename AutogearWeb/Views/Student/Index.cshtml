@@ -19,9 +19,9 @@
             var baseUrl = "/Api/AutogearApi/";
             var gridSelector = "#jqGrid";
             var pagerSelector = "#jqGridPager";
-            var updateInstructor = $("#UpdateInstructor");
+            var updateStudent = $("#UpdateStudent");
 
-            updateInstructor.hide();
+            updateStudent.hide();
             var parentColumn = $(gridSelector).closest("[class*='col-']");
             //resize to fit page size
             $(window).on("resize.jqGrid", function () {
@@ -80,7 +80,7 @@
                 colModel: [
                 {                    label: "StudentId",
                     name: "studentId",
-                    width: 100,
+                    width: 0,
                     key: true,
                     editable: true,
                     editrules :{required:true}
@@ -89,8 +89,6 @@
                      label: 'First Name',
                      name: 'firstName',
                      width: 100,
-                     key: true,
-                     editable: true,
                      editrules: { required: true }
                  },
                  {
@@ -102,7 +100,7 @@
                  {
                      label: 'Instructor',
                      name: 'instructorName',
-                     width: 100,
+                     width: 150,
                      editable: true
                  },
                  {
@@ -129,7 +127,7 @@
                 onSelectRow:function() {
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
                     $("#UpdateStudent").show();
-                    $("#UpdateStudent").attr("href", "@Url.Action("Edit")?studentId=" + rowKey);
+                    $("#UpdateStudent").attr("href", "@Url.Action("Edit")?StudentId=" + rowKey);
                 },
                 caption: "Students"
 
