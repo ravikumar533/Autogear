@@ -130,7 +130,9 @@
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
                     $("#UpdateStudent").show();
                     $("#UpdateStudent").attr("href", "@Url.Action("Edit")?studentId=" + rowKey);
-                }
+                },
+                caption: "Students"
+
             });
 
         });
