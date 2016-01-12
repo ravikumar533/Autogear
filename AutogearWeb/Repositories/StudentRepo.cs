@@ -165,7 +165,9 @@ namespace AutogearWeb.Repositories
                 students.Add(new SelectListItem { Value = studentNumber.ToString(), Text = name  });
             }
             return students;
-        } // Fetch Instructor Names
+        } 
+        
+        // Fetch Instructor Names
         // ReSharper disable once FunctionComplexityOverflow
         public StudentModel GetStudentById(int studentId)
         {

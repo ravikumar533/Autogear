@@ -29,21 +29,6 @@ namespace AutogearWeb.Models
         public string className { get; set; }
     }
 
-    public class BookingAppointment
-    {
-        public int BookingId { get; set; }
-        public string StudentName { get; set; }
-        public int StudentId { get; set; }
-        public string InstructorName { get; set; }
-        public string InstructorNumber { get; set; }
-        public string InstructorId { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan StopTime { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public SelectList InstructorList { get; set; }
-        public SelectList StudentList { get; set; }
-    }
     public class StudentList
     {
         public int BookingId { get; set; }
