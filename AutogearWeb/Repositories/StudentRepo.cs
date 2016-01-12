@@ -129,7 +129,15 @@ namespace AutogearWeb.Repositories
 
         public async Task<List<TblStudent>> GetStudentList(string searchtext, string date, Boolean addInactiveStudents)
         {
-            return await TblStudents.ToListAsync();
+            var results = (addInactiveStudents == false) ? TblStudents.Where(s => s.Status) : TblStudents;
+            if (!string.IsNullOrEmpty(searchtext))
+                results = results.Where(s => (s.FirstName + " " + s.LastName).Contains(searchtext));
+            if (!string.IsNullOrEmpty(date))
+            {
+                var startdate = Convert.ToDateTime(date);
+                results = results.Where(s => s.StartDate >= startdate);
+            }
+            return await results.ToListAsync();
         }
 
         public IList<SelectListItem> GetPackages()
