@@ -192,6 +192,7 @@ namespace AutogearWeb.Repositories
                     if (subUrb != null)
                     {
                         studentModel.SuburbName = subUrb.Suburb_Name;
+                        studentModel.SuburbId = subUrb.SuburbId;
                     }
                 }
 
@@ -417,11 +418,14 @@ namespace AutogearWeb.Repositories
             addressDetails.PostCode = Convert.ToInt32(studentModel.PostalCode);
             addressDetails.ModifiedDate = DateTime.Now;
             addressDetails.ModifiedBy = currentUser;
-            var subUrb = DataContext.Suburbs.FirstOrDefault(s => s.Suburb_Name == studentModel.SuburbName);
-            if (subUrb != null)
+            if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
             {
-                addressDetails.SuburbID = subUrb.SuburbId;
+                addressDetails.PostCode = Convert.ToInt32(studentModel.PostalCode);
+                // studentAddress.
             }
+            if (studentModel.SuburbId != 0)
+                addressDetails.SuburbID = studentModel.SuburbId;
+
             if (addressDetails.AddressId == 0)
             {
                 addressDetails.CreatedBy = currentUser;
