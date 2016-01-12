@@ -249,11 +249,7 @@ namespace AutogearWeb.Repositories
             var bookingAppointment = new BookingAppointment {BookingId = bookingAppointmentId};
             if (booking != null)
             {
-                var student = DataContext.Students.FirstOrDefault(s=>s.Id == booking.StudentId);
-                if (student != null)
-                {
-                    bookingAppointment.StudentName = student.FirstName + " " + student.LastName;
-                }
+                bookingAppointment.StudentId = booking.StudentId;
                 var instructor = TblInstructors.FirstOrDefault(s => s.InstructorId == booking.InstructorId);
                 if (instructor != null)
                     bookingAppointment.InstructorName = instructor.FirstName + " " + instructor.LastName;

@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="55f7601639fc4129b4f394a8265ebc37" Name="Diagram1">
-        <EntityTypeShape EntityType="AutogearDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AutogearDBModel.Address" Width="1.5" PointX="6" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AutogearDBModel.AspNetRole" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AutogearDBModel.AspNetUserClaim" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />

@@ -269,9 +269,6 @@
     <Compile Include="EFModels\Booking.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFModels\C__MigrationHistory.cs">
-      <DependentUpon>AutogearModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="EFModels\Instructor.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
@@ -901,6 +898,7 @@
     <Content Include="Views\Instructor\EditArea.cshtml" />
     <Content Include="Views\Instructor\UpdateLeave.cshtml" />
     <Content Include="Views\Instructor\AllLeaves.cshtml" />
+    <Content Include="Views\Instructor\Appointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

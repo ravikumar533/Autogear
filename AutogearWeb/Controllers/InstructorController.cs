@@ -19,16 +19,19 @@ namespace AutogearWeb.Controllers
         private readonly IInstructorRepo _instructorRepo;
         private readonly IPostalRepo _postalRepo;
         private readonly IAutogearRepo _autogearRepo;
+        private readonly IStudentRepo _studentRepo;
+
         public InstructorController()
         {
         }
-        public InstructorController(ApplicationUserManager userManager, ApplicationRoleManager roleManager, IInstructorRepo instructorRepo,IPostalRepo postalRepo,IAutogearRepo autogearRepo)
+        public InstructorController(ApplicationUserManager userManager, ApplicationRoleManager roleManager, IInstructorRepo instructorRepo,IPostalRepo postalRepo,IAutogearRepo autogearRepo,IStudentRepo studentRepo)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _instructorRepo = instructorRepo;
             _postalRepo = postalRepo;
             _autogearRepo = autogearRepo;
+            _studentRepo = studentRepo;
         }
 
         // GET: Instructor
@@ -104,7 +107,18 @@ namespace AutogearWeb.Controllers
         public ActionResult BookingAppointment(int bookingId)
         {
             var appointment = _instructorRepo.GetBookingAppointmentById(bookingId);
+            var student = _studentRepo.GetStudentById(appointment.StudentId);
+            appointment.StudentList = new SelectList(_studentRepo.GetStudents(),"Value","Text");
+            appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(),"Value","Text");
+            if (student != null)
+                appointment.StudentName = student.FirstName + " " + student.LastName;
             return View(appointment);
+        }
+
+        [HttpPost]
+        public ActionResult BookingAppointment(BookingAppointment model)
+        {
+            return View(model);
         }
 
         public ActionResult Edit(string instructorId)

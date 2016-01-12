@@ -17,7 +17,7 @@ namespace AutogearWeb.Repositories
         IQueryable<TblBooking> TblStudentBookings { get; set; }
         IQueryable<TblPackage> TblPackageDetails { get; set; }
         IQueryable<TblState> TblStates { get; set; }
-        
+        IList<SelectListItem> GetStudents(); // Fetch Instructor Names
         Task<List<TblStudent>> GetStudentList();
         IList<SelectListItem> GetPackages();
         IList<SelectListItem> GetStateList();

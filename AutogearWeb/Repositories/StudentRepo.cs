@@ -147,6 +147,17 @@ namespace AutogearWeb.Repositories
             return await TblStudents.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
         }
 
+        public IList<SelectListItem> GetStudents()
+        {
+            var students = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            foreach (var student in TblStudents)
+            {
+                var name = student.FirstName + " " + student.LastName;
+                var studentNumber = student.StudentId;
+                students.Add(new SelectListItem { Value = studentNumber.ToString(), Text = name  });
+            }
+            return students;
+        } // Fetch Instructor Names
         // ReSharper disable once FunctionComplexityOverflow
         public StudentModel GetStudentById(int studentId)
         {
