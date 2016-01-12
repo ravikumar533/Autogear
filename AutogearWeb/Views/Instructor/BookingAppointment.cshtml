@@ -19,15 +19,24 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                @Html.EditorFor(model => model.StudentName, new { htmlAttributes = new { @class = "form-control", placeholder = "Search for student" } })
-                                @Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
+                                <div class="widget-body">
+                                    <div class="widget-main padding-6">
+                                        @Html.DropDownListFor(model=>model.StudentId, Model.StudentList, new { @class = "chosen-select form-control", data_placeholder = "Search a Student..." })
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.StudentName, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.InstructorName, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                @Html.EditorFor(model => model.InstructorName, new { htmlAttributes = new { @class = "form-control", @readonly= "readonly" } })
-                                @Html.ValidationMessageFor(model => model.InstructorName, "", new { @class = "text-danger" })
+                                <div class="widget-body">
+                                    <div class="widget-main padding-6">
+                                        @Html.DropDownListFor(model=> model.InstructorName, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
+                                    </div>
+                                </div>
+                           
+                                @Html.ValidationMessageFor(model => model.InstructorName, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,7 +55,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3" })
-                                    <div class="col-sm-9">
+                                    <div class="col-md-9">
                                         <div class="input-group col-xs-10 col-sm-8">
                                             @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Test Date" } })
                                             <span class="input-group-addon">
@@ -59,36 +68,52 @@
                             </div>
 
                         </div>
-
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new {@class = "control-label col-md-3"})
                                     <div class="col-md-9">
                                         <div class="input-group col-xs-10 col-sm-8">
-                                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Start Time", @readonly = "readonly" } })
+                                            @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
                                             <span class="input-group-addon">
                                                 <i class="fa fa-clock-o bigger-110"></i>
                                             </span>
-                                            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                                    @Html.LabelFor(model => model.StopTime, htmlAttributes: new {@class = "control-label col-md-3"})
                                     <div class="col-md-9">
                                         <div class="input-group col-xs-10 col-sm-8">
-                                            @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Start Time", @readonly = "readonly" } })
+                                            @Html.EditorFor(model => model.StopTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
                                             <span class="input-group-addon">
                                                 <i class="fa fa-clock-o bigger-110"></i>
                                             </span>
-                                            @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.StopTime, "", new {@class = "text-danger"})
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new {@class = "control-label col-md-3"})
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.PickupLocation, new {@class = "form-control", placeholder = "Pick Up Location"})
+                                @Html.ValidationMessageFor(model => model.StudentName, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.BookingType, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                <div class="widget-body">
+                                    <div class="widget-main padding-6">
+                                        @Html.DropDownListFor(model => model.BookingType, Model.StudentList, new { @class = "chosen-select form-control", data_placeholder = "Search a Student..." })
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.BookingType, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                         <div class="=row">
                             <div class="clearfix form-actions">

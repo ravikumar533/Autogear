@@ -148,7 +148,7 @@
                 eventClick: function(calEvent, jsEvent, view) {
                     $.ajax({
                         url: "/Instructor/BookingAppointment",
-                        method: "POST",
+                        method: "GET",
                         dataType: "html",
                         data: { bookingId: calEvent.id }
                     }).success(function(data) {

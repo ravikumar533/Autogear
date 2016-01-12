@@ -7,5 +7,6 @@ namespace AutogearWeb.Repositories
    public interface IAutogearRepo : IDisposable
     {
         IList<SelectListItem> GenderListItems();
+       IList<SelectListItem> DrivingTypeItems();
     }
 }

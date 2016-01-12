@@ -249,9 +249,7 @@ namespace AutogearWeb.Repositories
             var bookingAppointment = new BookingAppointment { BookingId = bookingAppointmentId };
             if (booking != null)
             {
-
                 bookingAppointment.StudentId = booking.StudentId;
-
                 var instructor = TblInstructors.FirstOrDefault(s => s.InstructorId == booking.InstructorId);
                 if (instructor != null)
                     bookingAppointment.InstructorName = instructor.FirstName + " " + instructor.LastName;
@@ -261,6 +259,8 @@ namespace AutogearWeb.Repositories
                     bookingAppointment.StopTime = booking.StopTime.Value;
                 bookingAppointment.StartDate = booking.StartDate;
                 bookingAppointment.EndDate = booking.EndDate;
+                bookingAppointment.PickupLocation = booking.PickupLocation;
+                bookingAppointment.BookingType = booking.Type;
             }
             return bookingAppointment;
         }

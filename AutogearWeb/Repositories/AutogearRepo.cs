@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace AutogearWeb.Repositories
@@ -25,6 +26,12 @@ namespace AutogearWeb.Repositories
                 i++;
             }
             return genderList;
+        }
+
+        public IList<SelectListItem> DrivingTypeItems()
+        {
+            string[] list = { "", "Learning", "Driving Test" };
+            return list.Select(type => new SelectListItem {Value = type, Text = type}).ToList();
         }
     }
 }

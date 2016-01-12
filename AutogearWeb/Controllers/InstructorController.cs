@@ -110,16 +110,19 @@ namespace AutogearWeb.Controllers
         {
             var appointment = _instructorRepo.GetBookingAppointmentById(bookingId);
             var student = _studentRepo.GetStudentById(appointment.StudentId);
-            appointment.StudentList = new SelectList(_studentRepo.GetStudents(),"Value","Text");
-            appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(),"Value","Text");
-            if (student != null)
-                appointment.StudentName = student.FirstName + " " + student.LastName;
+            appointment.StudentList = new SelectList(_studentRepo.GetStudents(),"Value","Text",student.StudentId);
+            appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(),"Value","Text",appointment.InstructorNumber);
+            appointment.DrivingTypeList = new SelectList(_autogearRepo.GenderListItems(),"Value","Text",appointment.BookingType);
+            appointment.StudentName = student.FirstName + " " + student.LastName;
             return View(appointment);
         }
 
         [HttpPost]
         public ActionResult BookingAppointment(BookingAppointment model)
         {
+            model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", model.StudentId);
+            model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", model.InstructorNumber);
+            model.DrivingTypeList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text", model.BookingType);
             return View(model);
         }
 

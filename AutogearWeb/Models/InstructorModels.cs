@@ -35,6 +35,9 @@ namespace AutogearWeb.Models
         public int StudentId { get; set; }
         public string InstructorName { get; set; }
         public string InstructorNumber { get; set; }
+        public string PickupLocation { get; set; }
+        public string MobileNumber { get; set; }
+        public string BookingType { get; set; }
         public string InstructorId { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan StopTime { get; set; }
@@ -42,6 +45,7 @@ namespace AutogearWeb.Models
         public DateTime? EndDate { get; set; }
         public SelectList InstructorList { get; set; }
         public SelectList StudentList { get; set; }
+        public SelectList DrivingTypeList { get; set; }
     }
     public class StudentList
     {
