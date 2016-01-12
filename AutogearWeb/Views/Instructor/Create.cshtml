@@ -105,9 +105,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Areas, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.AreaNames, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-6">
-                        @Html.DropDownList("Areas", Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area..." })
+                        @Html.DropDownListFor(model=> model.AreaNames, Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area..." })
                         
                     </div>
                 </div>

@@ -416,7 +416,8 @@ namespace AutogearWeb.Repositories
                 Mobile = model.Mobile,
                 Phone = model.Phone,
                 AddressId = instructorAddress.AddressId,
-                Status = model.Status
+                Status = model.Status,
+                Areas = model.AreaNames
             };
             DataContext.Instructors.Add(instructor);
             SaveInDatabase();

@@ -129,11 +129,12 @@ namespace AutogearWeb.Models
         [Display(Name = "Suburb Name")]
         public string SuburbName { get; set; }
         //[Required]
-        [Display(Name = "Area")]
+        [Display(Name = "Areas")]
+        public string AreaNames { get; set; }
+
+
         public SelectList Areas { get; set; }
-
         public bool Status { get; set; }
-
         public int SuburbId { get; set; }
         public int LastInstructor { get; set; }
         public string CreatedUser { get; set; }
