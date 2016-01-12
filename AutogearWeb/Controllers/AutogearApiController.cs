@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -32,9 +33,9 @@ namespace AutogearWeb.Controllers
             return await _instructorRepo.GetInstructorList();
         }
 
-        public async Task<IList<TblStudent>> GetStudents()
+        public async Task<IList<TblStudent>> GetStudents(string searchtext, string date, Boolean addInactiveStudents)
         {
-            return await _studentRepo.GetStudentList();
+            return await _studentRepo.GetStudentList( searchtext,  date, addInactiveStudents);
         }
 
         public async Task<IList<int>> GetPostCodes(string suburbName)

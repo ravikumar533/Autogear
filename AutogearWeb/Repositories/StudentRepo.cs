@@ -127,7 +127,7 @@ namespace AutogearWeb.Repositories
             set { _tblStateses = value; }
         }
 
-        public async Task<List<TblStudent>> GetStudentList()
+        public async Task<List<TblStudent>> GetStudentList(string searchtext, string date, Boolean addInactiveStudents)
         {
             return await TblStudents.ToListAsync();
         }
