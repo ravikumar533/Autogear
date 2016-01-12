@@ -287,7 +287,7 @@ namespace AutogearWeb.Repositories
 
         public Instructor GetInstructorById(string instructorNumber)
         {
-            return DataContext.Instructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
+            return DataContext.Instructors.SingleOrDefault(s => s.InstructorNumber == instructorNumber);
         }
         public Instructor GetInstructorByName(string name)
         {

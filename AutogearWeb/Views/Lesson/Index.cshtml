@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "Lesson";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Update", "Edit", null, new { @class = "btn btn-info", id = "updateLesson" })
+</p>
+<table id="jqGrid"></table>
+<div id="jqGridPager"></div>
+@section Scripts{
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/jqGrid");
+    @Scripts.Render("~/bundles/jqueryUI");
+    @Scripts.Render("~/bundles/jqueryval");
+    
+    <script>
+        $(function () {
+            var baseUrl = "/Api/AutogearApi/";
+            var gridSelector = "#jqGrid";
+            var pagerSelector = "#jqGridPager";
+            var updateLesson = $("#updateLesson");
+
+            updateLesson.hide();
+            var parentColumn = $(gridSelector).closest("[class*='col-']");
+            //resize to fit page size
+            $(window).on("resize.jqGrid", function () {
+                $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+            });
+
+            //resize on sidebar collapse/expand
+            $(document).on("settings.ace.jqGrid", function (ev, eventName, collapsed) {
+                if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
+                    //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                    setTimeout(function () {
+                        $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+                    }, 0);
+                }
+            });
+
+
+            //it causes some flicker when reloading or navigating grid
+            //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+            //or go back to default browser checkbox styles for the grid
+            function styleCheckbox() {
+
+            }
+
+
+            //unlike navButtons icons, action icons in rows seem to be hard-coded
+            //you can change them like this in here if you want
+            function updateActionIcons() {
+
+            }
+
+            //replace icons with FontAwesome icons like above
+            function updatePagerIcons() {
+                var replacement =
+                {
+                    "ui-icon-seek-first": "ace-icon fa fa-angle-double-left bigger-140",
+                    "ui-icon-seek-prev": "ace-icon fa fa-angle-left bigger-140",
+                    "ui-icon-seek-next": "ace-icon fa fa-angle-right bigger-140",
+                    "ui-icon-seek-end": "ace-icon fa fa-angle-double-right bigger-140"
+                };
+                $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function () {
+                    var icon = $(this);
+                    var $class = $.trim(icon.attr("class").replace("ui-icon", ""));
+
+                    if ($class in replacement) icon.attr("class", "ui-icon " + replacement[$class]);
+                });
+            }
+
+            function enableTooltips(table) {
+                $(".navtable .ui-pg-button").tooltip({ container: "body" });
+                $(table).find(".ui-pg-div").tooltip({ container: "body" });
+            }
+
+
+            $(gridSelector).jqGrid({
+                url: baseUrl + "GetStudentEvents",
+                datatype: "json",
+                colNames: ['Name', 'StartDate', 'EndDate', 'StartTime', 'EndTime'],
+                colModel: [
+                    { label: 'Name', name: 'studentName', width: 70, editable: true },
+                    {
+                        label: 'StartDate', name: 'startDate', width: 40, editable: true,
+                        formatter: "date",
+                        formatoptions: { srcformat: "ISO8601Long", newformat: "d-M-Y" }
+                    },
+                    {
+                        label: 'EndDate', name: 'endDate', width: 40, editable: true,
+                        formatter: "date",
+                        formatoptions: { srcformat: "ISO8601Long", newformat: "d-M-Y" }
+                    },
+                    { label: 'StartTime', name: 'startTime', width: 40, editable: true },
+                    { label: 'EndTime', name: 'stopTime', width: 40, editable: true }
+                ],
+
+                viewrecords: true,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: pagerSelector,
+                altRows: false,
+                multiselect: false,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+                onSelectRow: function () {
+                    var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
+                    updateLesson.show();
+                    updateLesson.attr("href", "@Url.Action("Edit")?bookingId=" + rowKey);
+                },
+                loadComplete: function () {
+                    var table = this;
+                    setTimeout(function () {
+                        styleCheckbox(table);
+
+                        updateActionIcons(table);
+                        updatePagerIcons(table);
+                        enableTooltips(table);
+                    }, 0);
+                },
+
+
+                caption: "Lessons List",
+                defaultSearch: true
+
+                //,autowidth: true,
+            });
+            $(window).triggerHandler("resize.jqGrid");//trigger window resize to make the grid get the correct size
+            function styleSearchForm(form) {
+                var dialog = form.closest(".ui-jqdialog");
+                var buttons = dialog.find(".EditTable");
+                buttons.find(".EditButton a[id*='_reset']").addClass("btn btn-sm btn-info").find(".ui-icon").attr("class", "ace-icon fa fa-retweet");
+                buttons.find(".EditButton a[id*='_query']").addClass("btn btn-sm btn-inverse").find(".ui-icon").attr("class", "ace-icon fa fa-comment-o");
+                buttons.find(".EditButton a[id*='_search']").addClass("btn btn-sm btn-purple").find(".ui-icon").attr("class", "ace-icon fa fa-search");
+            }
+
+            function styleSearchFilters(form) {
+                form.find(".delete-rule").val("X");
+                form.find(".add-rule").addClass("btn btn-xs btn-primary");
+                form.find(".add-group").addClass("btn btn-xs btn-success");
+                form.find(".delete-group").addClass("btn btn-xs btn-danger");
+            }
+            jQuery(gridSelector).jqGrid("navGrid", pagerSelector,
+                {
+                    search: true,
+                    searchicon: "ace-icon fa fa-search orange",
+                    refresh: true,
+                    refreshicon: "ace-icon fa fa-refresh green",
+                    view: true,
+                    viewicon: "ace-icon fa fa-search-plus grey"
+                },
+                {
+                    //edit record form
+                },
+                {
+                    //new record form
+                },
+                {
+                    //delete record form
+                },
+                {
+                    //search form
+                    recreateForm: true,
+                    afterShowSearch: function (e) {
+                        var form = $(e[0]);
+                        form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
+                        styleSearchForm(form);
+                    },
+                    afterRedraw: function () {
+                        styleSearchFilters($(this));
+                    },
+                    multipleSearch: true
+                },
+                {
+                    //view record form
+                    recreateForm: true,
+                    beforeShowForm: function (e) {
+                        var form = $(e[0]);
+                        form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
+                    }
+                }
+            );
+            $(document).one("ajaxloadstart.page", function () {
+                $.jgrid.gridDestroy(gridSelector);
+                $(".ui-jqdialog").remove();
+            });
+        });
+
+</script>
+}
