@@ -130,7 +130,7 @@ namespace AutogearWeb.Models
         public string SuburbName { get; set; }
         //[Required]
         [Display(Name = "Area")]
-        public string Areas { get; set; }
+        public SelectList Areas { get; set; }
 
         public bool Status { get; set; }
 

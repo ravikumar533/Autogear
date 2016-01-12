@@ -18,7 +18,7 @@ namespace AutogearWeb.Repositories
 
         public AutogearDBEntities DataContext { get; set; }
 
-        public  InstructorRepo()
+        public InstructorRepo()
         {
             DataContext = new AutogearDBEntities();
         }
@@ -73,7 +73,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date,Gender = s.Gender, AddressId = s.AddressId ?? 0 ,Status = s.Status ?? false});
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date, Gender = s.Gender, AddressId = s.AddressId ?? 0, Status = s.Status ?? false });
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -90,7 +90,7 @@ namespace AutogearWeb.Repositories
                                            s =>
                                                new InstructorLeaveModel
                                                {
-                                                   Id=s.Id,
+                                                   Id = s.Id,
                                                    InstructorId = s.InstructorId,
                                                    LeaveReason = s.Reason,
                                                    StartDate = s.StartDate,
@@ -208,7 +208,7 @@ namespace AutogearWeb.Repositories
             var model = new InstructorModel();
             if (instructor != null)
             {
-                
+
                 model.FirstName = instructor.FirstName;
                 model.LastName = instructor.LastName;
                 model.InstructorNumber = instructor.InstructorNumber;
@@ -233,7 +233,7 @@ namespace AutogearWeb.Repositories
 
         public IList<SelectListItem> GetInstructorNames()
         {
-            var instructors = new List<SelectListItem> {new SelectListItem {Value = "", Text = ""}};
+            var instructors = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
             foreach (var instructor in TblInstructors)
             {
                 var name = instructor.FirstName + " " + instructor.LastName;
@@ -246,10 +246,12 @@ namespace AutogearWeb.Repositories
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
         {
             var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);
-            var bookingAppointment = new BookingAppointment {BookingId = bookingAppointmentId};
+            var bookingAppointment = new BookingAppointment { BookingId = bookingAppointmentId };
             if (booking != null)
             {
+
                 bookingAppointment.StudentId = booking.StudentId;
+
                 var instructor = TblInstructors.FirstOrDefault(s => s.InstructorId == booking.InstructorId);
                 if (instructor != null)
                     bookingAppointment.InstructorName = instructor.FirstName + " " + instructor.LastName;
@@ -262,7 +264,7 @@ namespace AutogearWeb.Repositories
             }
             return bookingAppointment;
         }
-        
+
         public Instructor GetInstructorByEmail(string email)
         {
             return DataContext.Instructors.SingleOrDefault(s => s.Email == email);
@@ -383,7 +385,7 @@ namespace AutogearWeb.Repositories
 
         public void SaveInstructor(RegisterViewModel model)
         {
-           
+
             // Save Address
             var instructorAddress = new Address
             {
@@ -411,13 +413,13 @@ namespace AutogearWeb.Repositories
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Gender = model.Gender.ToString(),
-                Mobile =model.Mobile,
+                Mobile = model.Mobile,
                 Phone = model.Phone,
-                AddressId =instructorAddress.AddressId,
+                AddressId = instructorAddress.AddressId,
                 Status = model.Status
             };
             DataContext.Instructors.Add(instructor);
-          SaveInDatabase();
+            SaveInDatabase();
         }
 
         public void UpdateInstructor(InstructorModel model)
@@ -514,6 +516,15 @@ namespace AutogearWeb.Repositories
         public async Task<IList<AreaModel>> GetArea()
         {
             return await TblArea.ToListAsync();
+        }
+        public IList<SelectListItem> GetAreasList()
+        {
+            var areas = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            foreach (var area in TblArea)
+            {
+                areas.Add(new SelectListItem { Value = area.AreaId.ToString(), Text = area.Name });
+            }
+            return areas;
         }
 
         public AreaModel GetAreaById(int areaId)

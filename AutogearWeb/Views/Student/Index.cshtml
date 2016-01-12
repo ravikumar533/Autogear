@@ -6,6 +6,7 @@
 
 <p>
     @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Update", "Edit", new object { }, new { @class = "btn btn-info", id = "UpdateStudent" })
 </p>
 <table id="jqGrid"></table>
 <div id="jqGridPager"></div>
@@ -16,12 +17,68 @@
     <script>
         $(function() {
             var baseUrl = "/Api/AutogearApi/";
+            var gridSelector = "#jqGrid";
+            var pagerSelector = "#jqGridPager";
+            var updateInstructor = $("#UpdateInstructor");
+
+            updateInstructor.hide();
+            var parentColumn = $(gridSelector).closest("[class*='col-']");
+            //resize to fit page size
+            $(window).on("resize.jqGrid", function () {
+                $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+            });
+
+            //resize on sidebar collapse/expand
+            $(document).on("settings.ace.jqGrid", function (ev, eventName, collapsed) {
+                if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
+                    //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                    setTimeout(function () {
+                        $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+                    }, 0);
+                }
+            });
+
+
+            //it causes some flicker when reloading or navigating grid
+            //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+            //or go back to default browser checkbox styles for the grid
+            function styleCheckbox() {
+
+            }
+
+
+            //unlike navButtons icons, action icons in rows seem to be hard-coded
+            //you can change them like this in here if you want
+            function updateActionIcons() {
+
+            }
+
+            //replace icons with FontAwesome icons like above
+            function updatePagerIcons() {
+                var replacement =
+                {
+                    "ui-icon-seek-first": "ace-icon fa fa-angle-double-left bigger-140",
+                    "ui-icon-seek-prev": "ace-icon fa fa-angle-left bigger-140",
+                    "ui-icon-seek-next": "ace-icon fa fa-angle-right bigger-140",
+                    "ui-icon-seek-end": "ace-icon fa fa-angle-double-right bigger-140"
+                };
+                $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function () {
+                    var icon = $(this);
+                    var $class = $.trim(icon.attr("class").replace("ui-icon", ""));
+
+                    if ($class in replacement) icon.attr("class", "ui-icon " + replacement[$class]);
+                });
+            }
+
+            function enableTooltips(table) {
+                $(".navtable .ui-pg-button").tooltip({ container: "body" });
+                $(table).find(".ui-pg-div").tooltip({ container: "body" });
+            }
             $("#jqGrid").jqGrid({
                 url: baseUrl + "GetStudents",
                 datatype: "json",
                 colModel: [
-                {
-                    label: "StudentId",
+                {                    label: "StudentId",
                     name: "studentId",
                     width: 100,
                     key: true,
@@ -64,7 +121,16 @@
                 width: 780,
                 height: 200,
                 rowNum: 10,
-                pager: "#jqGridPager"
+                pager: "#jqGridPager",
+                altRows: false,
+                multiselect: false,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+                onSelectRow:function() {
+                    var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
+                    $("#UpdateStudent").show();
+                    $("#UpdateStudent").attr("href", "@Url.Action("Edit")?studentId=" + rowKey);
+                }
             });
 
         });

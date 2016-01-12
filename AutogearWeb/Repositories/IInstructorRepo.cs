@@ -42,7 +42,7 @@ namespace AutogearWeb.Repositories
         void CreateNewArea(string currentUser, AreaModel areaDetails);
         void UpdateArea(string currentUser, AreaModel areaDetails);
         void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
-
+        IList<SelectListItem> GetAreasList();
 
     }
 }

@@ -210,7 +210,7 @@ namespace AutogearWeb.Repositories
                     var instructorDetails = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == instructor.InstructorId);
                     if (instructorDetails != null)
                     {
-                        studentModel.InstructorName = instructorDetails.FirstName + " " + instructorDetails.LastName;
+                        studentModel.InstructorNumber = instructorDetails.InstructorNumber;
                     }
                 }
 
@@ -343,11 +343,11 @@ namespace AutogearWeb.Repositories
                 DataContext.Student_License.Add(studentLicense);
                 DataContext.SaveChanges();
 
-                if (!string.IsNullOrEmpty(studentModel.InstructorName))
+                if (!string.IsNullOrEmpty(studentModel.InstructorNumber))
                 {
                     var instructor =
                         DataContext.Instructors.SingleOrDefault(
-                            s => (s.FirstName + " " + s.LastName) == studentModel.InstructorName);
+                            s => (s.InstructorNumber) == studentModel.InstructorNumber);
                     // Booking Information
                     if (instructor != null)
                     {

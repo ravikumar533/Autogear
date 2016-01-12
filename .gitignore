@@ -3,4 +3,5 @@
 /AutogearWeb/Properties/
 /AutogearWeb/Properties/PublishProfiles
 /AutogearWeb/obj/
-/Autogear.v12
+/Autogear.v12.suo
+*.suo
