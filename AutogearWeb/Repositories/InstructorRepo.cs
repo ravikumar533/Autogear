@@ -244,6 +244,11 @@ namespace AutogearWeb.Repositories
             return instructors;
         }
 
+        public TblInstructor GetInstructorDetailsById(string instructorId)
+        {
+            return TblInstructors.SingleOrDefault(s => s.InstructorId == instructorId);
+        }
+
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
         {
             var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);

@@ -80,8 +80,9 @@
             $(gridSelector).jqGrid({
                 url: baseUrl + "GetStudentEvents",
                 datatype: "json",
-                colNames: ['Name', 'StartDate', 'EndDate', 'StartTime', 'EndTime'],
+                colNames: ['','Name', 'StartDate', 'EndDate', 'StartTime', 'EndTime'],
                 colModel: [
+                    {label:'Id',name:'bookingId',hidden:true},
                     { label: 'Name', name: 'studentName', width: 70, editable: true },
                     {
                         label: 'StartDate', name: 'startDate', width: 40, editable: true,
@@ -107,8 +108,9 @@
                 multiboxonly: true,
                 onSelectRow: function () {
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
+                    var rowData = jQuery(gridSelector).jqGrid('getRowData', rowKey);
                     updateLesson.show();
-                    updateLesson.attr("href", "@Url.Action("Edit")?bookingId=" + rowKey);
+                    updateLesson.attr("href", "@Url.Action("Edit")?bookingId=" + rowData.bookingId);
                 },
                 loadComplete: function () {
                     var table = this;

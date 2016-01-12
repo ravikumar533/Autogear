@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace AutogearWeb.Models
@@ -28,9 +24,13 @@ namespace AutogearWeb.Models
         public TimeSpan StopTime { get; set; }
         [Required]
         [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? StartDate { get; set; }
         [Required]
         [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
         public SelectList InstructorList { get; set; }
         public SelectList StudentList { get; set; }

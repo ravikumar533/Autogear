@@ -23,6 +23,7 @@ namespace AutogearWeb.Repositories
         Instructor GetInstructorByName(string name);
         Instructor GetInstructorById(string instructorNumber);
         InstructorModel GetInstructorByNumber(string instructorNumber);
+        TblInstructor GetInstructorDetailsById(string instructorId);
         InstructorLeaveModel GetInstructorLeaveById(int leaveId);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
@@ -43,6 +44,7 @@ namespace AutogearWeb.Repositories
         void UpdateArea(string currentUser, AreaModel areaDetails);
         void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
         IList<SelectListItem> GetAreasList();
+
 
     }
 }
