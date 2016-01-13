@@ -266,9 +266,10 @@ namespace AutogearWeb.Repositories
         {
             
             var studentDetails =
-                TblStudents.FirstOrDefault(s => (s.FirstName + " " + s.LastName) == bookingAppointment.StudentName);
+                TblStudents.FirstOrDefault(s => s.StudentId == bookingAppointment.StudentId);
             if (studentDetails != null)
             {
+
                 var startDate = Convert.ToDateTime(bookingAppointment.StartDate);
                 var endDate = Convert.ToDateTime( bookingAppointment.EndDate);
                 var days =endDate.Subtract(startDate).Days;
@@ -285,12 +286,14 @@ namespace AutogearWeb.Repositories
                     bookingDetails.BookingDate = DateTime.Now;
                     bookingDetails.StartTime = bookingAppointment.StartTime;
                     bookingDetails.EndTime = bookingAppointment.StopTime;
-                    bookingDetails.Status = "Learning";
+                    bookingDetails.Status = bookingAppointment.BookingType;
                     bookingDetails.StudentId = studentDetails.StudentId;
                     bookingDetails.CreatedBy = currentUser;
                     bookingDetails.CreatedDate = DateTime.Now;
                     bookingDetails.StartDate = bookingDate;
                     bookingDetails.EndDate = bookingDate;
+                    bookingDetails.PickupLocation = bookingAppointment.PickupLocation;
+                    bookingDetails.Type = bookingAppointment.BookingType;
                     if (bookingAppointment.BookingId == 0)
                         DataContext.Bookings.Add(bookingDetails);
                     DataContext.SaveChanges();

@@ -117,19 +117,15 @@ namespace AutogearWeb.Models
         public string AddressLine1 { get; set; }
          [Display(Name = "Address2")]
         public string AddressLine2 { get; set; }
-        //[Required]
-        [Display(Name = "Postal Code")]
+       
+        [Display(Name = "Areas")]
+        public string AreaNames { get; set; }
+
         public string PostalCode { get; set; }
-        [Required]
-        [Display(Name = "Suburb Name")]
         public string SuburbName { get; set; }
         public int SuburbId { get; set; }
-       // [Required]
-        [Display(Name="Area")]
-        public string Areas { get; set; }
-
+        public MultiSelectList Areas { get; set; }
         public bool Status { get; set; }
-
         public string CreatedUser { get; set; }
     }
 

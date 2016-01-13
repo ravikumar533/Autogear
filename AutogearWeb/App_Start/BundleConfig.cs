@@ -42,6 +42,7 @@ namespace AutogearWeb
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryUI").Include(
+                "~/Scripts/jquery.form.js",
                 "~/Scripts/jquery-ui-1.11.4.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/bootstrappicker").Include(

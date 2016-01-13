@@ -9,13 +9,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("SaveAppointment", "Instructor", FormMethod.Post, new { id = "signupform" }))
                 {
                     <div class="form-horizontal">
                         <h4>Booking Lesson</h4>
                         <hr />
                         @Html.HiddenFor(model => model.BookingId)
-                        @Html.HiddenFor(model=>model.InstructorNumber)
                         <div class="form-group">
                             @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
@@ -32,7 +31,7 @@
                             <div class="col-md-9">
                                 <div class="widget-body">
                                     <div class="widget-main padding-6">
-                                        @Html.DropDownListFor(model=> model.InstructorName, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
+                                        @Html.DropDownListFor(model=> model.InstructorNumber, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
                                     </div>
                                 </div>
                            
@@ -109,7 +108,7 @@
                             <div class="col-md-9">
                                 <div class="widget-body">
                                     <div class="widget-main padding-6">
-                                        @Html.DropDownListFor(model => model.BookingType, Model.StudentList, new { @class = "chosen-select form-control", data_placeholder = "Search a Student..." })
+                                        @Html.DropDownListFor(model => model.BookingType, Model.DrivingTypeList, new { @class = "chosen-select form-control", data_placeholder = "Search a Student..." })
                                     </div>
                                 </div>
                                 @Html.ValidationMessageFor(model => model.BookingType, "", new { @class = "text-danger" })
@@ -118,7 +117,7 @@
                         <div class="=row">
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-3 col-md-9">
-                                    <input type="button" value="Create" class="btn btn-info" id="submitForm" />
+                                    <input type="submit" value="Create" class="btn btn-info" id="submitForm" />
                                     &nbsp; &nbsp; &nbsp;
                                     <input type="button" value="Cancel" class="btn btn-undo" id="cancel" />
                                 </div>
@@ -126,8 +125,6 @@
                         </div>
                     </div>
                 }
-
-
             </div>
         </div>
     </div>

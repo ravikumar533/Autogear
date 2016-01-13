@@ -133,7 +133,7 @@ namespace AutogearWeb.Models
         public string AreaNames { get; set; }
 
 
-        public SelectList Areas { get; set; }
+        public MultiSelectList Areas { get; set; }
         public bool Status { get; set; }
         public int SuburbId { get; set; }
         public int LastInstructor { get; set; }

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Antlr.Runtime;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -61,7 +62,13 @@ namespace AutogearWeb.Repositories
                                            BookingDate = s.BookingDate,
                                            StudentId = s.StudentId,
                                            StartDate = s.StartDate,
-                                           EndDate = s.EndDate
+                                           EndDate = s.EndDate,
+                                           DropLocation = s.DropLocation,
+                                           PickupLocation =s.PickupLocation,
+                                           PackageId = s.PackageId,
+                                           Discount = s.Discount,
+                                           Type = s.Type
+                                           
                                        });
                 return _tblBookings;
             }
@@ -146,6 +153,11 @@ namespace AutogearWeb.Repositories
             return await TblInstructors.ToListAsync();
         }
 
+        public string CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
+        {
+            string message = "";
+            return message;
+        }
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
@@ -252,7 +264,7 @@ namespace AutogearWeb.Repositories
                 bookingAppointment.StudentId = booking.StudentId;
                 var instructor = TblInstructors.FirstOrDefault(s => s.InstructorId == booking.InstructorId);
                 if (instructor != null)
-                    bookingAppointment.InstructorName = instructor.FirstName + " " + instructor.LastName;
+                    bookingAppointment.InstructorNumber = instructor.InstructorNumber;
                 if (booking.StartTime != null)
                     bookingAppointment.StartTime = booking.StartTime.Value;
                 if (booking.StopTime != null)
@@ -261,6 +273,7 @@ namespace AutogearWeb.Repositories
                 bookingAppointment.EndDate = booking.EndDate;
                 bookingAppointment.PickupLocation = booking.PickupLocation;
                 bookingAppointment.BookingType = booking.Type;
+                
             }
             return bookingAppointment;
         }
@@ -395,7 +408,7 @@ namespace AutogearWeb.Repositories
                 Mobile = model.Mobile,
                 PostCode = Convert.ToInt32(model.PostalCode),
                 CreatedDate = DateTime.Now,
-                CreatedBy = model.CreatedUser
+                CreatedBy = model.CreatedUser,
             };
             if (model.SuburbId != 0)
                 instructorAddress.SuburbID = model.SuburbId;
@@ -436,6 +449,7 @@ namespace AutogearWeb.Repositories
                 instructor.Status = model.Status;
                 instructor.Modified_Date = DateTime.Now;
                 instructor.Modified_By = model.CreatedUser;
+                instructor.Areas = model.AreaNames;
                 var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
                 if (instructorAddress != null)
                 {

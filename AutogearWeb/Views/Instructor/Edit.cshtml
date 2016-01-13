@@ -106,7 +106,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Areas, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.Areas, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Areas" } })
+                        @Html.ListBoxFor(model => model.AreaNames, Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area...", @multiple = "multiple" })
                         @Html.ValidationMessageFor(model => model.Areas, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -152,13 +152,14 @@
 </div>
 @section scripts{
 @Scripts.Render("~/bundles/jqueryUI");
-@Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/jqueryval");
+@Scripts.Render("~/bundles/chosenjs");
     <script>
         $(function() {
             var baseUrl = "/Api/AutogearApi/";
             var postalCode = $("#PostalCode");
             var suburbNames = $("#SuburbName");
-           
+            $(".chosen-select").chosen();
             $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
                 // postalCodes = data;
                 suburbNames.autocomplete({
