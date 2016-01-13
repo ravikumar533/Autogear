@@ -4,8 +4,6 @@
     ViewBag.Title = "Edit";
 }
 
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -13,6 +11,7 @@
    <div class="form-horizontal">
        <h2>Edit @(Model.FirstName + " " + Model.LastName)</h2>
        @Html.HiddenFor(model=> model.InstructorNumber)
+       @Html.HiddenFor(model=>model.AreaNames)
         <hr/>
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="row">
@@ -104,9 +103,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Areas, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.AreaIds, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.ListBoxFor(model => model.AreaNames, Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area...", @multiple = "multiple" })
+                        @Html.DropDownListFor(model => model.AreaIds, Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area...", @multiple = "multiple" })
                         @Html.ValidationMessageFor(model => model.Areas, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -159,7 +158,32 @@
             var baseUrl = "/Api/AutogearApi/";
             var postalCode = $("#PostalCode");
             var suburbNames = $("#SuburbName");
-            $(".chosen-select").chosen();
+            var areaNames = '@Model.AreaNames';
+            console.log(areaNames);
+            var split = areaNames.split(',');
+            for(var i=0;i< split.length;i++) {
+
+                $("AreaIds").find("option:eq(" + split[i] + ")").attr("selected", "selected");
+
+            }
+            $(".chosen-select").chosen().change(function () {
+                var self = this;
+                $("option", self).removeAttr("select");
+                var count = $(".result-selected", ".chosen-results").length;
+                var i = 0;
+                var ids = "";
+                $(".result-selected", ".chosen-results").each(function () {
+                    i++;
+                    var index = $(this).attr("data-option-array-index");
+                    $("option:eq(" + index + ")", self).attr("selected", "selected");
+                    ids += index;
+                    if (i == count) {
+                        $("#AreaNames").val(ids);
+                    } else {
+                        ids += ",";
+                    }
+                });
+            });
             $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
                 // postalCodes = data;
                 suburbNames.autocomplete({

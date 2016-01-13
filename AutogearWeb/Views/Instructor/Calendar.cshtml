@@ -107,9 +107,15 @@
                             minLength: 2
                         });
                         modal.find('#signupform').ajaxForm({
-                            dataType: "HTML",
-                            success: function(data) {
-                                document.location.reload();
+                            dataType: "JSON",
+                            success: function (data) {
+                                console.log(data);
+                                if (data["StatusName"] == "Success")
+                                //document.location.reload();
+                                    calendar.fullCalendar('refresh');
+                                else {
+                                    modal.find("#appointmentError").show();
+                                }
                             }
                         });
                         modal.find("#cancel").on("click", function(ev) {
@@ -153,7 +159,8 @@
                         modal.find('#signupform').ajaxForm({
                             dataType: "JSON",
                             success: function(data) {
-                                document.location.reload();
+                                //document.location.reload();
+                                calendar.fullCalendar('refresh');
                             },
                             error: function(data) {
                                 console.log(data);

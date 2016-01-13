@@ -17,7 +17,7 @@ namespace AutogearWeb.Models
         public DateTime? CreatedDate { get; set; }
         public int AddressId { get; set; }
         public bool Status { get; set; }
-
+        public string AreaIds { get; set; }
     }
 
     public class InstructorBooking
@@ -122,7 +122,7 @@ namespace AutogearWeb.Models
         public string AddressLine2 { get; set; }
        
         [Display(Name = "Areas")]
-        public string AreaNames { get; set; }
+         public string AreaIds { get; set; }
 
         public string PostalCode { get; set; }
         public string SuburbName { get; set; }
@@ -130,6 +130,7 @@ namespace AutogearWeb.Models
         public MultiSelectList Areas { get; set; }
         public bool Status { get; set; }
         public string CreatedUser { get; set; }
+        public string AreaNames { get; set; }
     }
 
     public class PackageModel
@@ -160,5 +161,11 @@ namespace AutogearWeb.Models
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+    }
+
+    public class Status
+    {
+        public string StatusName { get; set; }
+        public string Message { get; set; }
     }
 }

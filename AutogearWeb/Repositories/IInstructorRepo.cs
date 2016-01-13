@@ -29,7 +29,7 @@ namespace AutogearWeb.Repositories
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
         Task<IList<AllInstructorsLeavesModel>> GetAllInstructorsLeaves();
         Task<IList<AllInstructorsLeavesModel>> GetInstructorLeavesByName(string instructorNumber);
-        string CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment);
+        Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment);
         int GetLatestInstructorId();
         Task<IList<PackageModel>> GetPackages();
         PackageModel GetPackagesById(int packageId);
@@ -44,7 +44,7 @@ namespace AutogearWeb.Repositories
         void CreateNewArea(string currentUser, AreaModel areaDetails);
         void UpdateArea(string currentUser, AreaModel areaDetails);
         void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
-        IList<SelectListItem> GetAreasList();
+        IList<SelectListItem> GetAreasList(string areaIds);
 
 
     }

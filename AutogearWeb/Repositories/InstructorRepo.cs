@@ -79,7 +79,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date, Gender = s.Gender, AddressId = s.AddressId ?? 0, Status = s.Status ?? false });
+                _tblInstructors = _tblInstructors ?? DataContext.Instructors.Select(s => new TblInstructor { Email = s.Email, FirstName = s.FirstName, LastName = s.LastName, InstructorId = s.InstructorId, Mobile = s.Mobile, Phone = s.Phone, InstructorNumber = s.InstructorNumber, CreatedDate = s.Created_Date, Gender = s.Gender, AddressId = s.AddressId ?? 0, Status = s.Status ?? false ,AreaIds = s.Areas});
                 return _tblInstructors;
             }
             set { _tblInstructors = value; }
@@ -152,10 +152,25 @@ namespace AutogearWeb.Repositories
             return await TblInstructors.ToListAsync();
         }
 
-        public string CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
+        public Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
         {
-            string message = "";
-            return message;
+            Boolean flag = false;
+            var instructor = TblInstructors.FirstOrDefault(s => s.InstructorNumber == appointment.InstructorNumber);
+            var instructorBookings =
+                TblBookings.Where(
+                    s =>
+                        s.InstructorId  == instructor.InstructorId &&
+                        (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate) &&
+                        ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
+            var studentBookings =
+                TblBookings.Where(
+                    s =>
+                        s.StudentId == appointment.StudentId &&
+                        (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate) &&
+                        ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
+            if (instructorBookings.Count > 0 || studentBookings.Count > 0)
+                flag = true;
+            return flag;
         }
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
@@ -228,6 +243,8 @@ namespace AutogearWeb.Repositories
                 model.Mobile = instructor.Mobile;
                 model.Phone = instructor.Phone;
                 model.Status = instructor.Status;
+                model.AreaIds = instructor.AreaIds;
+                model.AreaNames = instructor.AreaIds;
                 if (!string.IsNullOrEmpty(instructor.Gender))
                     model.Gender = Convert.ToInt32(instructor.Gender);
                 var instructorAddress = TblAddresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
@@ -435,7 +452,7 @@ namespace AutogearWeb.Repositories
                 Phone = model.Phone,
                 AddressId = instructorAddress.AddressId,
                 Status = model.Status,
-                Areas = model.AreaNames
+                Areas = model.AreaIds
             };
             DataContext.Instructors.Add(instructor);
             SaveInDatabase();
@@ -537,12 +554,23 @@ namespace AutogearWeb.Repositories
         {
             return await TblArea.ToListAsync();
         }
-        public IList<SelectListItem> GetAreasList()
+        public IList<SelectListItem> GetAreasList(string areaIds)
         {
             var areas = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            
             foreach (var area in TblArea)
             {
-                areas.Add(new SelectListItem { Value = area.AreaId.ToString(), Text = area.Name });
+                areas.Add(new SelectListItem { Value = area.AreaId.ToString(), Text = area.Name  });
+            }
+            if (!string.IsNullOrEmpty(areaIds))
+            {
+                string[] areaNames = areaIds.Split(',');
+                foreach (var areaname in areaNames)
+                {
+                    var option = areas.FirstOrDefault(s => s.Value == areaname);
+                    if (option != null)
+                        option.Selected = true;
+                }
             }
             return areas;
         }

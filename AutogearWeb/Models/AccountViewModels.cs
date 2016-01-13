@@ -130,7 +130,7 @@ namespace AutogearWeb.Models
         public string SuburbName { get; set; }
         //[Required]
         [Display(Name = "Areas")]
-        public string AreaNames { get; set; }
+        public string AreaIds { get; set; }
 
 
         public MultiSelectList Areas { get; set; }
@@ -139,6 +139,7 @@ namespace AutogearWeb.Models
         public int LastInstructor { get; set; }
         public string CreatedUser { get; set; }
         public string InstructorId { get; set; }
+        public string AreaNames { get; set; }
     }
 
     public class ResetPasswordViewModel

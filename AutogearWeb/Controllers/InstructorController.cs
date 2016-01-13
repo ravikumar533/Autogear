@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -45,7 +46,7 @@ namespace AutogearWeb.Controllers
             var model = new RegisterViewModel
             {
                 GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text"),
-                Areas = new MultiSelectList(_instructorRepo.GetAreasList(), "Value", "Text"),
+                Areas = new MultiSelectList(_instructorRepo.GetAreasList(string.Empty), "Value", "Text"),
                 Status = true
             };
             return View(model);
@@ -111,14 +112,19 @@ namespace AutogearWeb.Controllers
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(model.InstructorNumber))
+                if (!_instructorRepo.CheckIsAnyAppointmentsForInsturcotrOrStudent(model))
                 {
-                    var instructor = _instructorRepo.GetInstructorById(model.InstructorNumber);
-                    if (instructor != null)
-                        model.InstructorId = instructor.InstructorId;
+                    if (!string.IsNullOrEmpty(model.InstructorNumber))
+                    {
+                        var instructor = _instructorRepo.GetInstructorById(model.InstructorNumber);
+                        if (instructor != null)
+                            model.InstructorId = instructor.InstructorId;
+                    }
+                    _studentRepo.SaveStudentAppointment(model, currentUser);
+                    return Json(new Status {StatusName = "Success", Message = ""});
                 }
-                _studentRepo.SaveStudentAppointment(model, currentUser);
-                return Json("ok");
+                return Json(new Status{ StatusName  ="Error",Message ="Instructor or Student are booked in this timings"});
+                
             }
             model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", model.StudentId);
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text",
@@ -148,10 +154,23 @@ namespace AutogearWeb.Controllers
 
         public ActionResult Edit(string instructorId)
         {
+            
             var model = _instructorRepo.GetInstructorByNumber(instructorId);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
-            model.Areas = new MultiSelectList(_instructorRepo.GetAreasList(), "Value", "Text");
-            
+            var areas = _instructorRepo.GetAreasList(model.AreaIds);
+            model.Areas = new MultiSelectList(areas, "Value", "Text",areas.Where(s=>s.Selected));
+            var ids = model.AreaNames.Split(',');
+            var length = ids.Length;
+            var i = 0;
+            model.AreaNames = "";
+            foreach (var id in ids)
+            {
+                i++;
+                model.AreaNames += areas.ToList().FindIndex(s => s.Value == id);
+                if (i != length)
+                    model.AreaNames += ",";
+            }
+       //     model.AreaNames = model.AreaNames;
             var suburb = _postalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
             {
@@ -193,7 +212,7 @@ namespace AutogearWeb.Controllers
             }
             model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
-            model.Areas = new MultiSelectList(_instructorRepo.GetAreasList(), "Value", "Text");
+            model.Areas = new MultiSelectList(_instructorRepo.GetAreasList(model.AreaNames), "Value", "Text");
           
             return View(model);
         }
