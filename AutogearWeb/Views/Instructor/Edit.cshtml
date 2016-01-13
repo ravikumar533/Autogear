@@ -161,11 +161,6 @@
             var areaNames = '@Model.AreaNames';
             console.log(areaNames);
             var split = areaNames.split(',');
-            for(var i=0;i< split.length;i++) {
-
-                $("AreaIds").find("option:eq(" + split[i] + ")").attr("selected", "selected");
-
-            }
             $(".chosen-select").chosen().change(function () {
                 var self = this;
                 $("option", self).removeAttr("select");
@@ -175,7 +170,7 @@
                 $(".result-selected", ".chosen-results").each(function () {
                     i++;
                     var index = $(this).attr("data-option-array-index");
-                    $("option:eq(" + index + ")", self).attr("selected", "selected");
+                    $("option:eq(" + index + ")", "#AreaIds").attr("selected", "selected");
                     ids += index;
                     if (i == count) {
                         $("#AreaNames").val(ids);
@@ -184,6 +179,13 @@
                     }
                 });
             });
+            for(var i=0;i< split.length;i++) {
+                $("option:eq(" + index + ")", self).attr("selected", "selected");
+                $("").find("option:eq(" + split[i] + ")").attr("selected", "selected");
+                if (i == split.length)
+                    $(".chosen-select").trigger("update");
+            }
+           
             $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
                 // postalCodes = data;
                 suburbNames.autocomplete({
