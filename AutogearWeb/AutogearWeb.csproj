@@ -227,6 +227,7 @@
     <Compile Include="Controllers\AutogearApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -308,6 +309,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InstructorModels.cs" />
+    <Compile Include="Models\LessonModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostalCodeModels.cs" />
     <Compile Include="Models\StudentModels.cs" />
@@ -900,6 +902,9 @@
     <Content Include="Views\Instructor\UpdateLeave.cshtml" />
     <Content Include="Views\Instructor\AllLeaves.cshtml" />
     <Content Include="Views\Instructor\Appointment.cshtml" />
+    <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Lesson\Create.cshtml" />
+    <Content Include="Views\Lesson\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Providers\" />

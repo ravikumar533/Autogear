@@ -26,9 +26,11 @@ namespace AutogearWeb.Models
         public string Title { get; set; }
         public string Start { get; set; }
         public string End { get; set; }
+        public string ClassName { get; set; }
     }
 
-    public class BookingAppointment
+
+    public class cbooking
     {
         public int BookingId { get; set; }
         public string StudentName { get; set; }
@@ -47,6 +49,7 @@ namespace AutogearWeb.Models
         public SelectList StudentList { get; set; }
         public SelectList DrivingTypeList { get; set; }
     }
+
     public class StudentList
     {
         public int BookingId { get; set; }

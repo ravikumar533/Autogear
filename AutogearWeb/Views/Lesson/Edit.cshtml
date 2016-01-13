@@ -1,0 +1,154 @@
+﻿@model AutogearWeb.Models.BookingAppointment
+
+@{
+    ViewBag.Title = "Edit Lesson";
+}
+
+@using (Html.BeginForm("Edit", "Lesson", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-horizontal">
+        <h4>Booking Lesson</h4>
+        <hr />
+        @Html.HiddenFor(model => model.BookingId)
+        @Html.HiddenFor(model => model.StudentId)
+        @Html.HiddenFor(model => model.InstructorId)
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="widget-body">
+                        <div class="widget-main padding-2">
+                            @Html.DropDownListFor(model => model.StudentId, Model.StudentList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Student..." })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StudentName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.InstructorName, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="widget-body">
+                        <div class="widget-main padding-2">
+                            @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.InstructorName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Start Date" } })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Test Date" } })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Start Time", @readonly = "readonly" } })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Start Time", @readonly = "readonly" } })
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="=row">
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Save
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Clear
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="@Url.Action("Index")" class="btn btn-danger">
+                        <i class="ace-icon fa fa-reply icon-only"></i>
+                        @Html.Raw("Back to list")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+    @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/bootstrappicker");
+    @Scripts.Render("~/bundles/chosenjs");
+    @Scripts.Render("~/bundles/jqueryUI");
+
+    <script type="text/javascript">
+        $(function() {
+            $(".chosen-select").chosen();
+            $("#StartDate,#EndDate").datepicker({
+                minDate: 0,
+                dateFormat: "dd/mm/yy"
+            });
+            $("#StartTime,#StopTime").timepicker({
+                minuteStep: 1,
+                showSeconds: false,
+                showMeridian: false,
+                disableFocus: true
+            }).on("focus", function () {
+                $(this).timepicker("showWidget");
+            }).on("changeTime.timepicker", function (e) {
+                var self = this;
+                var newhour = (e.time.hours) + 1;
+                var newTime = newhour + ":" + e.time.minutes;
+                if (self.id.indexOf("StartTime") > -1) {
+                    $("#StopTime").val(newTime);
+                }
+            });
+        });
+    </script>
+}

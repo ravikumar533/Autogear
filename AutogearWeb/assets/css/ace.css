@@ -7386,7 +7386,7 @@ fieldset[disabled] .btn-white.btn-grey.active {
 .label.label-info,
 .badge.badge-info,
 .badge-info {
-  background-color: #3a87ad;
+  background-color: #3a87ad !important;
 }
 .label-primary,
 .label.label-primary,
@@ -7398,19 +7398,19 @@ fieldset[disabled] .btn-white.btn-grey.active {
 .label.label-success,
 .badge.badge-success,
 .badge-success {
-  background-color: #82af6f;
+  background-color: #82af6f !important;
 }
 .label-danger,
 .label.label-danger,
 .badge.badge-danger,
 .badge-danger {
-  background-color: #d15b47;
+  background-color: #d15b47 !important;
 }
 .label-important,
 .label.label-important,
 .badge.badge-important,
 .badge-important {
-  background-color: #d15b47;
+  background-color: #d15b47 !important;
 }
 .label-inverse,
 .label.label-inverse,
@@ -14522,7 +14522,7 @@ div.dataTables_processing {
   border-radius: 0;
 }
 .fc-event:not([class*="label-"]) {
-  background-color: #abbac3;
+  /*background-color: #abbac3;*/
 }
 .fc-event.label-yellow {
   color: #996633;

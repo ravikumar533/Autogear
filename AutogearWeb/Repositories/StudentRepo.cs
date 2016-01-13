@@ -96,7 +96,7 @@ namespace AutogearWeb.Repositories
         {
             get
             {
-                _tblBookings = _tblBookings ?? DataContext.Bookings.Select(s => new TblBooking { BookingId = s.BookingId, BookingDate = s.BookingDate, DropLocation = s.DropLocation, PickupLocation = s.PickupLocation, PackageId = s.PackageId, StartTime = s.StartTime, StopTime = s.EndTime, InstructorId = s.InstructorId, StudentId = s.StudentId, Type = s.Type, Discount = s.Discount});
+                _tblBookings = _tblBookings ?? DataContext.Bookings.Select(s => new TblBooking { BookingId = s.BookingId, BookingDate = s.BookingDate, DropLocation = s.DropLocation, PickupLocation = s.PickupLocation, PackageId = s.PackageId, StartTime = s.StartTime, StopTime = s.EndTime, StartDate = s.StartDate, EndDate = s.EndDate, InstructorId = s.InstructorId, StudentId = s.StudentId, Type = s.Type, Discount = s.Discount });
                 return _tblBookings;
             }
             set { _tblBookings = value;  }
@@ -165,7 +165,9 @@ namespace AutogearWeb.Repositories
                 students.Add(new SelectListItem { Value = studentNumber.ToString(), Text = name  });
             }
             return students;
-        } // Fetch Instructor Names
+        } 
+        
+        // Fetch Instructor Names
         // ReSharper disable once FunctionComplexityOverflow
         public StudentModel GetStudentById(int studentId)
         {
@@ -300,6 +302,30 @@ namespace AutogearWeb.Repositories
                 }
             }
         }
+
+        public BookingAppointment GetBookingDetailsById(int bookingId)
+        {
+            var bookingDetailsById = new BookingAppointment();
+            var bookingDetails = TblStudentBookings.SingleOrDefault(s => s.BookingId == bookingId);
+            if (bookingDetails != null)
+            {
+                bookingDetailsById.BookingId = bookingDetails.BookingId;
+                bookingDetailsById.InstructorId = bookingDetails.InstructorId;
+                bookingDetailsById.StartDate = bookingDetails.StartDate;
+                bookingDetailsById.EndDate = bookingDetails.EndDate;
+                if (bookingDetails.StopTime != null) bookingDetailsById.StopTime = (TimeSpan) bookingDetails.StopTime;
+                if (bookingDetails.StartTime != null) bookingDetailsById.StartTime = (TimeSpan) bookingDetails.StartTime;
+                var studentDetails = TblStudents.SingleOrDefault(s => s.StudentId == bookingDetails.StudentId);
+                if (studentDetails != null)
+                {
+                    bookingDetailsById.StudentId = studentDetails.StudentId;
+                    bookingDetailsById.StudentName = studentDetails.FirstName + " " + studentDetails.LastName;
+                }
+
+            }
+            return bookingDetailsById;
+        }
+
         public void SaveStudent(StudentModel studentModel,string currentUser)
         {
             if (currentUser != null)

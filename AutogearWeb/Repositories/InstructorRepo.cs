@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Antlr.Runtime;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
 
@@ -178,7 +177,8 @@ namespace AutogearWeb.Repositories
                             Id = booking.BookingId,
                             Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                            Title = student.FirstName + " " + student.LastName
+                            Title = student.FirstName + " " + student.LastName,
+                            ClassName = "label-success"
                         });
                     }
                 }
@@ -255,6 +255,11 @@ namespace AutogearWeb.Repositories
             return instructors;
         }
 
+        public TblInstructor GetInstructorDetailsById(string instructorId)
+        {
+            return TblInstructors.SingleOrDefault(s => s.InstructorId == instructorId);
+        }
+
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
         {
             var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);
@@ -300,7 +305,7 @@ namespace AutogearWeb.Repositories
 
         public Instructor GetInstructorById(string instructorNumber)
         {
-            return DataContext.Instructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
+            return DataContext.Instructors.SingleOrDefault(s => s.InstructorNumber == instructorNumber);
         }
         public Instructor GetInstructorByName(string name)
         {
