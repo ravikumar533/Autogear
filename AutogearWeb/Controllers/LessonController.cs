@@ -82,6 +82,7 @@ namespace AutogearWeb.Controllers
             var model = _studentRepo.GetBookingDetailsById(bookingId);
             model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text");
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
+            model.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text");
             var instructorDetails = _instructorRepo.GetInstructorDetailsById(model.InstructorId);
             if (instructorDetails == null) return View(model);
             model.InstructorName = instructorDetails.FirstName + " " + instructorDetails.LastName;
