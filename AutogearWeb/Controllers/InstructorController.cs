@@ -145,7 +145,16 @@ namespace AutogearWeb.Controllers
                 StopTime =model.StopTime,
                 StartTime = model.StartTime,
             };
-            
+            if (string.IsNullOrEmpty(appointment.InstructorName))
+            {
+                var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+                var instructor = _instructorRepo.GetInstructorDetailsById(currentUser);
+                appointment.InstructorName = instructor.FirstName + " " + instructor.LastName+" "+ instructor.InstructorNumber;
+            }
+            if (string.IsNullOrEmpty(appointment.BookingType))
+            {
+                appointment.BookingType = "Learning";
+            }
             appointment.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
             appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", appointment.InstructorNumber);
             appointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text", appointment.BookingType);

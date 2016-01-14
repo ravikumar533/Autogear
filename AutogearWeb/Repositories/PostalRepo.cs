@@ -125,25 +125,28 @@ namespace AutogearWeb.Repositories
             return await TblPostCodeModels.Select(s => s.PostCodeId).ToListAsync();
         }
 
-        public async Task<IList<string>> GetSuburbNames()
+        public IList<string> GetSuburbNames()
         {
             var names = new List<string>();
             var suburbName = "";
             var suburbId = 0;
             int stateId = 0;
             var stateName = "";
-            foreach (var post in TblPostCodeModels)
+            var postCodeModels = TblPostCodeModels.ToList();
+            var subUrbModels = TblSuburbModels.ToList();
+            var stateModels = TblStateModels.ToList();
+            foreach (var post in postCodeModels)
             {
                 if (suburbId != post.SuburbId)
                 {
                     suburbId = post.SuburbId;
-                    var suburb = TblSuburbModels.FirstOrDefault(s => s.SuburbId == post.SuburbId);
+                    var suburb = subUrbModels.FirstOrDefault(s => s.SuburbId == post.SuburbId);
                     if (suburb != null)
                     {
                         suburbName = suburb.Name;
                         if (stateId != suburb.StateId)
                         {
-                            var state = TblStateModels.FirstOrDefault(s => s.StateId == suburb.StateId);
+                            var state = stateModels.FirstOrDefault(s => s.StateId == suburb.StateId);
                             if (state != null)
                                 stateName = state.Name;
                         }
@@ -153,7 +156,7 @@ namespace AutogearWeb.Repositories
 
             }
 
-            return await Task.Run(() => names);
+            return  names.ToList();
         }
 
         public TblStateModel GetStateById(int stateId)
