@@ -244,30 +244,11 @@
                 form.find(".delete-group").addClass("btn btn-xs btn-danger");
             }
 
-            $(gridSelector).jqGrid("navGrid", pagerSelector,
-                {
 
-                },
-                {
-                    //edit record form
+            $(gridSelector).jqGrid("navGrid", pagerSelector);
+          
+            $(document).one("ajaxloadstart.page", function (e) {
 
-                },
-                {
-                    //new record form
-
-                },
-                {
-                    //delete record form
-
-                },
-                {
-
-                },
-                {
-
-                }
-            );
-            $(document).one("ajaxloadstart.page", function(e) {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();
             });

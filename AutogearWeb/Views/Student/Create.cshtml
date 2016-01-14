@@ -15,7 +15,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "col-sm-2 control-label no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "" } })
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "First Name" } })
                         @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-6">
                         <div class="widget-body">
-                            <div class="widget-main padding-6">
+                            <div class="widget-main padding-2">
                                 @Html.DropDownListFor(model => model.Gender, Model.GendersList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Gender..." })
                             </div>
                         </div>
@@ -266,13 +266,13 @@
                     @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9 bootstrap-timepicker">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time"}})
+                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", placeholder = "Start Time" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-clock-o bigger-110"></i>
                             </span>
-                            @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
+                            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                         </div>
-                     </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
@@ -320,7 +320,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.DrivingTestPackageDisacount, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.EditorFor(model => model.DrivingTestPackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8" } })
+                        @Html.EditorFor(model => model.DrivingTestPackageDisacount, new { htmlAttributes = new { @class = "col-xs-10 col-sm-8", placeholder = "Disacount" } })
                         @Html.ValidationMessageFor(model => model.DrivingTestPackageDisacount, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -472,11 +472,11 @@
                     var newhour = (e.time.hours) + 1;
                     var newTime = newhour + ":" + e.time.minutes ;
                     if (self.id.indexOf("StartTime") > -1) {
-                        if (self.id.indexOf("DrivingTest") > -1) {
-                            $("#DrivingTestStopTime").val(newTime);
-                        } else {
+                        //if (self.id.indexOf("DrivingTest") > -1) {
+                        //    $("#DrivingTestStopTime").val(newTime);
+                        //} else {
                             $("#StopTime").val(newTime);
-                        }
+                        //}
                     }
                 });
             });
