@@ -313,6 +313,8 @@ namespace AutogearWeb.Repositories
                 bookingDetailsById.InstructorId = bookingDetails.InstructorId;
                 bookingDetailsById.StartDate = bookingDetails.StartDate;
                 bookingDetailsById.EndDate = bookingDetails.EndDate;
+                bookingDetailsById.BookingType = bookingDetails.Type;
+                bookingDetailsById.PickupLocation = bookingDetails.PickupLocation;
                 if (bookingDetails.StopTime != null) bookingDetailsById.StopTime = (TimeSpan) bookingDetails.StopTime;
                 if (bookingDetails.StartTime != null) bookingDetailsById.StartTime = (TimeSpan) bookingDetails.StartTime;
                 var studentDetails = TblStudents.SingleOrDefault(s => s.StudentId == bookingDetails.StudentId);
