@@ -173,7 +173,9 @@
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
                 // ignoreTimezone: false,
-                timezone: "local"
+                timezone: "local",
+                viewrecords: true,
+                rowNum: 10
             });
 
             function fetchCalendarEvents(instructorName) {
@@ -190,15 +192,6 @@
             $("#InstructorName").change(function() {
                 fetchCalendarEvents($(this).val());
             });
-            //$.getJSON(baseUrl + "GetInstructorNames").then(function(data) {
-            //    $("#InstructorName").autocomplete({
-            //        source: data,
-            //        select: function(event, ui) {
-            //            fetchCalendarEvents(ui.item.value);
-            //        },
-            //        minLength: 2
-            //    });
-            //});
         });
     </script>
 }
