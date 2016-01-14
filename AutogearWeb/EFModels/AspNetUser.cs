@@ -18,8 +18,6 @@ namespace AutogearWeb.EFModels
         {
             this.Addresses = new HashSet<Address>();
             this.Addresses1 = new HashSet<Address>();
-            this.Bookings = new HashSet<Booking>();
-            this.Bookings1 = new HashSet<Booking>();
             this.Instructor_Leaves = new HashSet<Instructor_Leaves>();
             this.Instructor_Leaves1 = new HashSet<Instructor_Leaves>();
             this.Instructor_Student = new HashSet<Instructor_Student>();
@@ -29,6 +27,8 @@ namespace AutogearWeb.EFModels
             this.Students = new HashSet<Student>();
             this.Students1 = new HashSet<Student>();
             this.Users = new HashSet<User>();
+            this.Bookings = new HashSet<Booking>();
+            this.Bookings1 = new HashSet<Booking>();
         }
     
         public string Id { get; set; }
@@ -53,8 +53,6 @@ namespace AutogearWeb.EFModels
     
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<Address> Addresses1 { get; set; }
-        public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual ICollection<Booking> Bookings1 { get; set; }
         public virtual ICollection<Instructor_Leaves> Instructor_Leaves { get; set; }
         public virtual ICollection<Instructor_Leaves> Instructor_Leaves1 { get; set; }
         public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
@@ -65,5 +63,7 @@ namespace AutogearWeb.EFModels
         public virtual ICollection<Student> Students1 { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual Instructor Instructor { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Booking> Bookings1 { get; set; }
     }
 }
