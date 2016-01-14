@@ -142,12 +142,26 @@ namespace AutogearWeb.Repositories
 
         public IList<SelectListItem> GetPackages()
         {
-            return TblPackageDetails.Select(s => new SelectListItem { Text = s.PackageName , Value = s.PackageId.ToString()}).ToList();
+            var packages = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            foreach (var student in TblPackageDetails)
+            {
+                var name = student.PackageName;
+                var packageId = student.PackageId;
+                packages.Add(new SelectListItem { Value = packageId.ToString(), Text = name });
+            }
+            return packages;
         }
 
         public IList<SelectListItem> GetStateList()
         {
-            return TblStates.Select(s => new SelectListItem {Text = s.StateName, Value = s.StateId.ToString()}).ToList();
+            var states = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            foreach (var state in TblStates)
+            {
+                var name = state.StateName;
+                var packageId = state.StateId;
+                states.Add(new SelectListItem { Value = packageId.ToString(), Text = name });
+            }
+            return states;
         }
 
         public async Task<IList<string>> GetStudentNames()

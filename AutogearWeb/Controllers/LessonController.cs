@@ -54,13 +54,7 @@ namespace AutogearWeb.Controllers
             if (ModelState.IsValid)
             {
                 var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
-                var studentId = Convert.ToInt32(bookingAppointment.StudentId);
-                var student = _studentRepo.GetStudentById(studentId);
-                if (student != null)
-                {
-                    bookingAppointment.StudentName = student.FirstName + " " + student.LastName;
-                    bookingAppointment.StudentId = student.StudentId;
-                }
+                bookingAppointment.StudentId = bookingAppointment.StudentId;
                 if (!string.IsNullOrEmpty(bookingAppointment.InstructorNumber))
                 {
                     var instructor = _instructorRepo.GetInstructorById(bookingAppointment.InstructorNumber);
@@ -74,7 +68,10 @@ namespace AutogearWeb.Controllers
                 _studentRepo.SaveStudentAppointment(bookingAppointment, currentUser);
                 return View("Index");
             }
-            return View();
+            bookingAppointment.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text",bookingAppointment.StudentId);
+            bookingAppointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text",bookingAppointment.InstructorNumber);
+            bookingAppointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text",bookingAppointment.BookingType);
+            return View(bookingAppointment);
         }
 
         public ActionResult Edit(int bookingId)

@@ -6,14 +6,17 @@ namespace AutogearWeb.Models
 {
     public class BookingAppointment
     {
+
         public int BookingId { get; set; }
         [Display(Name = "Student Name")]
         public string StudentName { get; set; }
         [Required]
+        [Display(Name = "Student Name")]
         public int StudentId { get; set; }
         [Display(Name = "Instructor Name")]
         public string InstructorName { get; set; }
         [Required]
+        [Display(Name = "Instructor Name")]
         public string InstructorNumber { get; set; }
         public string InstructorId { get; set; }
         [Required]
@@ -35,8 +38,12 @@ namespace AutogearWeb.Models
         public SelectList InstructorList { get; set; }
         public SelectList StudentList { get; set; }
         public SelectList DrivingTypeList { get; set; }
+        [Display(Name = "Pickup Location")]
         public string PickupLocation { get; set; }
+        [Display(Name = "Mobile Number")]
         public string MobileNumber { get; set; }
+        [Required]
+        [Display(Name = "Booking Type")]
         public string BookingType { get; set; }
     }
 }

@@ -102,19 +102,24 @@ namespace AutogearWeb.Models
         public DateTime? StartDate { get; set; }
         public bool Status { get; set; }
         public SelectList InstructorList { get; set; }
+        [Required]
         [Display(Name="Instructor")]
         public string InstructorNumber { get; set; }
+        [Required]
         [Display(Name = "License Number")]
         public string LicenseNumber { get; set; }
         [Display(Name = "Expiry Date")]
         public DateTime? ExpiryDate { get; set; }
+        [Display(Name="State Name")]
         public int StateId { get; set; }
+        [Required]
         [Display(Name="Address1")]
         public string Address1 { get; set; }
         [Display(Name = "Address2")]
         public string Address2 { get; set; }
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
+        [Required]
         [Display(Name = "Suburb Name")]
         public string SuburbName { get; set; }
         [Display(Name = "Class")]

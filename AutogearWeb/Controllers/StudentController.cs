@@ -64,6 +64,7 @@ namespace AutogearWeb.Controllers
             model.StatesList = _iStudentRepo.GetStateList();
             model.LearningPackages = packages;
             model.DrivingPackages = packages;
+            model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             return View(model);
         }
         public ActionResult Edit(int studentId)
