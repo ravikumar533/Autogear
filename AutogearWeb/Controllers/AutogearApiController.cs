@@ -43,9 +43,9 @@ namespace AutogearWeb.Controllers
             return await _postalRepo.GetPostcodes(suburbName);
         }
 
-        public async Task<IList<string>> GetSubUrbs()
+        public IList<string> GetSubUrbs()
         {
-            return await _postalRepo.GetSuburbNames();
+            return  _postalRepo.GetSuburbNames();
         }
 
         public async Task<IList<TblPostCodeSuburbModel>> GetPostalCodewithSuburbs()
@@ -60,7 +60,7 @@ namespace AutogearWeb.Controllers
        
         public async Task<IList<StudentList>> GetStudentEvents()
         {
-             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
+            var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             return await _instructorRepo.GetStudentEvents(currentUser);
         }
 

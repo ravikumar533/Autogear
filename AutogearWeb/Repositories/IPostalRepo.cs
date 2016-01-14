@@ -26,7 +26,7 @@ namespace AutogearWeb.Repositories
         State GetState(string stateName);
         TblStateModel GetStateById(int stateId);
         Task<IList<int>> GetPostcodes(string suburbName);
-        Task<IList<string>> GetSuburbNames();
+        IList<string> GetSuburbNames();
         Task<IList<TblPostCodeSuburbModel>> GetPostCodeWithSuburbs();
     }
 }
