@@ -34,9 +34,13 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Gender, htmlAttributes: new {@class = "control-label col-md-2"})
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Gender, Model.GendersList, new {htmlAttributes = new {@class = "col-xs-10 col-sm-8", placeholder = "Gender"}})
-                        @Html.ValidationMessageFor(model => model.Gender, "", new {@class = "text-danger"})
+                    <div class="col-md-7">
+                        <div class="widget-body">
+                            <div class="widget-main padding-2">
+                                @Html.DropDownListFor(model => model.Gender, Model.GendersList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Gender..." })
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -103,25 +107,29 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AreaIds, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.AreaIds, Model.Areas, new { @class = "chosen-select form-control col-xs-10 col-sm-8", data_placeholder = "Choose a Area...", @multiple = "multiple" })
-                        @Html.ValidationMessageFor(model => model.Areas, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
-                    <div class="col-sm-9">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
-                                <span class="lbl"></span>
-                            </label>
-                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.AreaIds, htmlAttributes: new {@class = "control-label col-md-2 no-padding-right"})
+                    <div class="col-md-7">
+                        <div class="widget-body">
+                            <div class="widget-main padding-2">
+                                @Html.DropDownListFor(model => model.AreaIds, Model.Areas, new {@class = "chosen-select form-control ", data_placeholder = "Choose a Area..."})
+                                @Html.ValidationMessageFor(model => model.Areas, "", new {@class = "text-danger"})
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                            <div class="col-sm-9">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.Status, new { @class = "ace ace-switch" })
+                                        <span class="lbl"></span>
+                                    </label>
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </div>
         <div class="row">
             <div class="clearfix form-actions">
@@ -158,33 +166,7 @@
             var baseUrl = "/Api/AutogearApi/";
             var postalCode = $("#PostalCode");
             var suburbNames = $("#SuburbName");
-            var areaNames = '@Model.AreaNames';
-            console.log(areaNames);
-            var split = areaNames.split(',');
-            $(".chosen-select").chosen().change(function () {
-                var self = this;
-                $("option", self).removeAttr("select");
-                var count = $(".result-selected", ".chosen-results").length;
-                var i = 0;
-                var ids = "";
-                $(".result-selected", ".chosen-results").each(function () {
-                    i++;
-                    var index = $(this).attr("data-option-array-index");
-                    $("option:eq(" + index + ")", "#AreaIds").attr("selected", "selected");
-                    ids += index;
-                    if (i == count) {
-                        $("#AreaNames").val(ids);
-                    } else {
-                        ids += ",";
-                    }
-                });
-            });
-            for(var i=0;i< split.length;i++) {
-                $("option:eq(" + index + ")", self).attr("selected", "selected");
-                $("").find("option:eq(" + split[i] + ")").attr("selected", "selected");
-                if (i == split.length)
-                    $(".chosen-select").trigger("update");
-            }
+            $(".chosen-select").chosen();
            
             $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
                 // postalCodes = data;

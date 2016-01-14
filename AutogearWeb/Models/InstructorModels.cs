@@ -28,7 +28,6 @@ namespace AutogearWeb.Models
         public string End { get; set; }
         public string ClassName { get; set; }
     }
-
     
     public class StudentList
     {
@@ -107,7 +106,7 @@ namespace AutogearWeb.Models
         public string PostalCode { get; set; }
         public string SuburbName { get; set; }
         public int SuburbId { get; set; }
-        public MultiSelectList Areas { get; set; }
+        public SelectList Areas { get; set; }
         public bool Status { get; set; }
         public string CreatedUser { get; set; }
         public string AreaNames { get; set; }

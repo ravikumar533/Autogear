@@ -471,7 +471,7 @@ namespace AutogearWeb.Repositories
                 instructor.Status = model.Status;
                 instructor.Modified_Date = DateTime.Now;
                 instructor.Modified_By = model.CreatedUser;
-                instructor.Areas = model.AreaNames;
+                instructor.Areas = model.AreaIds;
                 var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
                 if (instructorAddress != null)
                 {

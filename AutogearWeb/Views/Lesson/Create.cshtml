@@ -36,7 +36,44 @@
                 </div>
             </div>
         </div>
-        
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new {@class = "control-label col-md-3"})
+                <div class="col-md-3">
+                    <div class="widget-body">
+                        <div class="widget-main padding-2">
+                            @Html.TextBoxFor(model => model.PickupLocation, new {@class = " form-control", placeholder = "Pick up Location"})
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.PickupLocation, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new {@class = "control-label col-md-3"})
+                <div class="col-md-3">
+                    <div class="widget-body">
+                        <div class="widget-main padding-2">
+                            @Html.TextBoxFor(model => model.MobileNumber, new {@class = " form-control", placeholder = "Mobile Number"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.BookingType, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-3">
+                    <div class="widget-body">
+                        <div class="widget-main padding-2">
+                            @Html.DropDownListFor(model => model.BookingType, Model.DrivingTypeList, new { @class = "chosen-select form-control", data_placeholder = "Search a Student..." })
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BookingType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <div class="row">
                 @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3" })

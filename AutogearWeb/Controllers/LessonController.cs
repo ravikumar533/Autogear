@@ -41,7 +41,8 @@ namespace AutogearWeb.Controllers
             var model = new BookingAppointment
             {
                 StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text"),
-                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text")
+                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text"),
+                DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(),"Value","Text")
             };
 
             return View(model);

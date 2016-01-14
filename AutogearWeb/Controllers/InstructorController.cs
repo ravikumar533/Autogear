@@ -158,7 +158,7 @@ namespace AutogearWeb.Controllers
             var model = _instructorRepo.GetInstructorByNumber(instructorId);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             var areas = _instructorRepo.GetAreasList(model.AreaIds);
-            model.Areas = new MultiSelectList(areas, "Value", "Text",areas.Where(s=>s.Selected));
+            model.Areas = new SelectList(areas, "Value", "Text");
             var ids = model.AreaNames.Split(',');
             var length = ids.Length;
             var i = 0;
@@ -212,7 +212,7 @@ namespace AutogearWeb.Controllers
             }
             model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
-            model.Areas = new MultiSelectList(_instructorRepo.GetAreasList(model.AreaNames), "Value", "Text");
+            model.Areas = new SelectList(_instructorRepo.GetAreasList(model.AreaNames), "Value", "Text");
           
             return View(model);
         }

@@ -40,9 +40,6 @@
             var baseUrl = "/Api/AutogearApi/";
             var instructor = "";
 
-            function bookingAppointment(bookingId) {
-
-            }
 
             $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
                 studentData = data;
@@ -50,14 +47,13 @@
 
             var calendar = $("#Calendar").fullCalendar({
                 defaultView: "agendaWeek",
-
                 header: {
                     left: "prev,next today",
                     center: "title",
                     right: "month,agendaWeek,agendaDay"
                 },
-                editable: false,                
-                eventDurationEditable:false,
+                editable: false,
+                eventDurationEditable: false,
                 allDaySlot: false,
                 slotDuration: "00:15:01",
                 //minTime: "06:00:00",
@@ -81,6 +77,7 @@
                         if (view.name === "month")
                             end = end.add("-1", "day");
                         var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(end));
+
                         modal.find("#StartTime,#StopTime").timepicker({
                             minuteStep: 1,
                             showSeconds: false,
@@ -99,21 +96,20 @@
                         modal.find("#StopTime").val(end.hours() + ":" + end.minutes());
                         modal.find("#InstructorName").val($("#InstructorName option:selected").text());
                         modal.find("#InstructorNumber").val($("#InstructorName").val());
+                        //  modal.find(".chosen-select").chosen();
                         //var stDate = new Date(start);
                         //var eDate = new Date(end);
 
-                        modal.find("#StudentName").autocomplete({
-                            source: studentData,
-                            minLength: 2
-                        });
                         modal.find('#signupform').ajaxForm({
                             dataType: "JSON",
-                            success: function (data) {
+                            success: function(data) {
                                 console.log(data);
                                 if (data["StatusName"] == "Success")
                                 //document.location.reload();
-                                    calendar.fullCalendar('refresh');
-                                else {
+                                {
+                                    fetchCalendarEvents($("#InstructorName").val());
+                                    modal.modal("hide");
+                                } else {
                                     modal.find("#appointmentError").show();
                                 }
                             }
@@ -138,10 +134,10 @@
                     }).success(function(data) {
                         modalDialog = data;
                         var modal = $(modalDialog).appendTo("body");
-                      
+
                         var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.start));
                         var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.end));
-
+                        modal.find(".chosen-select").chosen();
                         modal.find("#StartDate").val(startDate);
                         modal.find("#EndDate").val(endDate);
                         modal.find("#StartTime,#StopTime").timepicker({
@@ -149,7 +145,7 @@
                             showSeconds: false,
                             showMeridian: false,
                             disableFocus: true
-                        }).on("focus", function () {
+                        }).on("focus", function() {
                             $(this).timepicker("showWidget");
                         });
                         modal.find("#StartDate,#EndDate").datepicker({
@@ -160,13 +156,14 @@
                             dataType: "JSON",
                             success: function(data) {
                                 //document.location.reload();
-                                calendar.fullCalendar('refresh');
+                                modal.modal("hide");
+                                fetchCalendarEvents($("#InstructorName").val());
                             },
                             error: function(data) {
                                 console.log(data);
                             }
                         });
-                        modal.find("#cancel").on("click", function (ev) {
+                        modal.find("#cancel").on("click", function(ev) {
                             modal.modal("hide");
                         });
                         modal.modal("show").on("hidden", function() {
@@ -174,11 +171,9 @@
                         });
                     });
                 },
-                events:
-                    "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
+                events: "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
                 // ignoreTimezone: false,
-                timezone:
-                    "local"
+                timezone: "local"
             });
 
             function fetchCalendarEvents(instructorName) {
