@@ -51,6 +51,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -317,6 +320,9 @@
     <Compile Include="Models\PostalCodeModels.cs" />
     <Compile Include="Models\StudentModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\EmailAPI.cs" />
+    <Compile Include="Providers\Logger.cs" />
+    <Compile Include="Providers\SMSAPI.cs" />
     <Compile Include="Repositories\AutogearRepo.cs" />
     <Compile Include="Repositories\IAutogearRepo.cs" />
     <Compile Include="Repositories\IInstructorRepo.cs" />
@@ -817,6 +823,7 @@
       <DependentUpon>AutogearModel.edmx</DependentUpon>
       <LastGenOutput>AutogearModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Log4net.config" />
     <None Include="Properties\PublishProfiles\Autogear.pubxml" />
     <None Include="Properties\PublishProfiles\pnrit.com - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -909,9 +916,7 @@
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Lesson\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
