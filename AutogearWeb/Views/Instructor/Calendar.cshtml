@@ -25,6 +25,9 @@
 <div id="Calendar"></div>
 <div id="appointmentDialog"></div>
 
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="leaveModal">
+    <div class="modal-dialog modal-sm"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="mySmallModalLabel">Alert</h4> </div> <div class="modal-body"> You can not book Appointment on Leave </div> </div> </div>
+</div>
 @section Scripts
 {
     @Scripts.Render("~/bundles/bootstrap");
@@ -59,7 +62,7 @@
                 //minTime: "06:00:00",
                 //maxTime: "24:00:00",
 
-                defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToString("yyyy-MM-dd"))",
+                defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).ToString("yyyy-MM-dd"))",
                 selectable: true,
                 selectHelper: true,
                 select: function(start, end, allDay) {
@@ -124,52 +127,57 @@
                 },
                 //editable: true,
                 eventClick: function(calEvent, jsEvent, view) {
-                    $.ajax({
-                        url: "/Instructor/BookingAppointment",
-                        method: "POST",
-                        dataType: "html",
-                        data: {
-                            bookingId: calEvent.id
-                        }
-                    }).success(function(data) {
-                        modalDialog = data;
-                        var modal = $(modalDialog).appendTo("body");
-
-                        var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.start));
-                        var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.end));
-                        modal.find(".chosen-select").chosen();
-                        modal.find("#StartDate").val(startDate);
-                        modal.find("#EndDate").val(endDate);
-                        modal.find("#StartTime,#StopTime").timepicker({
-                            minuteStep: 1,
-                            showSeconds: false,
-                            showMeridian: false,
-                            disableFocus: true
-                        }).on("focus", function() {
-                            $(this).timepicker("showWidget");
-                        });
-                        modal.find("#StartDate,#EndDate").datepicker({
-                            minDate: 0,
-                            dateFormat: "yy-mm-dd"
-                        });
-                        modal.find('#signupform').ajaxForm({
-                            dataType: "JSON",
-                            success: function(data) {
-                                //document.location.reload();
-                                modal.modal("hide");
-                                fetchCalendarEvents($("#InstructorName").val());
-                            },
-                            error: function(data) {
-                                console.log(data);
+                    if (calEvent.id != 0) {
+                        $.ajax({
+                            url: "/Instructor/BookingAppointment",
+                            method: "POST",
+                            dataType: "html",
+                            data: {
+                                bookingId: calEvent.id
                             }
+                        }).success(function(data) {
+                            modalDialog = data;
+                            var modal = $(modalDialog).appendTo("body");
+
+                            var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.start));
+                            var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.end));
+                            modal.find(".chosen-select").chosen();
+                            modal.find("#StartDate").val(startDate);
+                            modal.find("#EndDate").val(endDate);
+                            modal.find("#StartTime,#StopTime").timepicker({
+                                minuteStep: 1,
+                                showSeconds: false,
+                                showMeridian: false,
+                                disableFocus: true
+                            }).on("focus", function() {
+                                $(this).timepicker("showWidget");
+                            });
+                            modal.find("#StartDate,#EndDate").datepicker({
+                                minDate: 0,
+                                dateFormat: "yy-mm-dd"
+                            });
+                            modal.find('#signupform').ajaxForm({
+                                dataType: "JSON",
+                                success: function(data) {
+                                    //document.location.reload();
+                                    modal.modal("hide");
+                                    fetchCalendarEvents($("#InstructorName").val());
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                }
+                            });
+                            modal.find("#cancel").on("click", function(ev) {
+                                modal.modal("hide");
+                            });
+                            modal.modal("show").on("hidden", function() {
+                                modal.remove();
+                            });
                         });
-                        modal.find("#cancel").on("click", function(ev) {
-                            modal.modal("hide");
-                        });
-                        modal.modal("show").on("hidden", function() {
-                            modal.remove();
-                        });
-                    });
+                    } else {
+                        $("#leaveModal").modal("show");
+                    }
+
                 },
                 events: "/Api/AutogearApi/GetBookingEvents?instructorNumber=" + instructor,
                 // ignoreTimezone: false,

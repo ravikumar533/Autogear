@@ -211,7 +211,7 @@ namespace AutogearWeb.Repositories
                 {
                     var startDate = leave.StartDate.Value;
                     var endDate = leave.EndDate.Value;
-                    for (var j = 0; j < endDate.Subtract(startDate).Days; j++)
+                    for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
                     {
                         var bookingDate = startDate.AddDays(j);
                         instuctorBookings.Add(
