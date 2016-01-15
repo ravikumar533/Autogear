@@ -614,6 +614,30 @@ namespace AutogearWeb.Repositories
 
         #endregion
 
+        #region Last 7Days Instructor Hours
+
+        public List<Last7DaysInstructorHours> GetLast7DaysInstructorHour()
+        {
+            var last7DaysInstructorHours = new List<Last7DaysInstructorHours>();
+            var hours = new TimeSpan();
+            var last7ThDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).AddDays(-6.0);
+            foreach (var instructor in TblInstructors.ToList())
+            {
+                var instructorDetail = instructor;
+                var bookingDetailsList = TblBookings.Where(s => s.InstructorId == instructorDetail.InstructorId && s.StartTime != null && s.StopTime != null && s.StartDate >= last7ThDay).ToList();
+                hours = (from bookingHour in bookingDetailsList where bookingHour.StartTime != null && bookingHour.StopTime != null select (bookingHour.StopTime.Value - bookingHour.StartTime.Value)).Aggregate(hours, (current, hour) => current + hour);
+                last7DaysInstructorHours.Add(new Last7DaysInstructorHours
+                {
+                    InstructorName = instructor.FirstName + " " + instructor.LastName,
+                    Hours = hours
+                });
+                hours = new TimeSpan();
+            }
+
+            return last7DaysInstructorHours;
+        }
+
+        #endregion
 
         public void SaveInDatabase()
         {
