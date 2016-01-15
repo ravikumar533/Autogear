@@ -31,7 +31,7 @@
                                 @Html.Label("StartDate", htmlAttributes: new { @class = "control-label col-sm-2" })
                                 <div class="col-sm-9">
                                     <div class="input-group col-xs-10 col-sm-8">
-                                        @Html.Editor("StartDate","", new { htmlAttributes = new { @class = "form-control", placeholder = "Start Date" } })
+                                        @Html.TextBox("StartDate", "", new { htmlAttributes = new { @class = "form-control date-pickerSD", placeholder = "Start Date" } })
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar bigger-110"></i>
                                         </span>
@@ -260,9 +260,9 @@
                 var url = baseUrl + "GetStudents?searchtext=" + searchtext + "&date=" + date + "&addInactiveStudents=" + addInactiveStudent;
                 $(gridSelector).jqGrid("setGridParam", { url: url, page: 1 }).trigger("reloadGrid");
             }
-
             $("#StartDate").datepicker({
-                dateFormat: "yy-mm-dd",
+                minDate: 0,
+                dateFormat: "dd-mm-yy",
                 onSelect: function(dateText, inst) {
                     doSearch();
                 }

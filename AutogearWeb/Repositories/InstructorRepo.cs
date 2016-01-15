@@ -168,16 +168,22 @@ namespace AutogearWeb.Repositories
                         s.StudentId == appointment.StudentId &&
                         (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate) &&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
-            if (instructorBookings.Count > 0 || studentBookings.Count > 0)
+            var leaves =
+                TblInstructorLeaves.Where(
+                    s => s.InstructorId == appointment.InstructorId &&
+                         (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate)
+                    ).ToList();
+            if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
                 flag = true;
             return flag;
         }
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
-            foreach (
-                var booking in
-                    TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId))
+            var tblInstructorLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorId);
+            var tblInstructorBookings =
+                TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId);
+            foreach (var booking in tblInstructorBookings)
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
                 if (student != null)
@@ -198,6 +204,30 @@ namespace AutogearWeb.Repositories
                     }
                 }
             }
+            // Fetch Instructor Leaves
+            foreach (var leave in tblInstructorLeaves)
+            {
+                if (leave.StartDate != null && leave.EndDate != null)
+                {
+                    var startDate = leave.StartDate.Value;
+                    var endDate = leave.EndDate.Value;
+                    for (var j = 0; j < endDate.Subtract(startDate).Days; j++)
+                    {
+                        var bookingDate = startDate.AddDays(j);
+                        instuctorBookings.Add(
+                            new InstructorBooking
+                            {
+                                Id = 0,
+                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,23,59,59).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                Title = leave.LeaveReason,
+                                ClassName = "label-yellow"
+                            }
+                            );
+                    }
+                }
+            }
+
             return await Task.Run(() => instuctorBookings);
         }
 

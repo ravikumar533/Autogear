@@ -7,3 +7,7 @@
     -o-text-overflow: ellipsis !important;
     text-overflow: ellipsis !important;
 }
+.fc-event.fc-start.fc-end.label-yellow {
+    background-color: RED !important;
+}
+ 
