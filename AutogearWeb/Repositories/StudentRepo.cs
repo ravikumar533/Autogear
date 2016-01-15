@@ -45,7 +45,8 @@ namespace AutogearWeb.Repositories
                             Status = student.Status,
                             AddressId = student.AddressId,
                             Email = student.Email,
-                            InstructorName = instructorStudent.Instructor.FirstName+ " " + instructorStudent.Instructor.LastName
+                            InstructorName = instructorStudent.Instructor.FirstName + " " + instructorStudent.Instructor.LastName,
+                            CreatedDate = student.CreatedDate
                         });
                 return _tblStudents;
 
@@ -543,6 +544,23 @@ namespace AutogearWeb.Repositories
         {
             
             return studentDetails;
+        }
+
+        public List<Last7DaysRegisterDetails> GetStudentRegisterDetails()
+        {
+            var last7DaysRegisteredStudents = new List<Last7DaysRegisterDetails>();
+            var last7Day = DateTime.Now.AddDays(-7.0);
+            for (var dt = last7Day; dt < DateTime.Now.Date; dt = dt.AddDays(1))
+            {
+                last7DaysRegisteredStudents.Add(new Last7DaysRegisterDetails
+                {
+
+                    Count = TblStudents.Count(s => DbFunctions.TruncateTime(s.CreatedDate) == dt.Date),
+                    CreatedDate = dt.Date.ToShortDateString()
+                });
+
+            }
+            return last7DaysRegisteredStudents;
         }
     }
 }
