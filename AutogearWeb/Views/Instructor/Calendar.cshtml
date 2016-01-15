@@ -4,22 +4,16 @@
 }
 @if (Model.IsUserAdmin)
 {
-    <div class="col-xs-12 col-sm-3 widget-container-col">
-        <div class="widget-box widget-color-dark light-border">
-            <div class="widget-header">
-                <h5 class="widget-title smaller">Search for Instructor</h5>
-            </div>
+    <div class="row form-horizontal">
+        <div class="col-lg-8 col-md-12">
+            <div class="form-group">
+                @Html.Label("Search for Instructor", htmlAttributes: new { @class = "control-label col-md-3 control-label no-padding-right" })
+                <div class="col-md-6">
+                    @Html.DropDownList("InstructorName", Model.InstructorList, new { @class = "chosen-select form-control col-xs-9 col-sm-9", data_placeholder = "Choose a Instructor..." })
 
-            <div class="widget-body">
-                <div class="widget-main padding-6">
-                    @Html.DropDownList("InstructorName", Model.InstructorList, new { @class = "chosen-select form-control" , data_placeholder="Choose a Instructor..."})
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-lg-12">&nbsp;</div>
     </div>
 }
 <div id="Calendar"></div>
@@ -36,7 +30,7 @@
     @Scripts.Render("~/bundles/jqueryUI");
     @Scripts.Render("~/bundles/Fullcalendar")
     <script>
-        $(function() {
+        $(function () {
             $(".chosen-select").chosen();
             var modalDialog = "";
             var studentData = "";
@@ -44,7 +38,7 @@
             var instructor = "";
 
 
-            $.getJSON(baseUrl + "GetStudentNames").success(function(data) {
+            $.getJSON(baseUrl + "GetStudentNames").success(function (data) {
                 studentData = data;
             });
 
@@ -65,14 +59,14 @@
                 defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).ToString("yyyy-MM-dd"))",
                 selectable: true,
                 selectHelper: true,
-                select: function(start, end, allDay) {
+                select: function (start, end, allDay) {
                     $.ajax({
                         url: "/Instructor/BookingAppointment",
                         method: "POST",
                         dataType: "html",
                         data: { bookingId: 0 }
 
-                    }).success(function(data) {
+                    }).success(function (data) {
                         modalDialog = data;
                         var modal = $(modalDialog).appendTo("body");
                         var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(start));
@@ -86,7 +80,7 @@
                             showSeconds: false,
                             showMeridian: false,
                             disableFocus: true
-                        }).on("focus", function() {
+                        }).on("focus", function () {
                             $(this).timepicker("showWidget");
                         });
                         modal.find("#StartDate,#EndDate").datepicker({
@@ -105,10 +99,10 @@
 
                         modal.find('#signupform').ajaxForm({
                             dataType: "JSON",
-                            success: function(data) {
+                            success: function (data) {
                                 console.log(data);
                                 if (data["StatusName"] == "Success")
-                                //document.location.reload();
+                                    //document.location.reload();
                                 {
                                     fetchCalendarEvents($("#InstructorName").val());
                                     modal.modal("hide");
@@ -117,16 +111,16 @@
                                 }
                             }
                         });
-                        modal.find("#cancel").on("click", function(ev) {
+                        modal.find("#cancel").on("click", function (ev) {
                             modal.modal("hide");
                         });
-                        modal.modal("show").on("hide", function() {
+                        modal.modal("show").on("hide", function () {
                             modal.remove();
                         });
                     });
                 },
                 //editable: true,
-                eventClick: function(calEvent, jsEvent, view) {
+                eventClick: function (calEvent, jsEvent, view) {
                     if (calEvent.id != 0) {
                         $.ajax({
                             url: "/Instructor/BookingAppointment",
@@ -135,7 +129,7 @@
                             data: {
                                 bookingId: calEvent.id
                             }
-                        }).success(function(data) {
+                        }).success(function (data) {
                             modalDialog = data;
                             var modal = $(modalDialog).appendTo("body");
 
@@ -149,7 +143,7 @@
                                 showSeconds: false,
                                 showMeridian: false,
                                 disableFocus: true
-                            }).on("focus", function() {
+                            }).on("focus", function () {
                                 $(this).timepicker("showWidget");
                             });
                             modal.find("#StartDate,#EndDate").datepicker({
@@ -158,19 +152,19 @@
                             });
                             modal.find('#signupform').ajaxForm({
                                 dataType: "JSON",
-                                success: function(data) {
+                                success: function (data) {
                                     //document.location.reload();
                                     modal.modal("hide");
                                     fetchCalendarEvents($("#InstructorName").val());
                                 },
-                                error: function(data) {
+                                error: function (data) {
                                     console.log(data);
                                 }
                             });
-                            modal.find("#cancel").on("click", function(ev) {
+                            modal.find("#cancel").on("click", function (ev) {
                                 modal.modal("hide");
                             });
-                            modal.modal("show").on("hidden", function() {
+                            modal.modal("show").on("hidden", function () {
                                 modal.remove();
                             });
                         });
@@ -191,13 +185,13 @@
                     url: "/Api/AutogearApi/GetBookingEvents",
                     data: { instructorNumber: instructorName },
                     dataType: "json"
-                }).success(function(data) {
+                }).success(function (data) {
                     calendar.fullCalendar("removeEvents");
                     calendar.fullCalendar("addEventSource", data);
                 });
             }
 
-            $("#InstructorName").change(function() {
+            $("#InstructorName").change(function () {
                 fetchCalendarEvents($(this).val());
             });
         });
