@@ -147,10 +147,4 @@ namespace AutogearWeb.Models
         public string StatusName { get; set; }
         public string Message { get; set; }
     }
-
-    public class Last7DaysInstructorHours
-    {
-        public TimeSpan Hours { get; set; }
-        public string InstructorName { get; set; }
-    }
 }

@@ -16,7 +16,6 @@ namespace AutogearWeb.Models
         public bool Status { get; set; }
         public string InstructorName { get; set; }
         public int? AddressId { get; set; }
-        public DateTime? CreatedDate { get; set; }
     }
 
     public class TblStudentAddress
@@ -175,12 +174,6 @@ namespace AutogearWeb.Models
         public IList<SelectListItem> StatesList { get; set; }
         public IList<SelectListItem> LearningPackages { get; set; }
         public IList<SelectListItem> DrivingPackages { get; set; }
-    }
-
-    public class Last7DaysRegisterDetails
-    {
-        public int Count { get; set; }
-        public string CreatedDate { get; set; }
     }
     
 }

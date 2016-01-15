@@ -108,5 +108,3 @@
 /// <reference path="respond.matchmedia.addlistener.min.js" />
 /// <reference path="jquery-ui-1.11.4.min.js" />
 /// <reference path="jquery.form.js" />
-/// <reference path="morris.min.js" />
-/// <reference path="raphael-min.js" />

@@ -24,7 +24,6 @@ namespace AutogearWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/morris.css",
                       "~/Content/Site.css"));
             bundles.Add(new StyleBundle("~/Content/AceCss").Include(
                       "~/assets/css/font-awesome.css",
@@ -61,10 +60,6 @@ namespace AutogearWeb
                 ));
             bundles.Add(new ScriptBundle("~/bundles/chosenjs").Include(
                 "~/assets/js/chosen.jquery.js"
-                ));
-            bundles.Add(new ScriptBundle("~/bundles/barChart").Include(
-                "~/Scripts/morris.min.js",
-                "~/Scripts/raphael-min.js"
                 ));
             BundleTable.EnableOptimizations = true;
         }

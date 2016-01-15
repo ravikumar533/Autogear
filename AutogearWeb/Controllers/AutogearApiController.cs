@@ -144,23 +144,5 @@ namespace AutogearWeb.Controllers
         }
 
         #endregion
-
-        #region Student Register Details
-
-        public List<Last7DaysRegisterDetails> GetStudentRegisterDetails()
-        {
-            return _studentRepo.GetStudentRegisterDetails();
-        }
-
-        #endregion
-
-        #region Instructor Hour Details in Last 7 Days
-
-        public List<Last7DaysInstructorHours> GetLast7DaysInstructorHour()
-        {
-            return _instructorRepo.GetLast7DaysInstructorHour();
-        }
-
-        #endregion
     }
 }

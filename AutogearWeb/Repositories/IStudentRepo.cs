@@ -28,7 +28,6 @@ namespace AutogearWeb.Repositories
         void SaveStudent(StudentModel studentModel,string currentUser);
         TblStudent UpdateStudentDetails(string currentUser, TblStudent studentDetails);
         void SaveExistingStudent(string currentUser, StudentModel studentModel);
-        List<Last7DaysRegisterDetails> GetStudentRegisterDetails();
 
 
     }

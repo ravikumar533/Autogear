@@ -1,68 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
-
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
 
 <p>Dashboard info goes here</p>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Student Bar Chart Example
-            </div>
-            <div class="panel-body">
-                <div id="student-bar-chart"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Instructor Bar Chart Example
-            </div>
-            <div class="panel-body">
-                <div id="instructor-bar-chart"></div>
-            </div>
-        </div>
-    </div>
-</div>
-@section Scripts{
-    @Scripts.Render("~/bundles/jquery");
-    @Scripts.Render("~/bundles/barChart");
-    <script type="text/javascript">
-        $(function() {
-            var baseUrl = "/Api/AutogearApi/";
-            var studentData = "";
-
-
-            $.getJSON(baseUrl + "GetStudentRegisterDetails").success(function (data) {
-                studentData = data;
-                Morris.Bar({
-                    element: 'student-bar-chart',
-                    data: studentData,
-                    xkey: 'createdDate',
-                    ykeys: ['count'],
-                    labels: ['Count', 'Created Date'],
-                    //hideHover: 'auto',
-                    resize: true,
-                    xLabelAngle: 60
-                });
-            });
-            $.getJSON(baseUrl + "GetLast7DaysInstructorHour").success(function (data) {
-                var instructorData = data;
-                Morris.Bar({
-                    element: 'instructor-bar-chart',
-                    data: instructorData,
-                    xkey: 'instructorName',
-                    ykeys: ['hours'],
-                    labels: ['hours', 'Instructor Name'],
-                    resize: true,
-                    xLabelAngle: 60,
-                    horizontal: true
-                });
-            });
-        });
-    </script>
-
-    
-}
