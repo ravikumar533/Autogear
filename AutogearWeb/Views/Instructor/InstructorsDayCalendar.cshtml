@@ -22,21 +22,21 @@
             console.log(cols);
            $("#Calendar").fullCalendar({
                header: {
-                   left: 'prev,next today',
-                   center: 'title',
-                   right: 'multiColAgendaDay'
+                   left: "prev,next today",
+                   center: "title",
+                   right: "multiColAgendaDay"
                },
                views: {
                    multiColAgendaDay: {
-                       type: 'multiColAgenda',
+                       type: "multiColAgenda",
                        duration: { days: 1 },
                        numColumns: @Model.TotalInstructors,
                        columnHeaders: cols
                    }
                },
                allDaySlot: false,
-               defaultView: 'multiColAgendaDay',
-               defaultDate:'@Model.StartDate',
+               defaultView: "multiColAgendaDay",
+               defaultDate:"@Model.StartDate",
                editable: true,
                events: [
 
