@@ -110,3 +110,4 @@
 /// <reference path="jquery.form.js" />
 /// <reference path="morris.min.js" />
 /// <reference path="raphael-min.js" />
+/// <reference path="../assets/js/fullcalendar-columns.js" />

@@ -501,6 +501,7 @@
     <Content Include="assets\js\fuelux\fuelux.spinner.js" />
     <Content Include="assets\js\fuelux\fuelux.tree.js" />
     <Content Include="assets\js\fuelux\fuelux.wizard.js" />
+    <Content Include="assets\js\fullcalendar-columns.js" />
     <Content Include="assets\js\fullcalendar.js" />
     <Content Include="assets\js\html5shiv-printshiv.js" />
     <Content Include="assets\js\html5shiv.js" />
@@ -918,6 +919,7 @@
     <Content Include="Views\Lesson\Index.cshtml" />
     <Content Include="Views\Lesson\Create.cshtml" />
     <Content Include="Views\Lesson\Edit.cshtml" />
+    <Content Include="Views\Instructor\InstructorsDayCalendar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

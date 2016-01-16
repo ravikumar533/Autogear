@@ -106,6 +106,15 @@ namespace AutogearWeb.Controllers
             };
             return View(model);
         }
+
+        public ActionResult InstructorsDayCalendar()
+        {
+            var model = new InstructorsDayCalendarModel {InstructorNames = _instructorRepo.GetInstructors()};
+            model.TotalInstructors = model.InstructorNames.Length;
+            model.Instructors = string.Join(",", model.InstructorNames);
+            model.StartDate = DateTime.Now.ToString("yyyy-MM-dd");
+            return View(model);
+        }
         [HttpPost]
         public ActionResult SaveAppointment(BookingAppointment model)
         {

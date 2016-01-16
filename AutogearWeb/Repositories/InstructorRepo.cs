@@ -231,6 +231,10 @@ namespace AutogearWeb.Repositories
             return await Task.Run(() => instuctorBookings);
         }
 
+        public string[] GetInstructors()
+        {
+            return TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToArray(); 
+        }
         public async Task<IList<StudentList>> GetStudentEvents(string currentUser)
         {
             var instuctorBookings = new List<StudentList>();

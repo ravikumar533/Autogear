@@ -1,0 +1,48 @@
+﻿@model AutogearWeb.Models.InstructorsDayCalendarModel
+@{
+    ViewBag.Title = "Instructors Day Calendar";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="Calendar"></div>
+<div id="appointmentDialog"></div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.js'></script>
+@Scripts.Render("~/bundles/FullcalendarColumn")
+    <script>
+        $(function() {
+            var baseUrl = "/Api/AutogearApi/";
+            var instrutors = "@Model.Instructors";
+            var cols = [];
+            cols  = instrutors.split(",");
+            console.log(cols);
+           $("#Calendar").fullCalendar({
+               header: {
+                   left: 'prev,next today',
+                   center: 'title',
+                   right: 'multiColAgendaDay'
+               },
+               views: {
+                   multiColAgendaDay: {
+                       type: 'multiColAgenda',
+                       duration: { days: 1 },
+                       numColumns: @Model.TotalInstructors,
+                       columnHeaders: cols
+                   }
+               },
+               allDaySlot: false,
+               defaultView: 'multiColAgendaDay',
+               defaultDate:'@Model.StartDate',
+               editable: true,
+               events: [
+
+               ]
+                              
+            });
+        });
+    </script>
+}

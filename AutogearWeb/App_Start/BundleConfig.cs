@@ -54,10 +54,15 @@ namespace AutogearWeb
                 "~/assets/js/jqGrid/jquery.jqGrid.js",
                 "~/assets/js/jqGrid/i18n/grid.locale-en.js"
                 ));
-
+            
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+            "~/assets/js/date-time/moment.js"    ));
             bundles.Add(new ScriptBundle("~/bundles/Fullcalendar").Include(
-                "~/assets/js/date-time/moment.js",
+                
                 "~/assets/js/fullcalendar.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/FullcalendarColumn").Include(
+                "~/assets/js/fullcalendar-columns.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/chosenjs").Include(
                 "~/assets/js/chosen.jquery.js"

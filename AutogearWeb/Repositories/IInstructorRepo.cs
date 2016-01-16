@@ -32,6 +32,7 @@ namespace AutogearWeb.Repositories
         Task<IList<AllInstructorsLeavesModel>> GetInstructorLeavesByName(string instructorNumber);
         Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment);
         int GetLatestInstructorId();
+        string[] GetInstructors();
         Task<IList<PackageModel>> GetPackages();
         PackageModel GetPackagesById(int packageId);
         Task<IList<AreaModel>> GetArea();

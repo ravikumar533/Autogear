@@ -153,4 +153,12 @@ namespace AutogearWeb.Models
         public TimeSpan Hours { get; set; }
         public string InstructorName { get; set; }
     }
+
+    public class InstructorsDayCalendarModel
+    {
+        public int TotalInstructors { get; set; }
+        public string[] InstructorNames { get; set; }
+        public string Instructors { get; set; }
+        public string StartDate { get; set; }
+    }
 }
