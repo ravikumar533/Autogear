@@ -58,8 +58,10 @@ namespace AutogearWeb
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
             "~/assets/js/date-time/moment.js"    ));
             bundles.Add(new ScriptBundle("~/bundles/Fullcalendar").Include(
-                
                 "~/assets/js/fullcalendar.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/fullcalendarv231").Include(
+                "~/assets/js/fullcalendarv231.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/FullcalendarColumn").Include(
                 "~/assets/js/fullcalendar-columns.js"

@@ -171,7 +171,7 @@
             //  var postalCodes = [], suburbNames = [];
             var baseUrl = "/Api/AutogearApi/";
 
-            $.getJSON(baseUrl + "qmoGetSubUrbs", {}).then(function(data) {
+            $.getJSON(baseUrl + "GetSubUrbs", {}).then(function(data) {
                 // postalCodes = data;
                 $("#SuburbName").autocomplete({
                     source: function(request, response) {

@@ -56,9 +56,20 @@
                     xkey: 'instructorName',
                     ykeys: ['hours'],
                     labels: ['hours', 'Instructor Name'],
+                    horizontal:true,
                     resize: true,
-                    xLabelAngle: 60,
-                    horizontal: true
+                    barColors: function (row, series, type) {
+                        if (type === 'bar') {
+                            var red = Math.ceil(255 * row.y / this.ymax);
+                            console.log(red);
+                            return 'rgb(' + red + ',0,' + red + ')';
+                        }
+                        else {
+                            return '#000';
+                        }
+                    },
+                    barGap: 2,
+                    barSizeRatio: 0.2
                 });
             });
         });

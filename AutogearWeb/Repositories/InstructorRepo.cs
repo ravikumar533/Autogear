@@ -218,8 +218,8 @@ namespace AutogearWeb.Repositories
                             new InstructorBooking
                             {
                                 Id = 0,
-                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,23,59,59).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,06,00,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,20,00,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
                                 Title = leave.LeaveReason,
                                 ClassName = "label-yellow"
                             }
@@ -263,7 +263,7 @@ namespace AutogearWeb.Repositories
             return await Task.Run(() => instuctorBookings);
         }
 
-        public InstructorModel GetInstructorByNumber(string instructorNumber)
+        public InstructorModel GetInstructorModelByNumber(string instructorNumber)
         {
             var instructor = TblInstructors.FirstOrDefault(s => s.InstructorNumber == instructorNumber);
             var model = new InstructorModel();

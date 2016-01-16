@@ -503,6 +503,7 @@
     <Content Include="assets\js\fuelux\fuelux.wizard.js" />
     <Content Include="assets\js\fullcalendar-columns.js" />
     <Content Include="assets\js\fullcalendar.js" />
+    <Content Include="assets\js\fullcalendarv231.js" />
     <Content Include="assets\js\html5shiv-printshiv.js" />
     <Content Include="assets\js\html5shiv.js" />
     <Content Include="assets\js\jqGrid\i18n\grid.locale-ar.js" />

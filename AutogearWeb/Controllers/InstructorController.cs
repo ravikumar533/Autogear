@@ -99,10 +99,12 @@ namespace AutogearWeb.Controllers
         public ActionResult Calendar()
         {
             var currentUser = Request.GetOwinContext().Authentication.User;
+            var currentUserId = currentUser.Identity.GetUserId();
+            var currentInstructor = _instructorRepo.TblInstructors.FirstOrDefault(s=>s.InstructorId == currentUserId);
             var model = new CalendarModel
             {
                 IsUserAdmin = currentUser.IsInRole("Admin"),
-                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text")
+                InstructorList = currentInstructor != null ? new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text",currentInstructor.InstructorNumber) : new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text")
             };
             return View(model);
         }
@@ -144,15 +146,13 @@ namespace AutogearWeb.Controllers
             return View("BookingAppointment", model);
         }
 
-        [HttpPost]
-        public ActionResult BookingAppointment(BookingAppointment model)
+        [HttpGet]
+        public ActionResult BookingAppointment(int bookingId)
         {
-            var appointment = _instructorRepo.GetBookingAppointmentById(model.BookingId) ?? new BookingAppointment
+            var appointment = _instructorRepo.GetBookingAppointmentById(bookingId) ?? new BookingAppointment
             {
-                EndDate = model.EndDate,
-                StartDate = model.StartDate,
-                StopTime =model.StopTime,
-                StartTime = model.StartTime,
+                EndDate = DateTime.Now,
+                StartDate = DateTime.Now
             };
             if (string.IsNullOrEmpty(appointment.InstructorName))
             {
@@ -164,7 +164,7 @@ namespace AutogearWeb.Controllers
             {
                 appointment.BookingType = "Learning";
             }
-            appointment.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
+            appointment.StudentList = bookingId ==0?new SelectList(_studentRepo.GetStudents(),"Value","Text"): new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
             appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", appointment.InstructorNumber);
             appointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text", appointment.BookingType);
             return View(appointment);
@@ -173,7 +173,7 @@ namespace AutogearWeb.Controllers
         public ActionResult Edit(string instructorId)
         {
             
-            var model = _instructorRepo.GetInstructorByNumber(instructorId);
+            var model = _instructorRepo.GetInstructorModelByNumber(instructorId);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             var areas = _instructorRepo.GetAreasList(model.AreaIds);
             model.Areas = new SelectList(areas, "Value", "Text");
@@ -228,7 +228,7 @@ namespace AutogearWeb.Controllers
                 }
                 _instructorRepo.UpdateInstructor(model);
             }
-            model = _instructorRepo.GetInstructorByNumber(model.InstructorNumber);
+            model = _instructorRepo.GetInstructorModelByNumber(model.InstructorNumber);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             model.Areas = new SelectList(_instructorRepo.GetAreasList(model.AreaNames), "Value", "Text");
           

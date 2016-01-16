@@ -16,7 +16,7 @@ namespace AutogearWeb.Models
         [Display(Name = "Instructor Name")]
         public string InstructorName { get; set; }
         [Required]
-        [Display(Name = "Instructor Name")]
+        [Display(Name = "Instructor Number")]
         public string InstructorNumber { get; set; }
         public string InstructorId { get; set; }
         [Required]
