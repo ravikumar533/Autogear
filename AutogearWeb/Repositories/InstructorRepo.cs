@@ -231,6 +231,39 @@ namespace AutogearWeb.Repositories
             return await Task.Run(() => instuctorBookings);
         }
 
+        public async Task<IList<InstructorBooking>> GetInstructorsDayEvents(DateTime date)
+        {
+            var instuctorBookings = new List<InstructorBooking>();
+            var startDate = date;
+            var endDate = startDate.AddDays(1);
+            var tblInstructorBookings =
+                TblBookings.Where(b => date >= b.StartDate  && b.EndDate < endDate).ToList();
+            var tblInstructors = TblInstructors.Select(s => s.InstructorId).ToList();
+            foreach (var booking in tblInstructorBookings)
+            {
+                var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
+                if (student != null)
+                {
+                    if (booking.StartDate != null && booking.StartTime != null && booking.EndDate != null &&
+                        booking.StopTime != null)
+                    {
+                        var startTime = booking.StartDate.Value.Add(booking.StartTime.Value);
+                        var stopTime = booking.EndDate.Value.Add(booking.StopTime.Value);
+                        instuctorBookings.Add(new InstructorBooking
+                        {
+                            Id = booking.BookingId,
+                            Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                            End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                            Title = student.FirstName + " " + student.LastName,
+                            ClassName = "label-success",
+                            Column = tblInstructors.FindIndex(s=>s == booking.InstructorId)
+                        });
+                    }
+                }
+            }
+            return await Task.Run(() => instuctorBookings);
+        }
+
         public string[] GetInstructors()
         {
             return TblInstructors.Select(s => s.FirstName + " " + s.LastName).ToArray(); 

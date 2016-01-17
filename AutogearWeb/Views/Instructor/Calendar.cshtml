@@ -140,9 +140,9 @@
 
                             var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.start));
                             var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.end));
-                            modal.find(".chosen-select").chosen();
                             modal.find("#StartDate").val(startDate);
                             modal.find("#EndDate").val(endDate);
+                            modal.find(".chosen-select").chosen({ width: "inherit" });
                             modal.find("#StartTime,#StopTime").timepicker({
                                 minuteStep: 1,
                                 showSeconds: false,
@@ -166,7 +166,7 @@
                                     console.log(data);
                                 }
                             });
-                            modal.find(".chosen-select").chosen({ width: "inherit" });
+                            
                             modal.find("#cancel").on("click", function(ev) {
                                 modal.modal("hide");
                             });

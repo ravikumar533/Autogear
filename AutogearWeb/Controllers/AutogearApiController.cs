@@ -75,6 +75,11 @@ namespace AutogearWeb.Controllers
             }
             return await _instructorRepo.GetInstructorBookingEvents(currentUser);
         }
+        public async Task<IList<InstructorBooking>> GetInstructorDayEvents(string start)
+        {
+            DateTime startDate = Convert.ToDateTime(start);
+            return await _instructorRepo.GetInstructorsDayEvents(startDate);
+        }
 
         public async Task<IList<string>> GetStudentNames()
         {

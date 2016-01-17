@@ -27,6 +27,7 @@ namespace AutogearWeb.Models
         public string Start { get; set; }
         public string End { get; set; }
         public string ClassName { get; set; }
+        public int Column { get; set; }
     }
     
     public class StudentList

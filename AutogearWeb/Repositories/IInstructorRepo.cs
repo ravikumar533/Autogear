@@ -18,6 +18,7 @@ namespace AutogearWeb.Repositories
         
         Task<IList<TblInstructor>> GetInstructorList(); // Fetch List
         Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId);
+        Task<IList<InstructorBooking>> GetInstructorsDayEvents(DateTime date);
         Task<IList<StudentList>> GetStudentEvents(string currentUser); //Fetch Student List
         IList<SelectListItem>  GetInstructorNames(); // Fetch Instructor Names
         Instructor GetInstructorByEmail(string email); // Fetch by Email
