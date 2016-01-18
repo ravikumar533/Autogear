@@ -46,7 +46,7 @@
             });
 
             //resize on sidebar collapse/expand
-            $(document).on("settings.ace.jqGrid", function (ev, eventName, collapsed) {
+            $(document).on("settings.ace.jqGrid", function (ev, eventName) {
                 if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
                     //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
                     setTimeout(function () {
@@ -149,7 +149,7 @@
                 //multikey: "ctrlKey",
                 multiboxonly: true,
                 onSelectRow: function () {
-                    var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
+              //      var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
                 },
                 loadComplete: function () {
                     var table = this;
@@ -162,7 +162,7 @@
                     }, 0);
                 },
 
-
+                loadonce: true,
                 caption: "Leave List",
                 defaultSearch: true
 
@@ -227,7 +227,7 @@
                     }
                 }
             );
-            $(document).one("ajaxloadstart.page", function (e) {
+            $(document).one("ajaxloadstart.page", function () {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();
             });
