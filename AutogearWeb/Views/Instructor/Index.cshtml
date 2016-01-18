@@ -78,6 +78,7 @@
                 url: baseUrl + "GetInstructors",
                 datatype: "json",
                 height: 250,
+                loadonce: true,
                 colNames: ["ID", "First Name", "Last Name", "Email", "Phone"],
                 colModel: [                    
                     { name: "instructorNumber", index: "id", width: 0 ,key:true},
@@ -134,46 +135,8 @@
                  form.find(".add-group").addClass("btn btn-xs btn-success");
                  form.find(".delete-group").addClass("btn btn-xs btn-danger");
              }
-             jQuery(gridSelector).jqGrid("navGrid", pagerSelector,
-                 {
-                     search: true,
-                     searchicon: "ace-icon fa fa-search orange",
-                     refresh: true,
-                     refreshicon: "ace-icon fa fa-refresh green",
-                     view: true,
-                     viewicon: "ace-icon fa fa-search-plus grey"
-                 },
-                 {
-                     //edit record form
-                 },
-                 {
-                     //new record form
-                 },
-                 {
-                     //delete record form
-                 },
-                 {
-                     //search form
-                     recreateForm: true,
-                     afterShowSearch: function(e) {
-                         var form = $(e[0]);
-                         form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
-                         styleSearchForm(form);
-                     },
-                     afterRedraw: function() {
-                         styleSearchFilters($(this));
-                     },
-                     multipleSearch: true
-                 },
-                 {
-                     //view record form
-                     recreateForm: true,
-                     beforeShowForm: function(e) {
-                         var form = $(e[0]);
-                         form.closest(".ui-jqdialog").find(".ui-jqdialog-title").wrap("<div class='widget-header' />");
-                     }
-                 }
-             );
+             $(gridSelector).jqGrid('navGrid', pagerSelector, { add: false, edit: false, del: false, search: true, refresh: true },
+                        {}, {}, {}, { multipleSearch: true, multipleGroup: true, showQuery: true });
             $(document).one("ajaxloadstart.page", function (e) {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();

@@ -149,7 +149,7 @@ namespace AutogearWeb.Repositories
 
         public async Task<IList<TblInstructor>> GetInstructorList()
         {
-            return await TblInstructors.ToListAsync();
+            return await TblInstructors.OrderBy(s=>s.CreatedDate).ToListAsync();
         }
 
         public Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
