@@ -177,18 +177,6 @@ namespace AutogearWeb.Controllers
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             var areas = _instructorRepo.GetAreasList(model.AreaIds);
             model.Areas = new SelectList(areas, "Value", "Text");
-            var ids = model.AreaNames.Split(',');
-            var length = ids.Length;
-            var i = 0;
-            model.AreaNames = "";
-            foreach (var id in ids)
-            {
-                i++;
-                model.AreaNames += areas.ToList().FindIndex(s => s.Value == id);
-                if (i != length)
-                    model.AreaNames += ",";
-            }
-       //     model.AreaNames = model.AreaNames;
             var suburb = _postalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
             {

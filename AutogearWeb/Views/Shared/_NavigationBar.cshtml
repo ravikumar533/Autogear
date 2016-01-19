@@ -2,7 +2,7 @@
 {
     <div id="sidebar" class="sidebar responsive">
         <ul class="nav nav-list" id='mainmenu'>
-            <li class="active">
+            <li class="active menuitem">
                 <a href="@Url.Action("Dashboard", "Admin")">
                     <i class="menu-icon fa fa-tachometer"></i>
                     <span class="menu-text"> Dashboard </span>
@@ -12,7 +12,7 @@
             </li>
             @if (User.IsInRole("Admin"))
             {
-                <li id="liInstructor">
+                <li id="liInstructor" class="menuitem">
                     <a href="@Url.Action("Index", "Instructor")">
                         <i class="menu-icon fa fa-graduation-cap"></i>
                         <span class="menu-text">
@@ -22,7 +22,7 @@
                     <b class="arrow"></b>
                 </li>
             }
-            <li class="">
+            <li class="menuitem">
                 <a href="@Url.Action("Index","Student")" class="dropdown-toggle">
                     <i class="menu-icon fa fa-users"></i>
                     <span class="menu-text">
@@ -32,7 +32,7 @@
 
                 <b class="arrow"></b>
             </li>
-            <li class="">
+            <li class="menuitem">
                 <a href="@Url.Action("Calendar", "Instructor")">
                     <i class="menu-icon fa fa-calendar"></i>
 
@@ -43,7 +43,7 @@
 
                 <b class="arrow"></b>
             </li>
-            <li class="">
+            <li class="menuitem">
                 <a href="@Url.Action("InstructorsDayCalendar", "Instructor")">
                     <i class="menu-icon fa fa-calendar"></i>
 
@@ -54,7 +54,7 @@
 
                 <b class="arrow"></b>
             </li>
-            <li class="">
+            <li class="menuitem">
                 <a href="@Url.Action("Index", "Lesson")" class="dropdown-toggle">
                     <i class="menu-icon fa fa-pencil-square-o"></i>
                     <span class="menu-text">
@@ -66,7 +66,7 @@
             </li>
             @if (User.IsInRole("Admin"))
             {
-                <li id="">
+                <li id="" class="menuitem">
                     <a href="@Url.Action("Packages", "Instructor")">
                         <i class="menu-icon fa fa-diamond"></i>
                         <span class="menu-text">
@@ -76,28 +76,28 @@
 
                     <b class="arrow"></b>
                 </li>
-                <li id="">
-                    <a href="@Url.Action("Area", "Instructor")">
-                        <i class="menu-icon fa fa-university"></i>
-                        <span class="menu-text">
-                            Areas
-                        </span>
-                    </a>
+    <li id="" class="menuitem">
+        <a href="@Url.Action("Area", "Instructor")">
+            <i class="menu-icon fa fa-university"></i>
+            <span class="menu-text">
+                Areas
+            </span>
+        </a>
 
-                    <b class="arrow"></b>
-                </li>
-                <li id="">
-                    <a href="@Url.Action("AllLeaves", "Instructor")">
-                        <i class="menu-icon fa fa-list"></i>
-                        <span class="menu-text">
-                            All Leaves
-                        </span>
-                    </a>
+        <b class="arrow"></b>
+    </li>
+    <li id="" class="menuitem">
+        <a href="@Url.Action("AllLeaves", "Instructor")">
+            <i class="menu-icon fa fa-list"></i>
+            <span class="menu-text">
+                All Leaves
+            </span>
+        </a>
 
-                    <b class="arrow"></b>
-                </li>
+        <b class="arrow"></b>
+    </li>
             }
-            <li class="">
+            <li class="menuitem">
                 <a href="@Url.Action("InstructorLeaves", "Instructor")">
                     <i class="menu-icon fa fa-list"></i>
 

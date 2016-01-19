@@ -97,5 +97,12 @@
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("Scripts", false)
+<script>
+    $(function () {
+        $(".menuitem").removeClass("active");
+        var currentMenu = $(".menuitem").find("a[href$='" + location.pathname + "']");
+        $(currentMenu).parent("li").addClass("active");
+    });
+</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutogearWeb.Models;
+using AutogearWeb.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -55,6 +56,7 @@ namespace AutogearWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
