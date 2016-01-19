@@ -170,7 +170,7 @@ namespace AutogearWeb.Repositories
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var leaves =
                 TblInstructorLeaves.Where(
-                    s => s.InstructorId == appointment.InstructorId &&
+                    s => s.InstructorId == instructor.InstructorId &&
                          (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate)
                     ).ToList();
             if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
