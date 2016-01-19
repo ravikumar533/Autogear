@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AutogearWeb.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: Admin
