@@ -15,9 +15,9 @@ namespace AutogearWeb.Providers
             try
             {
                 string emailIds = GetEmailAddress(sendEmail);
-                var fromAddress = new MailAddress("nagenda.au@gmail.com", "Tsting");
+                var fromAddress = new MailAddress("autogeartesting159@gmail.com", "AdminAutogear");
                 var toAddress = new MailAddress(emailIds, "To Name");
-                const string fromPassword = "nagendra~1";
+                const string fromPassword = "Passw0rd12";
                 
                 var smtp = new SmtpClient
                 {
