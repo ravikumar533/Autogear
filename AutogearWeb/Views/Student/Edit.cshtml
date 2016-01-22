@@ -394,15 +394,9 @@
                 });
             });
             //SuburbName
-            $.getJSON(baseUrl + "GetInstructorNames").then(function (data) {
-                $("#InstructorName").autocomplete({
-                    source: data,
-                    minLength: 2
-                });
-            });
             $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
                 minDate: 0,
-                dateFormat: "dd-mm-yy"
+                dateFormat: "yy-mm-dd"
             });
             
             

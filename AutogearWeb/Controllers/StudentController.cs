@@ -99,7 +99,12 @@ namespace AutogearWeb.Controllers
                 _iStudentRepo.SaveExistingStudent(currentUser, studentModel);
                 return RedirectToAction("Index");
             }
-            
+            studentModel.GendersList = _iAutogearRepo.GenderListItems();
+            studentModel.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
+            studentModel.StatesList = _iStudentRepo.GetStateList();
+            var packages = _iStudentRepo.GetPackages();
+            studentModel.LearningPackages = packages;
+            studentModel.DrivingPackages = packages;
             return View(studentModel);
         }
         public ActionResult Register()
