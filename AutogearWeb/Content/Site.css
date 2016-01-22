@@ -14,3 +14,4 @@
 span.menu-text { width: 76%;display: inline-block;}
 .nav-list > li > a{ height: 45px !important;}
 .nav-list > li > a > .menu-icon { vertical-align: inherit !important;}
+.chosen-container-single{ width: 100% !important;}

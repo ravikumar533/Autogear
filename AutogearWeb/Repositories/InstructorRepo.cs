@@ -160,7 +160,7 @@ namespace AutogearWeb.Repositories
                 TblBookings.Where(
                     s =>
                         s.InstructorId  == instructor.InstructorId &&
-                        (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate) &&
+                        (appointment.StartDate >= s.StartDate && s.EndDate<=appointment.EndDate) &&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var studentBookings =
                 TblBookings.Where(
@@ -171,7 +171,7 @@ namespace AutogearWeb.Repositories
             var leaves =
                 TblInstructorLeaves.Where(
                     s => s.InstructorId == instructor.InstructorId &&
-                         (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate)
+                         (appointment.StartDate >= s.StartDate && s.EndDate <= appointment.EndDate)
                     ).ToList();
             if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
                 flag = true;
