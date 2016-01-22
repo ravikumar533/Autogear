@@ -179,7 +179,7 @@
                 ],
                 sortname: 'FirstName',
                 sortorder: 'asc',
-                loadonce: false,
+                loadonce: true,
                 viewrecords: true,
                 width: 780,
                 height: 200,
@@ -195,7 +195,10 @@
                     $("#UpdateStudent").show();
                     $("#UpdateStudent").attr("href", "@Url.Action("Edit")?StudentId=" + rowKey);
                 },
-                caption: "Students"
+                caption: "Students",
+                gridComplete: function () {
+                    $(gridSelector).setGridParam({ datatype: 'local' });
+                }
 
             });
             $(window).triggerHandler("resize.jqGrid");//trigger window resize to make the grid get the correct size
@@ -213,7 +216,7 @@
                 var date = $("#StartDate").val();
                 var addInactiveStudent = $("#Inactivestudents").val();
                 var url = baseUrl + "GetStudents?searchtext=" + searchtext + "&date=" + date + "&addInactiveStudents=" + addInactiveStudent;
-                $(gridSelector).jqGrid("setGridParam", { url: url, page: 1 }).trigger("reloadGrid");
+                $(gridSelector).jqGrid("setGridParam", { datatype: 'local',url: url, page: 1 }).trigger("reloadGrid");
             }
             $("#StartDate").datepicker({
                 minDate: 0,
