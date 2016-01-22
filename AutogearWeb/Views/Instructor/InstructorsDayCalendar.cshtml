@@ -3,7 +3,6 @@
     ViewBag.Title = "Instructors Day Calendar";
 }
 
-<h2>@ViewBag.Title</h2>
 
 <div id="Calendar"></div>
 <div id="appointmentDialog"></div>
@@ -34,10 +33,14 @@
                        columnHeaders: cols
                    }
                },
+               editable: false,
+               eventDurationEditable: false,
                allDaySlot: false,
+               slotDuration: "00:15:00",
+               minTime: "06:00:00",
+               maxTime: "20:15:00",
                defaultView: "multiColAgendaDay",
                defaultDate:"@Model.StartDate",
-               editable: true,
                events: "/Api/AutogearApi/GetInstructorDayEvents" 
                               
             });
