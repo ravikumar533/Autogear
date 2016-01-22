@@ -206,7 +206,7 @@ namespace AutogearWeb.Repositories
                 studentModel.Status = student.Status;
                 
                 //Student Address
-                var studentAddress = TblStudentAddresses.SingleOrDefault(s => s.AddressId == student.AddressId);
+                var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
                 if (studentAddress != null)
                 {
                     studentModel.Address1 = studentAddress.Address1;
@@ -222,7 +222,7 @@ namespace AutogearWeb.Repositories
                 }
 
                 //Student License
-                var studentLicense = TblStudentLicenses.SingleOrDefault(s => s.StudentId == student.StudentId);
+                var studentLicense = TblStudentLicenses.FirstOrDefault(s => s.StudentId == student.StudentId);
                 if (studentLicense != null)
                 {
                     studentModel.LicenseNumber = studentLicense.LicenseNumber;
@@ -240,26 +240,29 @@ namespace AutogearWeb.Repositories
                     }
                 }
 
-                var studentBooking = TblStudentBookings.SingleOrDefault(s => s.StudentId == student.StudentId && s.Type == "Learning");
-                if (studentBooking != null)
+                var studentBookings = TblStudentBookings.Where(s => s.StudentId == student.StudentId && s.Type == "Learning").ToList();
+                if (studentBookings.Count>0)
                 {
-                    studentModel.BookingStartDate = studentBooking.StartDate;
-                    studentModel.BookingEndDate = studentBooking.EndDate;
-                    studentModel.PickupLocation = studentBooking.PickupLocation;
-                    studentModel.StartTime = studentBooking.StartTime;
-                    studentModel.StopTime = studentBooking.StopTime;
-                    studentModel.DropLocation = studentBooking.DropLocation;
-                    studentModel.PackageDisacount = studentBooking.Discount;
-                    var package = packages.SingleOrDefault(s => s.Value == studentBooking.PackageId.ToString());
+                    var firstBooking = studentBookings[0];
+                    var lastBooking = studentBookings[studentBookings.Count - 1];
+                    studentModel.BookingStartDate = firstBooking.StartDate;
+                    studentModel.BookingEndDate = lastBooking.EndDate;
+                    studentModel.PickupLocation = firstBooking.PickupLocation;
+                    studentModel.StartTime = firstBooking.StartTime;
+                    studentModel.StopTime = firstBooking.StopTime;
+                    studentModel.DropLocation = firstBooking.DropLocation;
+                    studentModel.PackageDisacount = firstBooking.Discount;
+                    var package = packages.SingleOrDefault(s => s.Value == firstBooking.PackageId.ToString());
                     if (package != null)
                     {
-                        studentModel.PackageId = Convert.ToInt32(package.Value);
+                        if (!string.IsNullOrEmpty(package.Value))
+                            studentModel.PackageId = Convert.ToInt32(package.Value);
                         studentModel.PackageDetails = package.Text;
                     } 
 
                 }
 
-                var studentDrivingTestBooking = TblStudentBookings.SingleOrDefault(s => s.StudentId == student.StudentId && s.Type == "Driving");
+                var studentDrivingTestBooking = TblStudentBookings.FirstOrDefault(s => s.StudentId == student.StudentId && s.Type == "Driving");
                 if (studentDrivingTestBooking != null)
                 {
                     studentModel.DrivingTestDate  = studentDrivingTestBooking.BookingDate;
@@ -271,7 +274,8 @@ namespace AutogearWeb.Repositories
                     var package = packages.SingleOrDefault(s => s.Value == studentDrivingTestBooking.PackageId.ToString());
                     if (package != null)
                     {
-                        studentModel.DrivingTestPackageId = Convert.ToInt32(package.Value);
+                        if (!string.IsNullOrEmpty(package.Value))
+                            studentModel.DrivingTestPackageId = Convert.ToInt32(package.Value);
                         studentModel.DrivingTestPackageDetails = package.Text;
                     } 
                 }

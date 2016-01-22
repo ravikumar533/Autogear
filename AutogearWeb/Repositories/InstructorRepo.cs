@@ -180,9 +180,9 @@ namespace AutogearWeb.Repositories
         public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
         {
             var instuctorBookings = new List<InstructorBooking>();
-            var tblInstructorLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorId);
+            var tblInstructorLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorId).ToList();
             var tblInstructorBookings =
-                TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId);
+                TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId).ToList();
             foreach (var booking in tblInstructorBookings)
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
