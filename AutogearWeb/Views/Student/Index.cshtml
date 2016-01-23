@@ -216,7 +216,7 @@
                 var date = $("#StartDate").val();
                 var addInactiveStudent = $("#Inactivestudents").val();
                 var url = baseUrl + "GetStudents?searchtext=" + searchtext + "&date=" + date + "&addInactiveStudents=" + addInactiveStudent;
-                $(gridSelector).jqGrid("setGridParam", { datatype: 'local',url: url, page: 1 }).trigger("reloadGrid");
+                $(gridSelector).jqGrid("setGridParam", { datatype: 'json',url: url, page: 1 }).trigger("reloadGrid");
             }
             $("#StartDate").datepicker({
                 minDate: 0,

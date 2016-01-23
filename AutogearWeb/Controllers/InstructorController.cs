@@ -123,9 +123,11 @@ namespace AutogearWeb.Controllers
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
-                if (!_instructorRepo.CheckIsAnyAppointmentsForInsturcotrOrStudent(model))
+                if (_instructorRepo.CheckIsAnyAppointmentsForInsturcotrOrStudent(model) && model.BookingId == 0)
                 {
-                    if (!string.IsNullOrEmpty(model.InstructorNumber))
+                    return Json(new Status { StatusName = "Error", Message = "Instructor or Student are booked in this timings" });
+                }
+                if (!string.IsNullOrEmpty(model.InstructorNumber))
                     {
                         var instructor = _instructorRepo.GetInstructorById(model.InstructorNumber);
                         if (instructor != null)
@@ -133,8 +135,8 @@ namespace AutogearWeb.Controllers
                     }
                     _studentRepo.SaveStudentAppointment(model, currentUser);
                     return Json(new Status {StatusName = "Success", Message = ""});
-                }
-                return Json(new Status{ StatusName  ="Error",Message ="Instructor or Student are booked in this timings"});
+                
+                
                 
             }
             model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", model.StudentId);
