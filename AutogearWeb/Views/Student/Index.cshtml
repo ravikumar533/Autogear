@@ -198,6 +198,12 @@
                 caption: "Students",
                 gridComplete: function () {
                     $(gridSelector).setGridParam({ datatype: 'local' });
+                },
+                loadComplete: function () {
+                    var table = this;
+                    setTimeout(function () {
+                        updatePagerIcons(table);
+                    }, 0);
                 }
 
             });
