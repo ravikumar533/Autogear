@@ -38,12 +38,12 @@ namespace AutogearWeb.EFModels
         public virtual DbSet<RTA> RTAs { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Student_License> Student_License { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     }
 }

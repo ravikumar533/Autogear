@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutogearWeb.EFModels;
 using AutogearWeb.Models;
+using AutogearWeb.Providers;
 using AutogearWeb.Repositories;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -63,6 +65,10 @@ namespace AutogearWeb.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //Sending Email
+                     EmailAPI emp = new EmailAPI();
+                    var emails = new List<string> {model.Email};
+                    var subJect = "Account Creation";
                     //Add role instructor to created user
                     // Fetch role
                     var role = await _roleManager.FindByNameAsync("Instructor");

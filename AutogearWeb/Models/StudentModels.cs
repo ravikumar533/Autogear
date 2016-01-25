@@ -15,6 +15,7 @@ namespace AutogearWeb.Models
         public DateTime? StartDate { get; set; }
         public bool Status { get; set; }
         public string InstructorName { get; set; }
+        public string StudentNumber { get; set; }
         public int? AddressId { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
@@ -171,6 +172,7 @@ namespace AutogearWeb.Models
         public string DrivingTestPackageDisacount { get; set; }
 
         public int SuburbId { get; set; }
+        public string StudentNumber { get; set; }
         public IList<SelectListItem> GendersList { get; set; }
         public IList<SelectListItem> StatesList { get; set; }
         public IList<SelectListItem> LearningPackages { get; set; }

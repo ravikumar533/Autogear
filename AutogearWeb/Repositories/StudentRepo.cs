@@ -46,7 +46,8 @@ namespace AutogearWeb.Repositories
                             AddressId = student.AddressId,
                             Email = student.Email,
                             InstructorName = instructorStudent.Instructor.FirstName + " " + instructorStudent.Instructor.LastName,
-                            CreatedDate = student.CreatedDate
+                            CreatedDate = student.CreatedDate,
+                            StudentNumber = student.StudentNumber
                         });
                 return _tblStudents;
 
@@ -132,7 +133,11 @@ namespace AutogearWeb.Repositories
         {
             var results = (addInactiveStudents == false) ? TblStudents.Where(s => s.Status) : TblStudents;
             if (!string.IsNullOrEmpty(searchtext))
-                results = results.Where(s => (s.FirstName + " " + s.LastName).Contains(searchtext));
+                results =
+                    results.Where(
+                        s =>
+                            ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
+                            (s.StudentNumber.Contains(searchtext)));
             if (!string.IsNullOrEmpty(date))
             {
                 var startdate = Convert.ToDateTime(date);
@@ -370,6 +375,16 @@ namespace AutogearWeb.Repositories
                 DataContext.Addresses.Add(studentAddress);
                 DataContext.SaveChanges();
                 // Student Creation
+                // last student
+                var lastStudent = TblStudents.ToList().OrderByDescending(o => o.StudentId).FirstOrDefault();
+                var studentNumber = "0001";
+                if (lastStudent != null)
+                {
+                    var year = Convert.ToInt32(lastStudent.StudentNumber.Substring(3, 4));
+                    var number = Convert.ToInt32(lastStudent.StudentNumber.Substring(7, 4));
+                    if (DateTime.Now.Year == year)
+                        studentNumber = (number + 1).ToString("0000");
+                }
                 var student = new Student
                 {
                     FirstName = studentModel.FirstName,
@@ -380,11 +395,12 @@ namespace AutogearWeb.Repositories
                     CreatedBy = currentUser,
                     CreatedDate = DateTime.Now,
                     StartDate = studentModel.StartDate,
-                    AddressId = studentAddress.AddressId
+                    AddressId = studentAddress.AddressId,
+                    StudentNumber = "SID" + DateTime.Now.Year.ToString() + studentNumber
                 };
                 DataContext.Students.Add(student);
                 DataContext.SaveChanges();
-
+                
                 //License Information
                 var studentLicense = new Student_License
                 {
