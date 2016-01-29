@@ -86,7 +86,7 @@
                         @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-5">
                             <div class="input-group">
-                                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Start Date" } })
+                                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "YYYY-MM-DD" } })
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar bigger-110"></i>
                                 </span>
@@ -100,7 +100,7 @@
                         @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-5">
                             <div class="input-group">
-                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Test Date" } })
+                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "YYYY-MM-DD" } })
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar bigger-110"></i>
                                 </span>
@@ -176,8 +176,10 @@
         $(function() {
             $(".chosen-select").chosen();
             $("#StartDate,#EndDate").datepicker({
-                minDate: 0,
-                dateFormat: "dd/mm/yy"
+                //minDate: 0,
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                changeMonth: true
             });
             $("#StartTime,#StopTime").timepicker({
                 minuteStep: 1,

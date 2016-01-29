@@ -95,8 +95,10 @@
                             $(this).timepicker("showWidget");
                         });
                         modal.find("#StartDate,#EndDate").datepicker({
-                            minDate: 0,
-                            dateFormat: "yy-mm-dd"
+                            //minDate: 0,
+                            dateFormat: "yy-mm-dd",
+                            changeYear: true,
+                            changeMonth: true
                         });
                    
                         modal.find("#signupform").ajaxForm({
@@ -152,8 +154,10 @@
                                 $(this).timepicker("showWidget");
                             });
                             modal.find("#StartDate,#EndDate").datepicker({
-                                minDate: 0,
-                                dateFormat: "yy-mm-dd"
+                                //minDate: 0,
+                                dateFormat: "yy-mm-dd",
+                                changeYear: true,
+                                changeMonth: true
                             });
                             modal.find('#signupform').ajaxForm({
                                 dataType: "JSON",

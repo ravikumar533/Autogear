@@ -50,7 +50,7 @@
                     @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-sm-3" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD", placeholder = "Start Date" } })
+                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -137,7 +137,7 @@
                     @Html.LabelFor(model => model.ExpiryDate, htmlAttributes: new {@class = "control-label col-sm-3 no-padding-right"})
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control date-pickerED", placeholder = "Expiry Date" } })
+                            @Html.EditorFor(model => model.ExpiryDate, new { htmlAttributes = new { @class = "form-control date-pickerED", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -163,7 +163,7 @@
                     @Html.LabelFor(model => model.LicensePassedDate, htmlAttributes: new { @class = "control-label col-sm-3 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.LicensePassedDate, new { htmlAttributes = new { @class = "form-control date-pickerLPD", placeholder = "License Passed Date" } })
+                            @Html.EditorFor(model => model.LicensePassedDate, new { htmlAttributes = new { @class = "form-control date-pickerLPD", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -242,7 +242,7 @@
                     @Html.LabelFor(model => model.BookingStartDate, htmlAttributes: new {@class = "control-label col-sm-3 no-padding-right"})
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking Startdate"  } })
+                            @Html.EditorFor(model => model.BookingStartDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -339,7 +339,7 @@
                     @Html.LabelFor(model => model.DrivingTestDate, htmlAttributes: new { @class = "control-label col-sm-3 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.DrivingTestDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "Test Date" } })
+                            @Html.EditorFor(model => model.DrivingTestDate, new { htmlAttributes = new { @class = "form-control date-pickerDTD", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -446,8 +446,10 @@
                 //    });
                 //});
                 $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
-                    minDate: 0,
-                    dateFormat: "yy-mm-dd"
+                    //minDate: 0,
+                    dateFormat: "yy-mm-dd",
+                    changeYear: true,
+                    changeMonth: true
                 });
 
                 $("#Country,.Country").css("display", "none");
