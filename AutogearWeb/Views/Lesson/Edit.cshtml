@@ -186,8 +186,10 @@
                 showSeconds: false,
                 showMeridian: false,
                 disableFocus: true
-            }).on("focus", function () {
+            }).on("focusin", function () {
                 $(this).timepicker("showWidget");
+            }).on("focusout", function () {
+                $(this).timepicker("hideWidget");
             }).on("changeTime.timepicker", function (e) {
                 var self = this;
                 var newhour = (e.time.hours) + 1;

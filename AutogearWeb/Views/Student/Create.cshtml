@@ -254,7 +254,7 @@
                     @Html.LabelFor(model => model.BookingEndDate, htmlAttributes: new { @class = "control-label col-sm-3 no-padding-right" })
                     <div class="col-sm-9">
                         <div class="input-group col-xs-10 col-sm-8">
-                            @Html.EditorFor(model => model.BookingEndDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "Booking EndDate" } })
+                            @Html.EditorFor(model => model.BookingEndDate, new { htmlAttributes = new { @class = "form-control date-pickerBD", placeholder = "YYYY-MM-DD" } })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
@@ -467,8 +467,10 @@
                     showSeconds: false,
                     showMeridian: false,
                     disableFocus: true
-                }).on("focus", function () {
+                }).on("focusin", function () {
                     $(this).timepicker("showWidget");
+                }).on("focusout",function() {
+                    $(this).timepicker("hideWidget");
                 }).on("changeTime.timepicker", function(e) {
                     var self = this;
                     var newhour = (e.time.hours) + 1;
