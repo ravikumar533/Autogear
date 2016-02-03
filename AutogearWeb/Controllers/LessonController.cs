@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutogearWeb.Models;
@@ -95,7 +96,7 @@ namespace AutogearWeb.Controllers
             {
                 var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
                 var studentId = Convert.ToInt32(bookingAppointment.StudentId);
-                var student = _studentRepo.GetStudentById(studentId);
+                var student = _studentRepo.TblStudents.FirstOrDefault(s => s.StudentId == studentId);
                 if (student != null)
                 {
                     bookingAppointment.StudentName = student.FirstName + " " + student.LastName;

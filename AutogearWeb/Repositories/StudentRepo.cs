@@ -189,9 +189,9 @@ namespace AutogearWeb.Repositories
         
         // Fetch Instructor Names
         // ReSharper disable once FunctionComplexityOverflow
-        public StudentModel GetStudentById(int studentId)
+        public StudentModel GetStudentByNumber(string studentId)
         {
-            var student = TblStudents.SingleOrDefault(s => s.StudentId == studentId);
+            var student = TblStudents.FirstOrDefault(s => s.StudentNumber == studentId);
             var packages = GetPackages();
             var studentModel = new StudentModel
             {

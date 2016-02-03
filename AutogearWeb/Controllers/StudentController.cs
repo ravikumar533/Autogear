@@ -67,9 +67,9 @@ namespace AutogearWeb.Controllers
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             return View(model);
         }
-        public ActionResult Edit(int studentId)
+        public ActionResult Edit(string studentId)
         {
-            var model = _iStudentRepo.GetStudentById(studentId);
+            var model = _iStudentRepo.GetStudentByNumber(studentId);
             model.GendersList = _iAutogearRepo.GenderListItems();
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             var suburb = _iPostalRepo.GetSuburbById(model.SuburbId);
