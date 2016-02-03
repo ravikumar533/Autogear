@@ -32,7 +32,6 @@ namespace AutogearWeb.EFModels
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Instructor_Leaves> Instructor_Leaves { get; set; }
-        public virtual DbSet<Instructor_Student> Instructor_Student { get; set; }
         public virtual DbSet<Package_Details> Package_Details { get; set; }
         public virtual DbSet<PostCode> PostCodes { get; set; }
         public virtual DbSet<RTA> RTAs { get; set; }
@@ -43,7 +42,8 @@ namespace AutogearWeb.EFModels
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<Instructor_Student> Instructor_Student { get; set; }
     }
 }

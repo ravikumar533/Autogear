@@ -107,6 +107,8 @@ namespace AutogearWeb.Models
         [Required]
         [Display(Name="Instructor")]
         public string InstructorNumber { get; set; }
+        [Display(Name = "Instructor Remarks")]
+        public string InstructorRemarks { get; set; }
         [Required]
         [Display(Name = "License Number")]
         public string LicenseNumber { get; set; }

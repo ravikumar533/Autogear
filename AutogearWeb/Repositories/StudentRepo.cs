@@ -238,10 +238,14 @@ namespace AutogearWeb.Repositories
                     studentModel.IsInternationalLicensed = studentLicense.IsInternationalLicensed;
                     studentModel.Country = studentLicense.Country;
                     var instructor = DataContext.Instructor_Student.SingleOrDefault(s => s.StudentId == student.StudentId);
-                    var instructorDetails = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == instructor.InstructorId);
-                    if (instructorDetails != null)
+                    if (instructor != null)
                     {
-                        studentModel.InstructorNumber = instructorDetails.InstructorNumber;
+                        studentModel.InstructorRemarks = instructor.Remarks;
+                        var instructorDetails = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == instructor.InstructorId);
+                        if (instructorDetails != null)
+                        {
+                            studentModel.InstructorNumber = instructorDetails.InstructorNumber;
+                        }
                     }
                 }
 
@@ -320,6 +324,7 @@ namespace AutogearWeb.Repositories
                     bookingDetails.EndDate = bookingDate;
                     bookingDetails.PickupLocation = bookingAppointment.PickupLocation;
                     bookingDetails.Type = bookingAppointment.BookingType;
+                    bookingDetails.Remarks = bookingAppointment.RemarksForInstructor;
                     if (bookingAppointment.BookingId == 0)
                         DataContext.Bookings.Add(bookingDetails);
                     DataContext.SaveChanges();
@@ -552,7 +557,11 @@ namespace AutogearWeb.Repositories
             var instructorDetails = DataContext.Instructor_Student.FirstOrDefault(s => s.StudentId == studentModel.StudentId);
             if (instructorDetails != null)
             {
-                if (instructor != null) instructorDetails.InstructorId = instructor.InstructorId;
+                if (instructor != null)
+                {
+                    instructorDetails.InstructorId = instructor.InstructorId;
+                    instructorDetails.Remarks = studentModel.InstructorRemarks;
+                }
                 instructorDetails.ModifiedBy = currentUser;
                 instructorDetails.ModifiedDate = DateTime.Now;
                 DataContext.SaveChanges();

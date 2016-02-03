@@ -139,9 +139,15 @@
 
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.InstructorNumber, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    @Html.LabelFor(model => model.InstructorNumber, htmlAttributes: new {@class = "control-label col-sm-2 no-padding-right"})
                     <div class="col-sm-6">
-                        @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Instructor..." })
+                        @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Instructor..."})
+                    </div>
+                </div>
+                <div class="form-group instructorRemarks" style="display: none;">
+                    @Html.LabelFor(model => model.InstructorRemarks, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
+                    <div class="col-sm-7">
+                        @Html.TextAreaFor(model => model.InstructorRemarks, new { @class = "col-xs-10", @style = "resize: none;", placeholder = "Remarks" })
                     </div>
                 </div>
             </div>
@@ -168,7 +174,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-sm-2 no-padding-right" })
                     <div class="col-sm-9">
-                        @Html.TextAreaFor(model => model.Remarks, new { @class = "col-xs-10 col-sm-8", placeholder = "Remarks" })
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "col-xs-10 col-sm-8",@style = "resize: none;", placeholder = "Remarks" })
                         @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -400,7 +406,9 @@
                 changeYear: true,
                 changeMonth: true
             });
-            
+            $("#InstructorNumber").on("change", function() {
+                $(".instructorRemarks").show();
+            });
             
             if ($("#IsInternationalLicensed").prop("checked") == true) {
                 $("#Country,.Country").css("display", "inline-block");

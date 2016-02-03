@@ -38,6 +38,7 @@
                                 </div>
                             </div>
                             @Html.ValidationMessageFor(model => model.InstructorName, "", new { @class = "text-danger" })
+                            @Html.TextAreaFor(model => model.RemarksForInstructor, new { @class = "col-xs-12", @style = "resize: none; display:none;", placeholder = "Remarks" })
                         </div>
                     </div>
                 </div>
@@ -175,6 +176,9 @@
     <script type="text/javascript">
         $(function() {
             $(".chosen-select").chosen();
+            $("#InstructorNumber").on("change", function () {
+                $("#RemarksForInstructor").show();
+            });
             $("#StartDate,#EndDate").datepicker({
                 //minDate: 0,
                 dateFormat: "dd/mm/yy",

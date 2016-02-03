@@ -16,9 +16,9 @@ namespace AutogearWeb.EFModels
     {
         public Student()
         {
+            this.Student_License = new HashSet<Student_License>();
             this.Bookings = new HashSet<Booking>();
             this.Instructor_Student = new HashSet<Instructor_Student>();
-            this.Student_License = new HashSet<Student_License>();
         }
     
         public int Id { get; set; }
@@ -38,8 +38,8 @@ namespace AutogearWeb.EFModels
         public virtual Address Address { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual ICollection<Student_License> Student_License { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
-        public virtual ICollection<Student_License> Student_License { get; set; }
     }
 }

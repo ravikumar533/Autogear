@@ -19,6 +19,7 @@ namespace AutogearWeb.Models
         [Display(Name = "Instructor Number")]
         public string InstructorNumber { get; set; }
         public string InstructorId { get; set; }
+        public string RemarksForInstructor { get; set; }
         [Required]
         [Display(Name = "Start Time")]
         public TimeSpan StartTime { get; set; }
