@@ -100,7 +100,9 @@ namespace AutogearWeb.Repositories
                                                    InstructorId = s.InstructorId,
                                                    LeaveReason = s.Reason,
                                                    StartDate = s.StartDate,
-                                                   EndDate = s.EndDate
+                                                   EndDate = s.EndDate,
+                                                   StartTime = s.StartTime,
+                                                   StopTime = s.EndTime
                                                });
                 return _tblInstructorLeaves;
             }
@@ -456,6 +458,8 @@ namespace AutogearWeb.Repositories
             appliedDetails.Reason = appliedLeave.LeaveReason;
             appliedDetails.StartDate = appliedLeave.StartDate;
             appliedDetails.EndDate = appliedLeave.EndDate;
+            appliedDetails.StartTime = appliedLeave.StartTime;
+            appliedDetails.EndTime = appliedLeave.StopTime;
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = userId;
             if (appliedDetails.Id == 0)
@@ -474,6 +478,8 @@ namespace AutogearWeb.Repositories
             appliedDetails.Reason = updateLeave.LeaveReason;
             appliedDetails.StartDate = updateLeave.StartDate;
             appliedDetails.EndDate = updateLeave.EndDate;
+            appliedDetails.StartTime = updateLeave.StartTime;
+            appliedDetails.EndTime = updateLeave.StopTime;
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = currentUser;
             if (appliedDetails.Id == 0)

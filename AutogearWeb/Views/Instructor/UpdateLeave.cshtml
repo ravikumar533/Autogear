@@ -21,30 +21,59 @@
 
         <div class="form-group">
             <div class="row">
-                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    <div class="input-group">
-                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar bigger-110"></i>
-                        </span>
+                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
                     </div>
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                 </div>
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                </div>
+
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    <div class="input-group">
-                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar bigger-110"></i>
-                        </span>
+                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
                     </div>
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 </div>
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar bigger-110"></i>
+                            </span>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
@@ -74,6 +103,7 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrappicker")
     @Scripts.Render("~/bundles/jqueryUI")
     <script type="text/javascript">
         $(function () {
@@ -94,7 +124,16 @@
 
     </script>
     <script type="text/javascript">
-        
+        $("#StartTime,#StopTime").timepicker({
+            minuteStep: 1,
+            showSeconds: false,
+            showMeridian: false,
+            disableFocus: true
+        }).on("focusin", function () {
+            $(this).timepicker("showWidget");
+        }).on("focusout", function () {
+            $(this).timepicker("hideWidget");
+        });
         $(function() {
             $("#StartDate,#EndDate").datepicker({
                 //minDate: 0,
