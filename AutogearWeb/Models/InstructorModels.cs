@@ -61,6 +61,12 @@ namespace AutogearWeb.Models
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
+        [Required]
+        [Display(Name = "Start Time")]
+        public TimeSpan StartTime { get; set; }
+        [Required]
+        [Display(Name = "Stop Time")]
+        public TimeSpan StopTime { get; set; }
     }
 
     public class AllInstructorsLeavesModel

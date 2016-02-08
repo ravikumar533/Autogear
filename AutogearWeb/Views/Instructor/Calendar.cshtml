@@ -108,10 +108,11 @@
                             success: function(data) {
                                 console.log(data);
                                 if (data["StatusName"] == "Success")
-                                //document.location.reload();
+                                
                                 {
+                                    fetchCalendarEvents(modal.find("#InstructorNumber").val());
                                     modal.modal("hide");
-                                    fetchCalendarEvents($("#InstructorName").val());
+                                    
 
                                 } else {
                                     modal.find("#appointmentError").show();
