@@ -160,18 +160,18 @@ namespace AutogearWeb.Repositories
                 TblBookings.Where(
                     s =>
                         s.InstructorId  == instructor.InstructorId &&
-                        (appointment.StartDate >= s.StartDate && s.EndDate<=appointment.EndDate) &&
+                       ( (appointment.StartDate >= s.StartDate && s.EndDate>=appointment.StartDate) ||(appointment.EndDate>=s.StartDate && appointment.EndDate<= s.EndDate))&&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var studentBookings =
                 TblBookings.Where(
                     s =>
                         s.StudentId == appointment.StudentId &&
-                        (appointment.StartDate >= s.StartDate && appointment.EndDate <= s.EndDate) &&
+                        ((appointment.StartDate >= s.StartDate && appointment.StartDate <= s.EndDate) || (appointment.EndDate>= s.StartDate && appointment.EndDate <= s.EndDate))&&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var leaves =
                 TblInstructorLeaves.Where(
                     s => s.InstructorId == instructor.InstructorId &&
-                         (appointment.StartDate >= s.StartDate && s.EndDate <= appointment.EndDate)
+                        ( (appointment.StartDate <= s.StartDate && s.EndDate >= appointment.StartDate)||(appointment.EndDate>=s.StartDate&&appointment.EndDate<=s.EndDate))
                     ).ToList();
             if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
                 flag = true;

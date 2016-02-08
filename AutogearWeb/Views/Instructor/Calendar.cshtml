@@ -167,8 +167,9 @@
                                 dataType: "JSON",
                                 success: function(data) {
                                     //document.location.reload();
+                                    console.log(modal.find("#InstructorNumber").val());
+                                    fetchCalendarEvents(modal.find("#InstructorNumber").val());
                                     modal.modal("hide");
-                                    fetchCalendarEvents($("#InstructorName").val());
                                 },
                                 error: function(data) {
                                     console.log(data);
@@ -201,8 +202,9 @@
 
             function fetchCalendarEvents(instructorName) {
                 $.ajax({
+                    type :"GET",
                     url: "/Api/AutogearApi/GetBookingEvents",
-                    data: { instructorNumber: instructorName },
+                    data: { instructorNumber : instructorName },
                     dataType: "json"
                 }).success(function(data) {
                     calendar.fullCalendar("removeEvents");
