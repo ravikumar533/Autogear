@@ -100,7 +100,9 @@ namespace AutogearWeb.Repositories
                                                    InstructorId = s.InstructorId,
                                                    LeaveReason = s.Reason,
                                                    StartDate = s.StartDate,
-                                                   EndDate = s.EndDate
+                                                   EndDate = s.EndDate,
+                                                   StopTime =s.EndTime.Value,
+                                                   StartTime = s.StartTime.Value
                                                });
                 return _tblInstructorLeaves;
             }
@@ -211,6 +213,8 @@ namespace AutogearWeb.Repositories
                 {
                     var startDate = leave.StartDate.Value;
                     var endDate = leave.EndDate.Value;
+                    var starttime = leave.StartTime;
+                    var endtime = leave.StopTime;
                     for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
                     {
                         var bookingDate = startDate.AddDays(j);
@@ -456,6 +460,9 @@ namespace AutogearWeb.Repositories
             appliedDetails.Reason = appliedLeave.LeaveReason;
             appliedDetails.StartDate = appliedLeave.StartDate;
             appliedDetails.EndDate = appliedLeave.EndDate;
+            appliedDetails.StartTime = appliedLeave.StartTime;
+            appliedDetails.EndTime = appliedLeave.StopTime;
+            
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = userId;
             if (appliedDetails.Id == 0)
@@ -476,6 +483,8 @@ namespace AutogearWeb.Repositories
             appliedDetails.EndDate = updateLeave.EndDate;
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = currentUser;
+            appliedDetails.StartTime = updateLeave.StartTime;
+            appliedDetails.EndTime = updateLeave.StopTime;
             if (appliedDetails.Id == 0)
             {
                 appliedDetails.CreatedDate = DateTime.Now;

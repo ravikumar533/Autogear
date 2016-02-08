@@ -11,12 +11,12 @@
         <hr />
         <div class="form-group">
             <div class="row">
-                @Html.LabelFor(model => model.LeaveReason, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.LeaveReason, htmlAttributes: new {@class = "control-label col-md-1"})
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.LeaveReason, new { cols = "55",rows="4", htmlAttributes = new { @class = "form-control" }, style = "resize:none;" })
-                    @Html.ValidationMessageFor(model => model.LeaveReason, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.LeaveReason, new {cols = "65", rows = "4", htmlAttributes = new {@class = "form-control"}, style = "resize:none;"})
                 </div>
             </div>
+            @Html.ValidationMessageFor(model => model.LeaveReason, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -31,21 +31,20 @@
                             </span>
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })        
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger col-md-12" })        
                 </div>
                 <div class="col-md-3">
                     @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         <div class="input-group">
-                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control"} })
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger  col-md-12" })
                 </div>
-            
             </div>
         </div>
         <div class="form-group">
@@ -66,17 +65,16 @@
                     @Html.LabelFor(model => model.StopTime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
                         <div class="input-group">
-                            @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
+                            @Html.EditorFor(model => model.StopTime, new { htmlAttributes = new { @class = "form-control " }})
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger col-md-12" })
                 </div>
             </div>
         </div>
-
         <div class="=row">
             <div class="clearfix form-actions">
                 <div class="col-md-offset-2 col-md-10">
@@ -122,7 +120,7 @@
             };
         });
         $("#StartTime,#StopTime").timepicker({
-            minuteStep: 1,
+            defaultTime: "value",
             showSeconds: false,
             showMeridian: false,
             disableFocus: true

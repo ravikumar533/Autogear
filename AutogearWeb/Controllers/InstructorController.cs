@@ -242,8 +242,12 @@ namespace AutogearWeb.Controllers
 
         public ActionResult NewLeaveByInstructor(string instructorId)
         {
-
-            return View();
+            var model = new InstructorLeaveModel
+            {
+                StartTime = new TimeSpan(0,0,0),
+                StopTime = new TimeSpan(23,59,0)
+            };
+            return View(model);
         }
 
         [HttpPost]
