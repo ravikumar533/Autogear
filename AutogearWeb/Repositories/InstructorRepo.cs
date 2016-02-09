@@ -185,7 +185,7 @@ namespace AutogearWeb.Repositories
             var instuctorBookings = new List<InstructorBooking>();
             var tblInstructorLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorId).ToList();
             var tblInstructorBookings =
-                TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId).ToList();
+                TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId && b.Type !="Canceled").ToList();
             foreach (var booking in tblInstructorBookings)
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);

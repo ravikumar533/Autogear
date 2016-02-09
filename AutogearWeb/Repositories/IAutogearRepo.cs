@@ -8,5 +8,6 @@ namespace AutogearWeb.Repositories
     {
         IList<SelectListItem> GenderListItems();
        IList<SelectListItem> DrivingTypeItems();
+       SelectListItem CancelledItem();
     }
 }

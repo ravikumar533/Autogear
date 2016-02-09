@@ -325,13 +325,25 @@ namespace AutogearWeb.Repositories
                     bookingDetails.PickupLocation = bookingAppointment.PickupLocation;
                     bookingDetails.Type = bookingAppointment.BookingType;
                     bookingDetails.Remarks = bookingAppointment.RemarksForInstructor;
+                    if (bookingAppointment.BookingType == "Canceled")
+                    {
+                        bookingDetails.CancelledReason = bookingAppointment.CancelReason;
+                        bookingDetails.CancelledDate = DateTime.Now;
+                    }
+
                     if (bookingAppointment.BookingId == 0)
                         DataContext.Bookings.Add(bookingDetails);
+                    else
+                    {
+                        bookingDetails.ModifiedBy = currentUser;
+                        bookingDetails.ModifiedDate = DateTime.Now;
+                    }
                     DataContext.SaveChanges();
                 }
             }
         }
 
+    
         public BookingAppointment GetBookingDetailsById(int bookingId)
         {
             var bookingDetailsById = new BookingAppointment();

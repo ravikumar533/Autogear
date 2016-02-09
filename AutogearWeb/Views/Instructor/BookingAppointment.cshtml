@@ -13,160 +13,182 @@
                 <h4 class="modal-title">Booking Lesson</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("SaveAppointment", "Instructor", FormMethod.Post, new { id = "signupform" }))
-                {
-                    @Html.HiddenFor(model => model.BookingId)
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.StudentId, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-2">
-                                                @Html.DropDownListFor(model => model.StudentId, Model.StudentList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Student..."})
+                <div class="mainBookingContent">
+                    @using (Html.BeginForm("SaveAppointment", "Instructor", FormMethod.Post, new {id = "signupform"}))
+                    {
+                        @Html.HiddenFor(model => model.BookingId)
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.StudentId, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="widget-body">
+                                                <div class="widget-main padding-2">
+                                                    @Html.DropDownListFor(model => model.StudentId, Model.StudentList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Student..."})
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.StudentId, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.InstructorNumber, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="widget-body">
+                                                <div class="widget-main padding-2">
+                                                    @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Instructor..."})
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.InstructorNumber, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="widget-body">
+                                                <div class="widget-main padding-2">
+                                                    @Html.TextBoxFor(model => model.PickupLocation, new {@class = " form-control", placeholder = "Pick up Location"})
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.PickupLocation, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="widget-body">
+                                                <div class="widget-main padding-2">
+                                                    @Html.TextBoxFor(model => model.MobileNumber, new {@class = " form-control", placeholder = "Mobile Number"})
+                                                </div>
                                             </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.StudentId, "", new {@class = "text-danger"})
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.InstructorNumber, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-2">
-                                                @Html.DropDownListFor(model => model.InstructorNumber, Model.InstructorList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Instructor..."})
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.BookingType, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="widget-body">
+                                                <div class="widget-main padding-2">
+                                                    @Html.DropDownListFor(model => model.BookingType, Model.DrivingTypeList, new {@class = "chosen-select form-control", data_placeholder = "Search a Student..."})
+                                                </div>
                                             </div>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.InstructorNumber, "", new {@class = "text-danger"})
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.PickupLocation, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-2">
-                                                @Html.TextBoxFor(model => model.PickupLocation, new {@class = " form-control", placeholder = "Pick up Location"})
-                                            </div>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.PickupLocation, "", new {@class = "text-danger"})
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-2">
-                                                @Html.TextBoxFor(model => model.MobileNumber, new {@class = " form-control", placeholder = "Mobile Number"})
-                                            </div>
+                                            @Html.ValidationMessageFor(model => model.BookingType, "", new {@class = "text-danger"})
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.BookingType, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-2">
-                                                @Html.DropDownListFor(model => model.BookingType, Model.DrivingTypeList, new {@class = "chosen-select form-control", data_placeholder = "Search a Student..."})
-                                            </div>
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.BookingType, "", new {@class = "text-danger"})
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control date-pickerDTD", placeholder = "Start Date"}})
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control date-pickerDTD", placeholder = "Test Date"}})
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-                                </div>
-                            </div>
+@if (Model.BookingId > 0)
+{
 
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
-                                </div>
+    <div class="form-group cancelAppointment" style="display: none;">
+        <div class="row">
+            
+                @Html.LabelFor(model => model.CancelReason, htmlAttributes: new {@class = "control-label col-md-4 no-padding-right"})
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.CancelReason, new {@class = "col-xs-12", @style = "resize: none;", placeholder = "Remarks"})
+                </div>
+            
+        </div>
+    </div>
+}
                             </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    @Html.LabelFor(model => model.StopTime, htmlAttributes: new {@class = "control-label col-md-4"})
-                                    <div class="col-md-8">
-                                        <div class="input-group">
-                                            @Html.EditorFor(model => model.StopTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.StartDate, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control date-pickerDTD", placeholder = "Start Date"}})
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.StopTime, "", new {@class = "text-danger"})
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <input type="submit" value="Create" class="btn btn-info" id="submitForm" />
-                                    &nbsp; &nbsp; &nbsp;
-                                    <input type="button" value="Cancel" class="btn btn-undo" id="cancel" />
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.EndDate, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control date-pickerDTD", placeholder = "Test Date"}})
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+                                    </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.StartTime, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(model => model.StopTime, htmlAttributes: new {@class = "control-label col-md-4"})
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.StopTime, new {htmlAttributes = new {@class = "form-control", placeholder = "Start Time", @readonly = "readonly"}})
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar bigger-110"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StopTime, "", new {@class = "text-danger"})
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="alert alert-danger" id="appointmentError" style="display: none;">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <i class="ace-icon fa fa-times"></i>
-                        </button>
-                        <strong>
-                            <i class="ace-icon fa fa-times"></i>
-                            Sorry!
-                        </strong>
-                        Instructor or Student are booked in this timings
-                        <br/>
-                    </div>
-                }
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <input type="submit" value="Create" class="btn btn-info" id="submitForm"/>
+                                        &nbsp; &nbsp; &nbsp;
+                                        @if (Model.BookingId > 0)
+                                        {
+                                            <input type="button" value="Cancel Appointment" class="btn btn-undo" id="cancelAppointment"/>
+                                            
+                                        }&nbsp;&nbsp;&nbsp;
+                                        <input type="button" value="Cancel" class="btn btn-undo" id="cancel"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="appointmentError" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <strong>
+                                <i class="ace-icon fa fa-times"></i>
+                                Sorry!
+                            </strong>
+                            Instructor or Student are booked in this timings
+                            <br/>
+                        </div>
+                    }
+                </div>
+          
             </div>
         </div>
     </div>

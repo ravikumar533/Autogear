@@ -46,5 +46,16 @@ namespace AutogearWeb.Models
         [Required]
         [Display(Name = "Booking Type")]
         public string BookingType { get; set; }
+        [Display(Name = "Reason For Cancelation")]
+        public string CancelReason { get; set; }    
     }
+}
+
+public class CancelAppointment
+{
+    public int BookingId { get; set; }
+    public string InstructorNumber { get; set; }
+    
+    [Display(Name = "Reason For Cancelation")]
+    public string CancelReason { get; set; }
 }

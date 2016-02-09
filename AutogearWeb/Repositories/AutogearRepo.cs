@@ -30,8 +30,13 @@ namespace AutogearWeb.Repositories
 
         public IList<SelectListItem> DrivingTypeItems()
         {
-            string[] list = { "", "Learning", "Driving Test" };
+            string[] list = { "", "Learning", "Driving Test"};
             return list.Select(type => new SelectListItem {Value = type, Text = type}).ToList();
+        }
+
+        public SelectListItem CancelledItem()
+        {
+            return new SelectListItem {Value = "Canceled", Text = "Canceled"};
         }
     }
 }

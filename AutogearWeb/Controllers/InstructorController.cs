@@ -145,18 +145,23 @@ namespace AutogearWeb.Controllers
                 
                 
             }
+            var drivingTypeItems = _autogearRepo.DrivingTypeItems();
+            if (model.BookingId > 0)
+                drivingTypeItems.Add(_autogearRepo.CancelledItem());
             model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", model.StudentId);
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text",
                 model.InstructorNumber);
-            model.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text",
+            model.DrivingTypeList = new SelectList(drivingTypeItems, "Value", "Text",
                 model.BookingType);
 
             return View("BookingAppointment", model);
         }
 
+        
         [HttpGet]
         public ActionResult BookingAppointment(int bookingId)
         {
+            var drivingTypeItems = _autogearRepo.DrivingTypeItems();
             var appointment = _instructorRepo.GetBookingAppointmentById(bookingId) ?? new BookingAppointment
             {
                 EndDate = DateTime.Now,
@@ -172,9 +177,11 @@ namespace AutogearWeb.Controllers
             {
                 appointment.BookingType = "Learning";
             }
+            if(bookingId>0)
+                drivingTypeItems.Add(_autogearRepo.CancelledItem());
             appointment.StudentList = bookingId ==0?new SelectList(_studentRepo.GetStudents(),"Value","Text"): new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
             appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", appointment.InstructorNumber);
-            appointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text", appointment.BookingType);
+            appointment.DrivingTypeList = new SelectList(drivingTypeItems, "Value", "Text", appointment.BookingType);
             return View(appointment);
         }
 

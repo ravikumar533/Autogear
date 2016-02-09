@@ -106,7 +106,6 @@
                         modal.find("#signupform").ajaxForm({
                             dataType: "JSON",
                             success: function(data) {
-                                console.log(data);
                                 if (data["StatusName"] == "Success")
                                 
                                 {
@@ -119,6 +118,7 @@
                                 }
                             }
                         });
+                       
                         modal.find("#cancel").on("click", function(ev) {
                             modal.modal("hide");
                         });
@@ -168,7 +168,6 @@
                                 dataType: "JSON",
                                 success: function(data) {
                                     //document.location.reload();
-                                    console.log(modal.find("#InstructorNumber").val());
                                     fetchCalendarEvents(modal.find("#InstructorNumber").val());
                                     modal.modal("hide");
                                 },
@@ -176,7 +175,18 @@
                                     console.log(data);
                                 }
                             });
-                            
+                          
+                            modal.find("#cancelAppointment").click(function (ev) {
+                                modal.find(".cancelAppointment").fadeIn();
+                                modal.find("#BookingType").val("Canceled").trigger("chosen:updated");
+                            });
+                            modal.find("#BookingType").change(function() {
+                                if($(this).val()=="Canceled")
+                                    modal.find(".cancelAppointment").fadeIn();
+                                else {
+                                    modal.find(".cancelAppointment").fadeOut();
+                                }
+                            });
                             modal.find("#cancel").on("click", function(ev) {
                                 modal.modal("hide");
                             });
