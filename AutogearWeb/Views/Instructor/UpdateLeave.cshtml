@@ -31,6 +31,7 @@
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                         </div>
+
                     </div>
                     @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger col-md-12" })
                 </div>
@@ -47,6 +48,9 @@
                     @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger  col-md-12" })
                 </div>
 
+                    
+
+
             </div>
         </div>
         <div class="form-group">
@@ -60,6 +64,7 @@
                                 <i class="fa fa-calendar bigger-110"></i>
                             </span>
                         </div>
+
                     </div>
                     @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 </div>
@@ -74,10 +79,9 @@
                         </div>
                     </div>
                     @Html.ValidationMessageFor(model => model.StopTime, "", new { @class = "text-danger col-md-12" })
-                </div>
+                    </div>
             </div>
         </div>
-
         <div class="=row">
             <div class="clearfix form-actions">
                 <div class="col-md-offset-2 col-md-10">
@@ -104,6 +108,7 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrappicker")
     @Scripts.Render("~/bundles/jqueryUI")
     <script type="text/javascript">
         $(function () {
@@ -124,7 +129,16 @@
 
     </script>
     <script type="text/javascript">
-        
+        $("#StartTime,#StopTime").timepicker({
+            minuteStep: 1,
+            showSeconds: false,
+            showMeridian: false,
+            disableFocus: true
+        }).on("focusin", function () {
+            $(this).timepicker("showWidget");
+        }).on("focusout", function () {
+            $(this).timepicker("hideWidget");
+        });
         $(function() {
             $("#StartDate,#EndDate").datepicker({
                 //minDate: 0,

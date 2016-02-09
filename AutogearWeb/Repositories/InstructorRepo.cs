@@ -101,8 +101,9 @@ namespace AutogearWeb.Repositories
                                                    LeaveReason = s.Reason,
                                                    StartDate = s.StartDate,
                                                    EndDate = s.EndDate,
-                                                   StopTime =s.EndTime.Value,
-                                                   StartTime = s.StartTime.Value
+                                                   StartTime = s.StartTime,
+                                                   StopTime = s.EndTime
+
                                                });
                 return _tblInstructorLeaves;
             }
@@ -213,21 +214,22 @@ namespace AutogearWeb.Repositories
                 {
                     var startDate = leave.StartDate.Value;
                     var endDate = leave.EndDate.Value;
-                    var starttime = leave.StartTime;
-                    var endtime = leave.StopTime;
+                    var starttime = leave.StartTime ?? new TimeSpan(6,0,0);
+                    var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
                     for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
                     {
                         var bookingDate = startDate.AddDays(j);
-                        instuctorBookings.Add(
-                            new InstructorBooking
-                            {
-                                Id = 0,
-                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,06,00,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,20,00,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                                Title = leave.LeaveReason,
-                                ClassName = "label-yellow"
-                            }
-                            );
+                        
+                            instuctorBookings.Add(
+                                new InstructorBooking
+                                {
+                                    Id = 0,
+                                    Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,starttime.Hours,starttime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                    End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,endtime.Hours,endtime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                    Title = leave.LeaveReason,
+                                    ClassName = "label-yellow"
+                                }
+                                );
                     }
                 }
             }
@@ -462,7 +464,6 @@ namespace AutogearWeb.Repositories
             appliedDetails.EndDate = appliedLeave.EndDate;
             appliedDetails.StartTime = appliedLeave.StartTime;
             appliedDetails.EndTime = appliedLeave.StopTime;
-            
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = userId;
             if (appliedDetails.Id == 0)
@@ -481,6 +482,8 @@ namespace AutogearWeb.Repositories
             appliedDetails.Reason = updateLeave.LeaveReason;
             appliedDetails.StartDate = updateLeave.StartDate;
             appliedDetails.EndDate = updateLeave.EndDate;
+            appliedDetails.StartTime = updateLeave.StartTime;
+            appliedDetails.EndTime = updateLeave.StopTime;
             appliedDetails.ModifiedDate = DateTime.Now;
             appliedDetails.ModifiedBy = currentUser;
             appliedDetails.StartTime = updateLeave.StartTime;

@@ -63,10 +63,12 @@ namespace AutogearWeb.Models
         public DateTime? EndDate { get; set; }
         [Required]
         [Display(Name = "Start Time")]
-        public TimeSpan StartTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy dd MM}")]
+        public TimeSpan? StartTime { get; set; }
         [Required]
         [Display(Name = "Stop Time")]
-        public TimeSpan StopTime { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy dd MM}")]
+        public TimeSpan? StopTime { get; set; }
     }
 
     public class AllInstructorsLeavesModel
