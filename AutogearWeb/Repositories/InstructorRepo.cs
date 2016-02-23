@@ -202,7 +202,7 @@ namespace AutogearWeb.Repositories
                             Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             Title = student.FirstName + " " + student.LastName,
-                            ClassName = "label-success"
+                            ClassName = booking.Type == "Learning" ? "label-success" : "label-info"
                         });
                     }
                 }

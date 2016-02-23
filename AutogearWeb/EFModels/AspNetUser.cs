@@ -18,17 +18,17 @@ namespace AutogearWeb.EFModels
         {
             this.Addresses = new HashSet<Address>();
             this.Addresses1 = new HashSet<Address>();
-            this.Package_Details = new HashSet<Package_Details>();
-            this.Package_Details1 = new HashSet<Package_Details>();
-            this.Users = new HashSet<User>();
-            this.Students = new HashSet<Student>();
-            this.Students1 = new HashSet<Student>();
             this.Bookings = new HashSet<Booking>();
             this.Bookings1 = new HashSet<Booking>();
-            this.Instructor_Student = new HashSet<Instructor_Student>();
-            this.Instructor_Student1 = new HashSet<Instructor_Student>();
             this.Instructor_Leaves = new HashSet<Instructor_Leaves>();
             this.Instructor_Leaves1 = new HashSet<Instructor_Leaves>();
+            this.Instructor_Student = new HashSet<Instructor_Student>();
+            this.Instructor_Student1 = new HashSet<Instructor_Student>();
+            this.Package_Details = new HashSet<Package_Details>();
+            this.Package_Details1 = new HashSet<Package_Details>();
+            this.Students = new HashSet<Student>();
+            this.Students1 = new HashSet<Student>();
+            this.Users = new HashSet<User>();
         }
     
         public string Id { get; set; }
@@ -53,17 +53,17 @@ namespace AutogearWeb.EFModels
     
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<Address> Addresses1 { get; set; }
-        public virtual ICollection<Package_Details> Package_Details { get; set; }
-        public virtual ICollection<Package_Details> Package_Details1 { get; set; }
-        public virtual ICollection<User> Users { get; set; }
-        public virtual Instructor Instructor { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<Student> Students1 { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Booking> Bookings1 { get; set; }
-        public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
-        public virtual ICollection<Instructor_Student> Instructor_Student1 { get; set; }
         public virtual ICollection<Instructor_Leaves> Instructor_Leaves { get; set; }
         public virtual ICollection<Instructor_Leaves> Instructor_Leaves1 { get; set; }
+        public virtual ICollection<Instructor_Student> Instructor_Student { get; set; }
+        public virtual ICollection<Instructor_Student> Instructor_Student1 { get; set; }
+        public virtual Instructor Instructor { get; set; }
+        public virtual ICollection<Package_Details> Package_Details { get; set; }
+        public virtual ICollection<Package_Details> Package_Details1 { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Student> Students1 { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

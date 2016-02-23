@@ -209,6 +209,7 @@ namespace AutogearWeb.Repositories
                 studentModel.Gender = student.Gender;
                 studentModel.StartDate = student.StartDate;
                 studentModel.Status = student.Status;
+                studentModel.StudentNumber = student.StudentNumber;
                 
                 //Student Address
                 var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
@@ -381,6 +382,7 @@ namespace AutogearWeb.Repositories
                     CreatedBy = currentUser,
                     CreatedDate = DateTime.Now,
                     Mobile = studentModel.Mobile,
+                    
                 };
                 if (Regex.IsMatch(studentModel.PostalCode, @"\d"))
                 {
@@ -451,6 +453,8 @@ namespace AutogearWeb.Repositories
                             StudentId = student.Id,
                             CreatedBy = currentUser,
                             CreatedDate = DateTime.Now,
+                          Remarks = studentModel.Remarks,
+                          
                         };
                         DataContext.Instructor_Student.Add(instructorStudent);
                         DataContext.SaveChanges();

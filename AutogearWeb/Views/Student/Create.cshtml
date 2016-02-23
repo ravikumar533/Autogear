@@ -473,7 +473,7 @@
                     $(this).timepicker("hideWidget");
                 }).on("changeTime.timepicker", function(e) {
                     var self = this;
-                    var newhour = (e.time.hours) + 1;
+                    var newhour = (this.id == "DrivingTestStartTime") ? (e.time.hours) + 2 : (e.time.hours) + 1;
                     var newTime = newhour + ":" + e.time.minutes ;
                     if (self.id.indexOf("StartTime") > -1) {
                         //if (self.id.indexOf("DrivingTest") > -1) {
