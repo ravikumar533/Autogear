@@ -462,7 +462,7 @@
                         $("#Country,.Country").css("display","none");
                     }
                 });
-                $("#StartTime,#StopTime,#DrivingTestStopTime,#DrivingTestStartTime").timepicker({
+                $("#StartTime,#StopTime").timepicker({
                     minuteStep: 1,
                     showSeconds: false,
                     showMeridian: false,
@@ -473,14 +473,37 @@
                     $(this).timepicker("hideWidget");
                 }).on("changeTime.timepicker", function(e) {
                     var self = this;
-                    var newhour = (this.id == "DrivingTestStartTime") ? (e.time.hours) + 2 : (e.time.hours) + 1;
-                    var newTime = newhour + ":" + e.time.minutes ;
+                    var newhour = (e.time.hours) + 1;
+                    var newTime = newhour + ":" + e.time.minutes;
                     if (self.id.indexOf("StartTime") > -1) {
-                        //if (self.id.indexOf("DrivingTest") > -1) {
-                        //    $("#DrivingTestStopTime").val(newTime);
-                        //} else {
-                            $("#StopTime").val(newTime);
-                        //}
+                        $("#StopTime").val(newTime);
+                    }
+                    //var newhour = (this.id == "DrivingTestStartTime") ? (e.time.hours) + 2 : (e.time.hours) + 1;
+                    //var newTime = newhour + ":" + e.time.minutes ;
+                    //if (self.id.indexOf("StartTime") > -1) {
+                    //    //if (self.id.indexOf("DrivingTest") > -1) {
+                    //    //    $("#DrivingTestStopTime").val(newTime);
+                    //    //} else {
+                    //        $("#StopTime").val(newTime);
+                    //    //}
+                    //}
+                });
+                $("#DrivingTestStopTime,#DrivingTestStartTime").timepicker({
+                    minuteStep: 1,
+                    showSeconds: false,
+                    showMeridian: false,
+                    disableFocus: true
+                }).on("focusin", function () {
+                    $(this).timepicker("showWidget");
+                }).on("focusout", function () {
+                    $(this).timepicker("hideWidget");
+                }).on("changeTime.timepicker", function (e) {
+                    var self = this;
+                    var newhour = (e.time.hours) + 2;
+                    var newminute = (e.time.minutes) + 30;
+                    var newTime = newhour + ":" + newminute;
+                    if (self.id.indexOf("DrivingTestStartTime") > -1) {
+                        $("#DrivingTestStopTime").val(newTime);
                     }
                 });
             });
