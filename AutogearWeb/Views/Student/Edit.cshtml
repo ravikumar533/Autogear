@@ -9,6 +9,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <h2>Student Personal Details</h2>
         @Html.HiddenFor(model => model.StudentNumber)
+        @Html.HiddenFor(model=>model.StudentId)
         <div class="row">
             <div class="col-xs-6">
                 <div class="form-group">

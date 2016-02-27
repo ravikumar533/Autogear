@@ -10,16 +10,23 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrappicker")
+    @Scripts.Render("~/bundles/chosenjs")
+    @Scripts.Render("~/bundles/jqueryUI")
     @Scripts.Render("~/bundles/fullcalendarv231")
     @Scripts.Render("~/bundles/FullcalendarColumn")
     <script>
         $(function() {
+            var modalDialog = "";
+            var studentData = "";
+            var instructor = "";
             var baseUrl = "/Api/AutogearApi/";
             var instrutors = "@Model.Instructors";
             var cols = [];
             cols  = instrutors.split(",");
             console.log(cols);
-           $("#Calendar").fullCalendar({
+            
+            var calendar=$("#Calendar").fullCalendar({
                header: {
                    left: "prev,next today",
                    center: "title",
@@ -41,9 +48,98 @@
                maxTime: "20:15:00",
                defaultView: "multiColAgendaDay",
                defaultDate:"@Model.StartDate",
+               eventClick:
+                    function(calEvent, jsEvent, view) {
+                        if (calEvent.id != 0) {
+                            $.ajax({
+                                url: "/Instructor/BookingAppointment",
+                                method: "GET",
+                                dataType: "html",
+                                data: {
+                                    bookingId: calEvent.id
+                                }
+                            }).success(function(data) {
+                                modalDialog = data;
+                                var modal = $(modalDialog).appendTo("body");
+
+                                var startDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.start));
+                                var endDate = $.datepicker.formatDate("yy-mm-dd", new Date(calEvent.end));
+                                modal.find("#StartDate").val(startDate);
+                                modal.find("#EndDate").val(endDate);
+                                modal.find(".chosen-select").chosen({ width: "inherit" });
+                                modal.find("#StartTime,#StopTime").timepicker({
+                                    minuteStep: 1,
+                                    showSeconds: false,
+                                    showMeridian: false,
+                                    disableFocus: true
+                                }).on("focusin", function() {
+                                    $(this).timepicker("showWidget");
+                                }).on("focusout", function() {
+                                    $(this).timepicker("hideWidget");
+                                });
+                                modal.find("#StartDate,#EndDate").datepicker({
+                                    //minDate: 0,
+                                    dateFormat: "yy-mm-dd",
+                                    changeYear: true,
+                                    changeMonth: true
+                                });
+                                modal.find('#signupform').ajaxForm({
+                                    dataType: "JSON",
+                                    success: function(data) {
+                                        //document.location.reload();
+                                        //if ($("#InstructorName").length > 0)
+                                            fetchCalendarEvents(startDate);
+                                        //else
+                                        //    fetchCalendarEvents(modal.find("#InstructorNumber").val());
+                                        modal.modal("hide");
+                                    },
+                                    error: function(data) {
+                                        console.log(data);
+                                    }
+                                });
+
+                                modal.find("#cancelAppointment").click(function(ev) {
+                                    modal.find(".cancelAppointment").fadeIn();
+                                    modal.find("#BookingType").val("Canceled").trigger("chosen:updated");
+                                });
+                                modal.find("#BookingType").change(function() {
+                                    if ($(this).val() == "Canceled")
+                                        modal.find(".cancelAppointment").fadeIn();
+                                    else {
+                                        modal.find(".cancelAppointment").fadeOut();
+                                    }
+                                });
+                                modal.find("#cancel").on("click", function(ev) {
+                                    modal.modal("hide");
+                                });
+                                modal.modal("show").on("hidden", function() {
+                                    modal.remove();
+                                    $('body').removeClass('modal-open');
+                                    $('.modal-backdrop').remove();
+                                });
+                            });
+                        } else {
+                            //$("#leaveModal").modal("show").on("hidden", function() {
+                            //    modal.remove();
+                            //    $("body").find(".modal-backdrop").remove();
+                            //});
+                        }
+
+                    },
                events: "/Api/AutogearApi/GetInstructorDayEvents" 
                               
             });
+            function fetchCalendarEvents(startDate) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Api/AutogearApi/GetInstructorDayEvents",
+                    data: { start: startDate },
+                    dataType: "json"
+                }).success(function(data) {
+                    calendar.fullCalendar("removeEvents");
+                    calendar.fullCalendar("addEventSource", data);
+                });
+            }
         });
     </script>
 }
