@@ -59,7 +59,8 @@
                 minTime: "06:00:00",
                 maxTime: "20:15:00",
 
-                defaultDate: "@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day).ToString("yyyy-MM-dd"))",
+                //defaultDate: "2016-02-12",
+                firstDay:new Date().getDay(),
                 selectable: true,
                 selectHelper: true,
                 select: function (start, end, jsEvent) {
@@ -239,6 +240,8 @@
         $("#InstructorName").change(function() {
             fetchCalendarEvents($(this).val());
         });
+        //$('#calendar').fullCalendar('gotoDate', "2016-02-24");
+
     });
     </script>
 }

@@ -162,18 +162,18 @@ namespace AutogearWeb.Repositories
             var instructorBookings =
                 TblBookings.Where(
                     s =>
-                        s.InstructorId  == instructor.InstructorId &&
+                        s.InstructorId == instructor.InstructorId && s.Type != "Canceled" &&
                        ( (appointment.StartDate >= s.StartDate && s.EndDate>=appointment.StartDate) ||(appointment.EndDate>=s.StartDate && appointment.EndDate<= s.EndDate))&&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var studentBookings =
                 TblBookings.Where(
                     s =>
-                        s.StudentId == appointment.StudentId &&
+                        s.StudentId == appointment.StudentId && s.Type != "Canceled" &&
                         ((appointment.StartDate >= s.StartDate && appointment.StartDate <= s.EndDate) || (appointment.EndDate>= s.StartDate && appointment.EndDate <= s.EndDate))&&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
             var leaves =
                 TblInstructorLeaves.Where(
-                    s => s.InstructorId == instructor.InstructorId &&
+                    s => s.InstructorId == instructor.InstructorId && 
                         ( (appointment.StartDate <= s.StartDate && s.EndDate >= appointment.StartDate)||(appointment.EndDate>=s.StartDate&&appointment.EndDate<=s.EndDate))
                     ).ToList();
             if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
@@ -243,7 +243,7 @@ namespace AutogearWeb.Repositories
             var startDate = date;
             var endDate = startDate.AddDays(1);
             var tblInstructorBookings =
-                TblBookings.Where(b => date >= b.StartDate  && b.EndDate < endDate).ToList();
+                TblBookings.Where(b => date >= b.StartDate  && b.EndDate < endDate && b.Type !="Canceled").ToList();
             var tblInstructors = TblInstructors.Select(s => s.InstructorId).ToList();
             foreach (var booking in tblInstructorBookings)
             {
