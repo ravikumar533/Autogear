@@ -414,19 +414,8 @@
         <script>
             $(function () {
                 $(".chosen-select").chosen();
-                //  var postalCodes = [], suburbNames = [];
                 var baseUrl = "/Api/AutogearApi/";
-               /* $.getJSON(baseUrl + "GetPostCodes", { suburbName: $("#SuburbName").val() }).then(function (data) {
-                    //    postalCodes = data;
-                    $("#PostalCode").autocomplete({
-                        source: function (request, response) {
-                            var results = $.ui.autocomplete.filter(data, request.term);
-
-                            response(results.slice(0, 4));
-                        },
-                        minLength: 1
-                    });
-                });*/
+               
                 $.getJSON(baseUrl + "GetSubUrbs", {  }).then(function (data) {
                     // postalCodes = data;
                     $("#SuburbName").autocomplete({
@@ -438,13 +427,7 @@
                         minLength: 2
                     });
                 });
-                //SuburbName
-                //$.getJSON(baseUrl + "GetInstructorNames").then(function (data) {
-                //    $("#InstructorName").autocomplete({
-                //        source: data,
-                //        minLength: 2
-                //    });
-                //});
+                
                 $("#StartDate,#ExpiryDate,#LicensePassedDate,#BookingStartDate,#BookingEndDate,#DrivingTestDate").datepicker({
                     //minDate: 0,
                     dateFormat: "yy-mm-dd",
@@ -478,15 +461,7 @@
                     if (self.id.indexOf("StartTime") > -1) {
                         $("#StopTime").val(newTime);
                     }
-                    //var newhour = (this.id == "DrivingTestStartTime") ? (e.time.hours) + 2 : (e.time.hours) + 1;
-                    //var newTime = newhour + ":" + e.time.minutes ;
-                    //if (self.id.indexOf("StartTime") > -1) {
-                    //    //if (self.id.indexOf("DrivingTest") > -1) {
-                    //    //    $("#DrivingTestStopTime").val(newTime);
-                    //    //} else {
-                    //        $("#StopTime").val(newTime);
-                    //    //}
-                    //}
+                    
                 });
                 $("#DrivingTestStopTime,#DrivingTestStartTime").timepicker({
                     minuteStep: 1,

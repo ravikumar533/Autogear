@@ -110,10 +110,11 @@
                                 dataType: "JSON",
                                 success: function(data) {
                                     if (data["StatusName"] == "Success") {
-                                        fetchCalendarEvents(modal.find("#InstructorNumber").val());
+                                        if ($("#InstructorName").length > 0)
+                                            fetchCalendarEvents($("#InstructorName").val());
+                                        else
+                                            fetchCalendarEvents(modal.find("#InstructorNumber").val());
                                         modal.modal("hide");
-
-
                                     } else {
                                         modal.find("#appointmentError").show();
                                     }
@@ -174,7 +175,10 @@
                                     dataType: "JSON",
                                     success: function(data) {
                                         //document.location.reload();
-                                        fetchCalendarEvents(modal.find("#InstructorNumber").val());
+                                        if ($("#InstructorName").length > 0)
+                                            fetchCalendarEvents($("#InstructorName").val());
+                                        else
+                                            fetchCalendarEvents(modal.find("#InstructorNumber").val());
                                         modal.modal("hide");
                                     },
                                     error: function(data) {

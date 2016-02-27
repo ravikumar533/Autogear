@@ -193,7 +193,7 @@
                 onSelectRow: function () {
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
                     $("#UpdateStudent").show();
-                    $("#UpdateStudent").attr("href", "@Url.Action("Edit")?StudentId=" + rowKey);
+                    $("#UpdateStudent").attr("href", "@Url.Action("Edit")?studentNumber=" + rowKey);
                 },
                 caption: "Students",
                 gridComplete: function () {

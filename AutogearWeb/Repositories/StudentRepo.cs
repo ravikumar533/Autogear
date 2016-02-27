@@ -504,7 +504,7 @@ namespace AutogearWeb.Repositories
 
         public void SaveExistingStudent(string currentUser, StudentModel studentModel)
         {
-            var studentDetails = DataContext.Students.FirstOrDefault(s => s.Id == studentModel.StudentId) ??
+            var studentDetails = DataContext.Students.FirstOrDefault(s => s.StudentNumber == studentModel.StudentNumber) ??
                                  new Student();
             var addressDetails = DataContext.Addresses.FirstOrDefault(s => s.AddressId == studentDetails.AddressId) ?? new Address();
             addressDetails.Address1 = studentModel.Address1;
@@ -544,7 +544,7 @@ namespace AutogearWeb.Repositories
             DataContext.SaveChanges();
 
             var studentLicenseDetails =
-                DataContext.Student_License.FirstOrDefault(s => s.StudentId == studentModel.StudentId) ??
+                DataContext.Student_License.FirstOrDefault(s => s.StudentId == studentDetails.Id) ??
                 new Student_License();
             studentLicenseDetails.LicenseNo = studentModel.LicenseNumber;
             studentLicenseDetails.License_passed_Date = studentModel.LicensePassedDate;

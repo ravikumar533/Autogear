@@ -67,9 +67,9 @@ namespace AutogearWeb.Controllers
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             return View(model);
         }
-        public ActionResult Edit(string studentId)
+        public ActionResult Edit(string studentNumber)
         {
-            var model = _iStudentRepo.GetStudentByNumber(studentId);
+            var model = _iStudentRepo.GetStudentByNumber(studentNumber);
             model.GendersList = _iAutogearRepo.GenderListItems();
             model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");
             var suburb = _iPostalRepo.GetSuburbById(model.SuburbId);
@@ -78,7 +78,10 @@ namespace AutogearWeb.Controllers
                 model.SuburbName = suburb.Name;
                 var state = _iPostalRepo.GetStateById(suburb.StateId);
                 if (state != null)
+                {
                     model.SuburbName += "," + state.Name + "," + model.PostalCode;
+                    model.StateId = state.StateId;
+                }
             }
             return View(model);
         }
