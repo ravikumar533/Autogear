@@ -18,6 +18,7 @@ namespace AutogearWeb.Models
         public string StudentNumber { get; set; }
         public int? AddressId { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class TblStudentAddress

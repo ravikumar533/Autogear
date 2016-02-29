@@ -34,6 +34,8 @@ namespace AutogearWeb.Repositories
                      (from student in DataContext.Students
                         let instructorStudent =
                             DataContext.Instructor_Student.FirstOrDefault(s => s.StudentId == student.Id)
+                            let studentAddress =
+                            DataContext.Addresses.FirstOrDefault(a => a.AddressId == student.AddressId)
                         where instructorStudent != null
                         select new TblStudent
                         {
@@ -47,7 +49,8 @@ namespace AutogearWeb.Repositories
                             Email = student.Email,
                             InstructorName = instructorStudent.Instructor.FirstName + " " + instructorStudent.Instructor.LastName,
                             CreatedDate = student.CreatedDate,
-                            StudentNumber = student.StudentNumber
+                            StudentNumber = student.StudentNumber,
+                            PhoneNumber = studentAddress.Mobile
                         });
                 return _tblStudents;
 
