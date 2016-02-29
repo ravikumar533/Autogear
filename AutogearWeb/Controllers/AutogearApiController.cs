@@ -15,17 +15,19 @@ namespace AutogearWeb.Controllers
         private readonly IInstructorRepo _instructorRepo;
         private readonly IStudentRepo _studentRepo;
         private readonly IPostalRepo _postalRepo;
+        private readonly ApplicationUserManager _userManager;
 
         public AutogearApiController()
         {
             
         }
 
-        public AutogearApiController(IInstructorRepo instructorRepo,IStudentRepo studentRepo,IPostalRepo postalRepo)
+        public AutogearApiController(IInstructorRepo instructorRepo, IStudentRepo studentRepo, IPostalRepo postalRepo, ApplicationUserManager userManager)
         {
             _instructorRepo = instructorRepo;
             _studentRepo = studentRepo;
             _postalRepo = postalRepo;
+            _userManager = userManager;
         }
 
         public async Task<IList<TblInstructor>> GetInstructors()
@@ -33,9 +35,12 @@ namespace AutogearWeb.Controllers
             return await _instructorRepo.GetInstructorList();
         }
 
-        public async Task<IList<TblStudent>> GetStudents(string searchtext, string date, Boolean addInactiveStudents)
+        public async Task<IList<TblStudent>> GetStudents(string searchtext, string phoneNumber, Boolean addInactiveStudents)
         {
-            return await _studentRepo.GetStudentList( searchtext,  date, addInactiveStudents);
+            if (User.IsInRole("Admin"))
+                return await _studentRepo.GetStudentList(searchtext, phoneNumber, addInactiveStudents);
+            else
+                return await _studentRepo.GetInstructorStudentList(searchtext, phoneNumber, addInactiveStudents, User.Identity.GetUserId());
         }
 
         public async Task<IList<int>> GetPostCodes(string suburbName)

@@ -29,13 +29,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 col-xs-4">
-                                    @Html.Label("StartDate", htmlAttributes: new { @class = "control-label col-sm-3" })
+                                    @Html.Label("PhoneNumber", htmlAttributes: new { @class = "control-label col-sm-3" })
                                     <div class="col-sm-9">
                                         <div class="input-group col-xs-10 col-sm-8">
-                                            @Html.TextBox("StartDate", "", new { htmlAttributes = new { @class = "form-control date-pickerSD" }, placeholder = "YYYY-MM-DD" })
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
+                                            @Html.TextBox("PhoneNumber", "", new { htmlAttributes = new { @class = "form-control" }, placeholder = "Phone Number" })                                            
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +136,7 @@
             }
 
             $(gridSelector).jqGrid({
-                url: baseUrl + "GetStudents?searchtext=&date=&addInactiveStudents=" + false,
+                url: baseUrl + "GetStudents?searchtext=&phoneNumber=&addInactiveStudents=" + false,
                 datatype: "json",
                 colModel: [
                     {
@@ -224,9 +221,9 @@
 
             function doSearch() {
                 var searchtext = $("#SearchText").val();
-                var date = $("#StartDate").val();
+                var phone = $("#PhoneNumber").val();
                 var addInactiveStudent = $("#Inactivestudents").val();
-                var url = baseUrl + "GetStudents?searchtext=" + searchtext + "&date=" + date + "&addInactiveStudents=" + addInactiveStudent;
+                var url = baseUrl + "GetStudents?searchtext=" + searchtext + "&phoneNumber=" + phone + "&addInactiveStudents=" + addInactiveStudent;
                 $(gridSelector).jqGrid("setGridParam", { datatype: 'json',url: url, page: 1 }).trigger("reloadGrid");
             }
             $("#StartDate").datepicker({

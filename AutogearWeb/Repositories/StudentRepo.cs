@@ -28,8 +28,7 @@ namespace AutogearWeb.Repositories
         public IQueryable<TblStudent> TblStudents
         {
             get
-            {
-
+            {                
                  _tblStudents = _tblStudents ??
                      (from student in DataContext.Students
                         let instructorStudent =
@@ -50,7 +49,8 @@ namespace AutogearWeb.Repositories
                             InstructorName = instructorStudent.Instructor.FirstName + " " + instructorStudent.Instructor.LastName,
                             CreatedDate = student.CreatedDate,
                             StudentNumber = student.StudentNumber,
-                            PhoneNumber = studentAddress.Mobile
+                            PhoneNumber = studentAddress.Mobile,
+                            InstructorId = instructorStudent.InstructorId
                         });
                 return _tblStudents;
 
@@ -132,7 +132,7 @@ namespace AutogearWeb.Repositories
             set { _tblStateses = value; }
         }
 
-        public async Task<List<TblStudent>> GetStudentList(string searchtext, string date, Boolean addInactiveStudents)
+        public async Task<List<TblStudent>> GetStudentList(string searchtext, string phoneNumber, Boolean addInactiveStudents)
         {
             var results = (addInactiveStudents == false) ? TblStudents.Where(s => s.Status) : TblStudents;
             if (!string.IsNullOrEmpty(searchtext))
@@ -141,10 +141,25 @@ namespace AutogearWeb.Repositories
                         s =>
                             ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
                             (s.StudentNumber.Contains(searchtext)));
-            if (!string.IsNullOrEmpty(date))
+            if (!string.IsNullOrEmpty(phoneNumber))
             {
-                var startdate = Convert.ToDateTime(date);
-                results = results.Where(s => s.StartDate >= startdate);
+                results = results.Where(s => s.PhoneNumber.Contains(phoneNumber));
+            }
+            return await results.ToListAsync();
+        }
+        public async Task<List<TblStudent>> GetInstructorStudentList(string searchtext, string phoneNumber, Boolean addInactiveStudents,string instructorId)
+        {
+            var results = TblStudents.Where(s => s.InstructorId == instructorId);
+            results = (addInactiveStudents == false) ? results.Where(s => s.Status) : results;
+            if (!string.IsNullOrEmpty(searchtext))
+                results =
+                    results.Where(
+                        s =>
+                            ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
+                            (s.StudentNumber.Contains(searchtext)));
+            if (!string.IsNullOrEmpty(phoneNumber))
+            {
+                results = results.Where(s => s.PhoneNumber.Contains(phoneNumber));
             }
             return await results.ToListAsync();
         }

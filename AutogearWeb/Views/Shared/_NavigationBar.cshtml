@@ -2,14 +2,17 @@
 {
     <div id="sidebar" class="sidebar responsive">
         <ul class="nav nav-list" id='mainmenu'>
-            <li class="active menuitem">
-                <a href="@Url.Action("Dashboard", "Admin")">
-                    <i class="menu-icon fa fa-tachometer"></i>
-                    <span class="menu-text"> Dashboard </span>
-                </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="active menuitem">
+                    <a href="@Url.Action("Dashboard", "Admin")">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> Dashboard </span>
+                    </a>
 
-                <b class="arrow"></b>
-            </li>
+                    <b class="arrow"></b>
+                </li>
+            }
             @if (User.IsInRole("Admin"))
             {
                 <li id="liInstructor" class="menuitem">
@@ -43,17 +46,20 @@
 
                 <b class="arrow"></b>
             </li>
-            <li class="menuitem">
-                <a href="@Url.Action("InstructorsDayCalendar", "Instructor")">
-                    <i class="menu-icon fa fa-calendar"></i>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="menuitem">
+                    <a href="@Url.Action("InstructorsDayCalendar", "Instructor")">
+                        <i class="menu-icon fa fa-calendar"></i>
 
-                    <span class="menu-text">
-                        Instructors Day Calendar
-                    </span>
-                </a>
+                        <span class="menu-text">
+                            Instructors Day Calendar
+                        </span>
+                    </a>
 
-                <b class="arrow"></b>
-            </li>
+                    <b class="arrow"></b>
+                </li>
+            }
             @if (User.IsInRole("Admin"))
             {
                 <li id="" class="menuitem">
@@ -66,26 +72,26 @@
 
                     <b class="arrow"></b>
                 </li>
-    <li id="" class="menuitem">
-        <a href="@Url.Action("Area", "Instructor")">
-            <i class="menu-icon fa fa-university"></i>
-            <span class="menu-text">
-                Areas
-            </span>
-        </a>
+                <li id="" class="menuitem">
+                    <a href="@Url.Action("Area", "Instructor")">
+                        <i class="menu-icon fa fa-university"></i>
+                        <span class="menu-text">
+                            Areas
+                        </span>
+                    </a>
 
-        <b class="arrow"></b>
-    </li>
-    <li id="" class="menuitem">
-        <a href="@Url.Action("AllLeaves", "Instructor")">
-            <i class="menu-icon fa fa-list"></i>
-            <span class="menu-text">
-                All Leaves
-            </span>
-        </a>
+                    <b class="arrow"></b>
+                </li>
+                <li id="" class="menuitem">
+                    <a href="@Url.Action("AllLeaves", "Instructor")">
+                        <i class="menu-icon fa fa-list"></i>
+                        <span class="menu-text">
+                            All Leaves
+                        </span>
+                    </a>
 
-        <b class="arrow"></b>
-    </li>
+                    <b class="arrow"></b>
+                </li>
             }
             <li class="menuitem">
                 <a href="@Url.Action("InstructorLeaves", "Instructor")">

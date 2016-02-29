@@ -19,6 +19,7 @@ namespace AutogearWeb.Repositories
         IQueryable<TblState> TblStates { get; set; }
         IList<SelectListItem> GetStudents(); // Fetch Instructor Names
         Task<List<TblStudent>> GetStudentList(string searchtext, string date,Boolean addInactiveStudents);
+        Task<List<TblStudent>> GetInstructorStudentList(string searchtext, string date, Boolean addInactiveStudents, string instructorId);
         IList<SelectListItem> GetPackages();
         IList<SelectListItem> GetStateList();
         Task<IList<string>> GetStudentNames();
