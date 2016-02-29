@@ -221,8 +221,13 @@
                     "local",
                 viewrecords:
                     true,
-                rowNum:
-                    10
+                rowNum: 10,
+                views: {
+                    
+                    week: {
+                        columnFormat: "ddd D/M"
+                    }
+                }
             });
 
         function fetchCalendarEvents(instructorName) {

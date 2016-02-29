@@ -319,7 +319,6 @@
     <Compile Include="EFModels\User.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
