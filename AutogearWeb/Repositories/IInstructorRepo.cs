@@ -49,7 +49,7 @@ namespace AutogearWeb.Repositories
         void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
         IList<SelectListItem> GetAreasList(string areaIds);
         List<Last7DaysInstructorHours> GetLast7DaysInstructorHour();
-
+        IList<SelectListItem> GetInstructorNames(string instructorId);
 
     }
 }

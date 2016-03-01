@@ -203,6 +203,19 @@ namespace AutogearWeb.Repositories
                 students.Add(new SelectListItem { Value = studentNumber.ToString(), Text = name  });
             }
             return students;
+        }
+
+        public IList<SelectListItem> GetInstructorStudents(string instructorId)
+        {
+            var students = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var results = TblStudents.Where(s => s.InstructorId == instructorId);
+            foreach (var student in results)
+            {
+                var name = student.FirstName + " " + student.LastName;
+                var studentNumber = student.StudentId;
+                students.Add(new SelectListItem { Value = studentNumber.ToString(), Text = name });
+            }
+            return students;
         } 
         
         // Fetch Instructor Names

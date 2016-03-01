@@ -7422,7 +7422,7 @@ fieldset[disabled] .btn-white.btn-grey.active {
 .label.label-warning,
 .badge.badge-warning,
 .badge-warning {
-  background-color: #f89406;
+  background-color: #f89406 !important;
 }
 .label-pink,
 .label.label-pink,

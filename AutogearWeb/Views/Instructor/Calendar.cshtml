@@ -189,13 +189,17 @@
 
                                 modal.find("#cancelAppointment").click(function(ev) {
                                     modal.find(".cancelAppointment").fadeIn();
-                                    modal.find("#BookingType").val("Canceled").trigger("chosen:updated");
+                                    modal.find("#cancelAppointment").fadeOut();
+                                    modal.find("#BookingType").val("Canceled").trigger("chosen:updated");                                    
                                 });
                                 modal.find("#BookingType").change(function() {
-                                    if ($(this).val() == "Canceled")
+                                    if ($(this).val() == "Canceled") {
                                         modal.find(".cancelAppointment").fadeIn();
+                                        modal.find("#cancelAppointment").fadeOut();
+                                    }
                                     else {
                                         modal.find(".cancelAppointment").fadeOut();
+                                        modal.find("#cancelAppointment").fadeIn();
                                     }
                                 });
                                 modal.find("#cancel").on("click", function(ev) {

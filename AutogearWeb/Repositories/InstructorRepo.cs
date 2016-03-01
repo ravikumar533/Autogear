@@ -102,8 +102,8 @@ namespace AutogearWeb.Repositories
                                                    StartDate = s.StartDate,
                                                    EndDate = s.EndDate,
                                                    StartTime = s.StartTime,
-                                                   StopTime = s.EndTime
-
+                                                   StopTime = s.EndTime,
+                                                   Status = s.Status
                                                });
                 return _tblInstructorLeaves;
             }
@@ -227,7 +227,7 @@ namespace AutogearWeb.Repositories
                                     Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,starttime.Hours,starttime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
                                     End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,endtime.Hours,endtime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
                                     Title = leave.LeaveReason,
-                                    ClassName = "label-yellow"
+                                    ClassName = "label-warning"
                                 }
                                 );
                     }
@@ -239,9 +239,10 @@ namespace AutogearWeb.Repositories
 
         public async Task<IList<InstructorBooking>> GetInstructorsDayEvents(DateTime date)
         {
-            var instuctorBookings = new List<InstructorBooking>();
+            var instuctorBookings = new List<InstructorBooking>();            
             var startDate = date;
             var endDate = startDate.AddDays(1);
+            var tblInstructorLeaves = TblInstructorLeaves.Where(b => date >= b.StartDate && b.EndDate < endDate && b.Status != "Canceled").ToList();
             var tblInstructorBookings =
                 TblBookings.Where(b => date >= b.StartDate  && b.EndDate < endDate && b.Type !="Canceled").ToList();
             var tblInstructors = TblInstructors.Select(s => s.InstructorId).ToList();
@@ -261,9 +262,36 @@ namespace AutogearWeb.Repositories
                             Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             Title = student.FirstName + " " + student.LastName,
-                            ClassName = "label-success",
+                            ClassName = booking.Type == "Learning" ? "label-success" : "label-important",
                             Column = tblInstructors.FindIndex(s=>s == booking.InstructorId)
                         });
+                    }
+                }
+            }
+            // Fetch Instructor Leaves
+            foreach (var leave in tblInstructorLeaves)
+            {
+                if (leave.StartDate != null && leave.EndDate != null)
+                {
+                    var leaveStartDate = leave.StartDate.Value;
+                    var leaveEndDate = leave.EndDate.Value;
+                    var starttime = leave.StartTime ?? new TimeSpan(6, 0, 0);
+                    var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
+                    for (var j = 0; j < leaveEndDate.Subtract(startDate).Days + 1; j++)
+                    {
+                        var bookingDate = leaveStartDate.AddDays(j);
+
+                        instuctorBookings.Add(
+                            new InstructorBooking
+                            {
+                                Id = 0,
+                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day, starttime.Hours, starttime.Minutes, 00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day, endtime.Hours, endtime.Minutes, 00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                Title = leave.LeaveReason,
+                                ClassName = "label-warning",
+                                Column = tblInstructors.FindIndex(s => s == leave.InstructorId)
+                            }
+                            );
                     }
                 }
             }
@@ -341,6 +369,18 @@ namespace AutogearWeb.Repositories
                 var name = instructor.FirstName + " " + instructor.LastName;
                 var instructorNumber = instructor.InstructorNumber;
                 instructors.Add(new SelectListItem { Value = instructorNumber , Text = name + " "+ instructorNumber });
+            }
+            return instructors;
+        }
+        public IList<SelectListItem> GetInstructorNames(string instructorId)
+        {
+            var instructors = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
+            var results = TblInstructors.Where(i => i.InstructorId == instructorId);
+            foreach (var instructor in results)
+            {
+                var name = instructor.FirstName + " " + instructor.LastName;
+                var instructorNumber = instructor.InstructorNumber;
+                instructors.Add(new SelectListItem { Value = instructorNumber, Text = name + " " + instructorNumber });
             }
             return instructors;
         }

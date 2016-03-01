@@ -162,6 +162,7 @@ namespace AutogearWeb.Controllers
         public ActionResult BookingAppointment(int bookingId)
         {
             var drivingTypeItems = _autogearRepo.DrivingTypeItems();
+            var instructornumber = string.Empty;
             var appointment = _instructorRepo.GetBookingAppointmentById(bookingId) ?? new BookingAppointment
             {
                 EndDate = DateTime.Now,
@@ -172,6 +173,7 @@ namespace AutogearWeb.Controllers
                 var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
                 var instructor = _instructorRepo.GetInstructorDetailsById(currentUser);
                 appointment.InstructorName = instructor.FirstName + " " + instructor.LastName+" "+ instructor.InstructorNumber;
+                instructornumber = instructor.InstructorNumber;
             }
             if (string.IsNullOrEmpty(appointment.BookingType))
             {
@@ -179,8 +181,16 @@ namespace AutogearWeb.Controllers
             }
             if(bookingId>0)
                 drivingTypeItems.Add(_autogearRepo.CancelledItem());
-            appointment.StudentList = bookingId ==0?new SelectList(_studentRepo.GetStudents(),"Value","Text"): new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
-            appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", appointment.InstructorNumber);
+            if (User.IsInRole("Admin"))
+            {
+                appointment.StudentList = bookingId == 0 ? new SelectList(_studentRepo.GetStudents(), "Value", "Text") : new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
+                appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", appointment.InstructorNumber);
+            }
+            else
+            {
+                appointment.StudentList = bookingId == 0 ? new SelectList(_studentRepo.GetInstructorStudents(User.Identity.GetUserId()), "Value", "Text") : new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
+                appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(User.Identity.GetUserId()), "Value", "Text", instructornumber);
+            }
             appointment.DrivingTypeList = new SelectList(drivingTypeItems, "Value", "Text", appointment.BookingType);
             return View(appointment);
         }

@@ -39,12 +39,18 @@ namespace AutogearWeb.Controllers
 
         public ActionResult Create()
         {
-            var model = new BookingAppointment
+            var model = new BookingAppointment();
+            model.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text");
+            if (User.IsInRole("Admin"))
             {
-                StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text"),
-                InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text"),
-                DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(),"Value","Text")
-            };
+                model.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text");
+                model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text");                
+            }
+            else
+            {
+                model.StudentList = new SelectList(_studentRepo.GetInstructorStudents(User.Identity.GetUserId()), "Value", "Text");
+                model.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(User.Identity.GetUserId()), "Value", "Text");                
+            }
 
             return View(model);
         }
@@ -69,9 +75,9 @@ namespace AutogearWeb.Controllers
                 _studentRepo.SaveStudentAppointment(bookingAppointment, currentUser);
                 return View("Index");
             }
-            bookingAppointment.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text",bookingAppointment.StudentId);
-            bookingAppointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text",bookingAppointment.InstructorNumber);
-            bookingAppointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text",bookingAppointment.BookingType);
+            bookingAppointment.StudentList = new SelectList(_studentRepo.GetStudents(), "Value", "Text", bookingAppointment.StudentId);
+            bookingAppointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(), "Value", "Text", bookingAppointment.InstructorNumber);
+            bookingAppointment.DrivingTypeList = new SelectList(_autogearRepo.DrivingTypeItems(), "Value", "Text", bookingAppointment.BookingType);
             return View(bookingAppointment);
         }
 

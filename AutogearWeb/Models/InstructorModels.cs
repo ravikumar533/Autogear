@@ -69,6 +69,8 @@ namespace AutogearWeb.Models
         [Display(Name = "Stop Time")]
         [DisplayFormat(DataFormatString = "{0:yyyy dd MM}")]
         public TimeSpan? StopTime { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class AllInstructorsLeavesModel
