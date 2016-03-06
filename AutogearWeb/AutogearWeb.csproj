@@ -289,6 +289,9 @@
     <Compile Include="EFModels\Instructor.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EFModels\InstructorArea.cs">
+      <DependentUpon>AutogearModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EFModels\Instructor_Leaves.cs">
       <DependentUpon>AutogearModel.tt</DependentUpon>
     </Compile>

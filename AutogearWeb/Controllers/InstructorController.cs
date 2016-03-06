@@ -40,6 +40,7 @@ namespace AutogearWeb.Controllers
         // GET: Instructor
         public ActionResult Index()
         {
+            ViewBag.Areas = new SelectList(_instructorRepo.GetAreasList(string.Empty), "Value", "Text");
             return View();
         }
 
@@ -447,6 +448,29 @@ namespace AutogearWeb.Controllers
 
         #endregion
 
+        public ActionResult MigrateAreas()
+        {
+
+            var instructorList = _instructorRepo.TblInstructors.ToList();
+            foreach (var instructor in instructorList )
+            {
+                if (!string.IsNullOrEmpty(instructor.AreaIds))
+                {
+                    string[] areas = instructor.AreaIds.Split(',');
+                    foreach (var area in areas)
+                    {
+
+                        var instructorArea = _instructorRepo.GetInstructorArea(instructor.InstructorId,
+                            Convert.ToInt32(area));
+                        if (instructorArea == null)
+                            instructorArea = new TblInstructorArea {InstructorId = instructor.InstructorId,AreaId = Convert.ToInt32(area)};
+
+                        _instructorRepo.SaveInstructorArea(instructorArea);
+                    }
+                }
+            }
+            return View("");
+        }
     }
 
 }

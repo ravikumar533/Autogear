@@ -30,9 +30,9 @@ namespace AutogearWeb.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IList<TblInstructor>> GetInstructors()
+        public async Task<IList<TblInstructor>> GetInstructors(string searchtext, string area)
         {
-            return await _instructorRepo.GetInstructorList();
+            return await _instructorRepo.GetInstructorList(searchtext,area);
         }
 
         public async Task<IList<TblStudent>> GetStudents(string searchtext, string phoneNumber, Boolean addInactiveStudents)

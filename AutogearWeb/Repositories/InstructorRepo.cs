@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -131,6 +132,26 @@ namespace AutogearWeb.Repositories
             set { _tblPackages = value; }
         }
 
+        private IQueryable<TblInstructorArea> _tblInstructorAreas;
+
+        public IQueryable<TblInstructorArea> TblInstuctorAreas
+        {
+            get
+            {
+                _tblInstructorAreas = _tblInstructorAreas ??
+                                      DataContext.InstructorAreas.Select(
+                                          s =>
+                                              new TblInstructorArea
+                                              {
+                                                  Id = s.Id,
+                                                  InstructorId = s.InstructorID,
+                                                  AreaId = s.AreaId,
+                                              });
+                return _tblInstructorAreas;
+            }
+            set { _tblInstructorAreas = value; }
+        }
+
         private IQueryable<AreaModel> _tblArea;
         public IQueryable<AreaModel> TblArea
         {
@@ -150,9 +171,25 @@ namespace AutogearWeb.Repositories
             set { _tblArea = value; }
         }
 
-        public async Task<IList<TblInstructor>> GetInstructorList()
+        public async Task<IList<TblInstructor>> GetInstructorList(string searchtext,string area)
         {
-            return await TblInstructors.OrderBy(s=>s.CreatedDate).ToListAsync();
+            var results = TblInstructors;
+            if (!string.IsNullOrEmpty(searchtext))
+                results =
+                    results.Where(
+                        s =>
+                            ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
+                            (s.InstructorNumber.Contains(searchtext)));
+            if (!string.IsNullOrEmpty(area))
+            {
+                var areas = DataContext.InstructorAreas.Where(v => v.AreaId == Convert.ToInt32(area)).ToList();
+                results = (from p in results
+                    from q in areas
+                    where p.InstructorId == q.InstructorID
+                    select p);
+            }
+            return await results.ToListAsync();
+            
         }
 
         public Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
@@ -390,6 +427,11 @@ namespace AutogearWeb.Repositories
             return TblInstructors.SingleOrDefault(s => s.InstructorId == instructorId);
         }
 
+        public TblInstructorArea GetInstructorArea(string instructorid, int areaid)
+        {
+            return TblInstuctorAreas.SingleOrDefault(s => s.InstructorId == instructorid&&s.AreaId==areaid);
+        }
+
         public BookingAppointment GetBookingAppointmentById(int bookingAppointmentId)
         {
             var booking = TblBookings.FirstOrDefault(s => s.BookingId == bookingAppointmentId);
@@ -575,6 +617,30 @@ namespace AutogearWeb.Repositories
             };
             DataContext.Instructors.Add(instructor);
             SaveInDatabase();
+            foreach (var iarea in model.AreaIds.Split(','))
+            {
+                // Instructor Area
+                var instructorArea = new InstructorArea
+                {
+                    InstructorID = instructor.InstructorId,
+                    AreaId = Convert.ToInt32(iarea)
+                };
+                DataContext.InstructorAreas.Add(instructorArea);
+                SaveInDatabase();
+            }
+          
+        }
+
+        public void SaveInstructorArea(TblInstructorArea model)
+        {
+            var instructorarea =
+                DataContext.InstructorAreas.SingleOrDefault(
+                    s => s.AreaId == model.AreaId && s.InstructorID == model.InstructorId) ?? new InstructorArea();
+            instructorarea.AreaId = model.AreaId;
+            instructorarea.InstructorID = model.InstructorId;
+            if (instructorarea.Id == 0)
+                DataContext.InstructorAreas.Add(instructorarea);
+            SaveInDatabase();
         }
 
         public void UpdateInstructor(InstructorModel model)
@@ -603,7 +669,28 @@ namespace AutogearWeb.Repositories
                     instructorAddress.SuburbID = model.SuburbId;
                     instructorAddress.ModifiedBy = model.CreatedUser;
                 }
+                var instructorAreas =
+                    DataContext.InstructorAreas.Where(v => v.InstructorID == instructor.InstructorId).ToList();
                 SaveInDatabase();
+                var instructorareas = model.AreaIds.Split(',');
+                foreach (var area in instructorAreas)
+                {
+                    if (instructorareas.FirstOrDefault(s => s == area.AreaId.ToString()) == null)
+                    {
+                        DataContext.InstructorAreas.Remove(area);
+                        DataContext.SaveChanges();
+                    }
+                }
+                foreach (var area in instructorareas)
+                {
+                    if (instructorAreas.SingleOrDefault(s => s.AreaId == Convert.ToInt32(area)) == null)
+                    {
+                        DataContext.InstructorAreas.Add(new InstructorArea {AreaId = Convert.ToInt32(area),InstructorID = instructor.InstructorId});
+                        SaveInDatabase();
+                    }
+                }
+
+                
             }
         }
 

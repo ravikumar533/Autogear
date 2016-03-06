@@ -35,4 +35,11 @@
         public string Phone { get; set; }
         public string Mobile { get; set; }
     }
+
+    public class TblInstructorArea
+    {
+        public int Id { get; set; }
+        public string InstructorId { get; set; }
+        public int AreaId { get; set; }
+     }
 }

@@ -50,6 +50,7 @@
         <AssociationConnector Association="AutogearDBModel.FK_PostCodes_Suburbs1" />
         <AssociationConnector Association="AutogearDBModel.FK_Suburbs_States" />
         <AssociationConnector Association="AutogearDBModel.FK_Student_License_Students" />
+        <EntityTypeShape EntityType="AutogearDBModel.InstructorArea" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

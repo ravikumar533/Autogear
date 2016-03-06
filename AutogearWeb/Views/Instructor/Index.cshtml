@@ -1,16 +1,72 @@
 ﻿@{
     ViewBag.Title = "Instructors";
-}<p>
-    @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-success" })
-     @Html.ActionLink("Update", "Edit", new object { }, new { @class = "btn btn-info", id="UpdateInstructor" })
-</p>
-<table id="jqGridInstructor"></table>
-<div id="jqGridPager"></div>
+}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 widget-container-col">
+        <div class="widget-box widget-color-blue">
+            <div class="widget-header">
+                <h5 class="widget-title">Search for Instructor</h5>
+
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="1 ace-icon fa fa-chevron-up bigger-125"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="row">
+                        <div class="col-xs-12 form-horizontal">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <!-- #section:elements.form -->
+                            <div class="row">
+                                <div class="form-group col-md-5 col-xs-5">
+                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Instructor Name </label>
+                                    <div class="col-sm-9">
+                                        @Html.TextBox("SearchText", "", new { @class = "form-control search-query", placeholder = "Search Instructor Name" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 col-xs-4">
+                                    @Html.Label("area", htmlAttributes: new { @class = "control-label col-sm-3" })
+                                    <div class="col-sm-9">
+                                        <div class="input-group col-xs-10 col-sm-8">
+                                            @Html.DropDownList("AreaId", (SelectList)ViewBag.Areas, new { @class = "chosen-select form-control ", data_placeholder = "Choose a Area..." });
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-1 col-xs-1">
+                                    <button class="btn btn-xs btn-success pull-right" id="searchbtn">
+                                        <span class="bigger-110">Search</span>
+                                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <p>
+            @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Update", "Edit", new object { }, new { @class = "btn btn-info", id = "UpdateInstructor" })
+        </p>
+        <table id="jqGridInstructor"></table>
+        <div id="jqGridPager"></div>
+    </div>
+</div>
+
 @section Scripts{
     @Scripts.Render("~/bundles/bootstrap");
     @Scripts.Render("~/bundles/bootstrappicker");
     @Scripts.Render("~/bundles/jqGrid");
-   
+   @Scripts.Render("~/bundles/chosenjs");
 
     <script type="text/javascript">
          jQuery(function () {
@@ -18,7 +74,7 @@
             var gridSelector = "#jqGridInstructor";
             var pagerSelector = "#jqGridPager";
             var updateInstructor = $("#UpdateInstructor");
-
+            $(".chosen-select").chosen();
 
              updateInstructor.hide();
             var parentColumn = $(gridSelector).closest("[class*='col-']");
@@ -75,7 +131,7 @@
              }
 
             jQuery(gridSelector).jqGrid({
-                url: baseUrl + "GetInstructors",
+                url: baseUrl + "GetInstructors?searchtext=&area=",
                 datatype: "json",
                 height: 250,
                 loadonce: true,
@@ -140,6 +196,19 @@
             $(document).one("ajaxloadstart.page", function (e) {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();
+            });
+            function doSearch() {
+                var searchtext = $("#SearchText").val();
+                var area = $("#AreaId").val();
+                var url = baseUrl + "GetInstructors?searchtext=" + searchtext + "&area=" + area;
+                $(gridSelector).jqGrid("setGridParam", { datatype: 'json', url: url, page: 1 }).trigger("reloadGrid");
+            }
+            $("#SearchText").keyup(function () {
+                doSearch();
+            });
+            
+            $("#searchbtn").click(function () {
+                doSearch();
             });
         });
     </script>

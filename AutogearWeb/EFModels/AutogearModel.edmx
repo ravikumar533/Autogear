@@ -160,6 +160,14 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="Remarks" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="InstructorArea">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InstructorID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AreaId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Instructors">
           <Key>
             <PropertyRef Name="InstructorId" />
@@ -580,6 +588,7 @@
           <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructor_Leaves" EntityType="Self.Instructor_Leaves" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructor_Student" EntityType="Self.Instructor_Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstructorArea" EntityType="Self.InstructorArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Instructors" EntityType="Self.Instructors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Package_Details" EntityType="Self.Package_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostCodes" EntityType="Self.PostCodes" Schema="dbo" store:Type="Tables" />
@@ -815,6 +824,7 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="Student_License" EntitySet="Student_License" />
           </AssociationSet>
+          <EntitySet Name="InstructorAreas" EntityType="AutogearDBModel.InstructorArea" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -1429,6 +1439,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="InstructorArea">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InstructorID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AreaId" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1709,6 +1727,15 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstructorAreas">
+            <EntityTypeMapping TypeName="AutogearDBModel.InstructorArea">
+              <MappingFragment StoreEntitySet="InstructorArea">
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

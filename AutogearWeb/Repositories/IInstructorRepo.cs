@@ -15,8 +15,8 @@ namespace AutogearWeb.Repositories
         IQueryable<TblAddress> TblAddresses { get; set; }
         IQueryable<TblInstructor> TblInstructors { get; set; }
         IQueryable<TblBooking> TblBookings { get; set; }
-        
-        Task<IList<TblInstructor>> GetInstructorList(); // Fetch List
+        IQueryable<TblInstructorArea> TblInstuctorAreas { get; set; }
+        Task<IList<TblInstructor>> GetInstructorList(string searchtext,string area); // Fetch List
         Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId);
         Task<IList<InstructorBooking>> GetInstructorsDayEvents(DateTime date);
         Task<IList<StudentList>> GetStudentEvents(string currentUser); //Fetch Student List
@@ -26,6 +26,8 @@ namespace AutogearWeb.Repositories
         Instructor GetInstructorById(string instructorNumber);
         InstructorModel GetInstructorModelByNumber(string instructorNumber);
         TblInstructor GetInstructorDetailsById(string instructorId);
+        TblInstructorArea GetInstructorArea(string instructorid,int areaid);
+
         InstructorLeaveModel GetInstructorLeaveById(int leaveId);
         BookingAppointment GetBookingAppointmentById(int bookingAppointmentId);
         Task<IList<InstructorLeaveModel>> GetInstructorLeaves(string currentUser);
@@ -39,6 +41,7 @@ namespace AutogearWeb.Repositories
         Task<IList<AreaModel>> GetArea();
         AreaModel GetAreaById(int areaId);
         void SaveInstructor(RegisterViewModel model);
+        void SaveInstructorArea(TblInstructorArea model);
         void UpdateInstructor(InstructorModel model);
         void SaveInDatabase();  // Save Asynchronous
         void ApplyInstructorLeave(string currentUser, InstructorLeaveModel appliedLeave);
