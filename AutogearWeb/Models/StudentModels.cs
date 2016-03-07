@@ -102,7 +102,7 @@ namespace AutogearWeb.Models
         [Display(Name = "Mobile")]
         public string Mobile { get; set; }
 
-        [Display(Name = "Start Date")]
+        [Display(Name = "Date Of Birth")]
         public DateTime? StartDate { get; set; }
         public bool Status { get; set; }
         public SelectList InstructorList { get; set; }
