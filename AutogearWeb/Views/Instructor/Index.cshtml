@@ -22,7 +22,7 @@
                             <!-- PAGE CONTENT BEGINS -->
                             <!-- #section:elements.form -->
                             <div class="row">
-                                <div class="form-group col-md-5 col-xs-5">
+                                <div class="form-group col-md-6 col-xs-6">
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Instructor Name </label>
                                     <div class="col-sm-9">
                                         @Html.TextBox("SearchText", "", new { @class = "form-control search-query", placeholder = "Search Instructor Name" })
@@ -32,13 +32,13 @@
                                     @Html.Label("area", htmlAttributes: new { @class = "control-label col-sm-3" })
                                     <div class="col-sm-9">
                                         <div class="input-group col-xs-10 col-sm-8">
-                                            @Html.DropDownList("AreaId", (SelectList)ViewBag.Areas, new { @class = "chosen-select form-control ", data_placeholder = "Choose a Area..." });
+                                            @Html.DropDownList("AreaId", (SelectList)ViewBag.Areas, new { @class = "chosen-select form-control ", data_placeholder = "Choose a Area..." })
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-1 col-xs-1">
                                     <button class="btn btn-xs btn-success pull-right" id="searchbtn">
-                                        <span class="bigger-110">Search</span>
+                                        <span class="bigger-110">Search</span>`
                                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                     </button>
                                 </div>
@@ -66,69 +66,71 @@
     @Scripts.Render("~/bundles/bootstrap");
     @Scripts.Render("~/bundles/bootstrappicker");
     @Scripts.Render("~/bundles/jqGrid");
-   @Scripts.Render("~/bundles/chosenjs");
+    @Scripts.Render("~/bundles/chosenjs");
 
     <script type="text/javascript">
-         jQuery(function () {
+        jQuery(function() {
             var baseUrl = "/Api/AutogearApi/";
             var gridSelector = "#jqGridInstructor";
             var pagerSelector = "#jqGridPager";
             var updateInstructor = $("#UpdateInstructor");
-            $(".chosen-select").chosen();
+            $(".chosen-select").chosen().change(function() {
+                console.log(this);
+            });
 
-             updateInstructor.hide();
+            updateInstructor.hide();
             var parentColumn = $(gridSelector).closest("[class*='col-']");
             //resize to fit page size
-             $(window).on("resize.jqGrid", function() {
-                 $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
-             });
+            $(window).on("resize.jqGrid", function() {
+                $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+            });
 
             //resize on sidebar collapse/expand
-             $(document).on("settings.ace.jqGrid", function(ev, eventName, collapsed) {
-                 if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
-                     //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
-                     setTimeout(function() {
-                         $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
-                     }, 0);
-                 }
-             });
+            $(document).on("settings.ace.jqGrid", function(ev, eventName, collapsed) {
+                if (eventName === "sidebar_collapsed" || eventName === "main_container_fixed") {
+                    //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                    setTimeout(function() {
+                        $(gridSelector).jqGrid("setGridWidth", parentColumn.width());
+                    }, 0);
+                }
+            });
 
 
-             //it causes some flicker when reloading or navigating grid
-             //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-             //or go back to default browser checkbox styles for the grid
-             function styleCheckbox() {
-                 
-             }
+            //it causes some flicker when reloading or navigating grid
+            //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+            //or go back to default browser checkbox styles for the grid
+            function styleCheckbox() {
+
+            }
 
 
-             //unlike navButtons icons, action icons in rows seem to be hard-coded
-             //you can change them like this in here if you want
-             function updateActionIcons() {
-                 
-             }
-             
-             //replace icons with FontAwesome icons like above
-             function updatePagerIcons() {
-                 var replacement =
-                 {
-                     "ui-icon-seek-first": "ace-icon fa fa-angle-double-left bigger-140",
-                     "ui-icon-seek-prev": "ace-icon fa fa-angle-left bigger-140",
-                     "ui-icon-seek-next": "ace-icon fa fa-angle-right bigger-140",
-                     "ui-icon-seek-end": "ace-icon fa fa-angle-double-right bigger-140"
-                 };
-                 $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function () {
-                     var icon = $(this);
-                     var $class = $.trim(icon.attr("class").replace("ui-icon", ""));
+            //unlike navButtons icons, action icons in rows seem to be hard-coded
+            //you can change them like this in here if you want
+            function updateActionIcons() {
 
-                     if ($class in replacement) icon.attr("class", "ui-icon " + replacement[$class]);
-                 });
-             }
+            }
 
-             function enableTooltips(table) {
-                 $(".navtable .ui-pg-button").tooltip({ container: "body" });
-                 $(table).find(".ui-pg-div").tooltip({ container: "body" });
-             }
+            //replace icons with FontAwesome icons like above
+            function updatePagerIcons() {
+                var replacement =
+                {
+                    "ui-icon-seek-first": "ace-icon fa fa-angle-double-left bigger-140",
+                    "ui-icon-seek-prev": "ace-icon fa fa-angle-left bigger-140",
+                    "ui-icon-seek-next": "ace-icon fa fa-angle-right bigger-140",
+                    "ui-icon-seek-end": "ace-icon fa fa-angle-double-right bigger-140"
+                };
+                $(".ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon").each(function() {
+                    var icon = $(this);
+                    var $class = $.trim(icon.attr("class").replace("ui-icon", ""));
+
+                    if ($class in replacement) icon.attr("class", "ui-icon " + replacement[$class]);
+                });
+            }
+
+            function enableTooltips(table) {
+                $(".navtable .ui-pg-button").tooltip({ container: "body" });
+                $(table).find(".ui-pg-div").tooltip({ container: "body" });
+            }
 
             jQuery(gridSelector).jqGrid({
                 url: baseUrl + "GetInstructors?searchtext=&area=",
@@ -136,30 +138,30 @@
                 height: 250,
                 loadonce: true,
                 colNames: ["ID", "First Name", "Last Name", "Email", "Phone"],
-                colModel: [                    
-                    { name: "instructorNumber", index: "id", width: 0 ,key:true},
-                   { name: "firstName", index: "FirstName", width: 100, editable: true, sorttype: "date" },
+                colModel: [
+                    { name: "instructorNumber", index: "id", width: 0, key: true },
+                    { name: "firstName", index: "FirstName", width: 100, editable: true, sorttype: "date" },
                     { name: "lastName", index: "LastName", width: 100, editable: true, editoptions: { size: "20", maxlength: "30" } },
                     { name: "email", index: "Email", width: 150, editable: true, edittype: "checkbox" },
                     { name: "phone", index: "Phone", width: 120, editable: true, edittype: "select", editoptions: { value: "FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX" } }
                 ],
-                
+
                 viewrecords: true,
                 rowNum: 5,
-                rowList: [5,10, 15, 20],
+                rowList: [5, 10, 15, 20],
                 pager: pagerSelector,
                 altRows: false,
                 multiselect: false,
                 //multikey: "ctrlKey",
                 multiboxonly: true,
-                onSelectRow:function() {
+                onSelectRow: function() {
                     var rowKey = $(gridSelector).jqGrid("getGridParam", "selrow");
                     $("#UpdateInstructor").show();
                     $("#UpdateInstructor").attr("href", "@Url.Action("Edit")?instructorId=" + rowKey);
                 },
-                loadComplete: function () {
+                loadComplete: function() {
                     var table = this;
-                    setTimeout(function () {
+                    setTimeout(function() {
                         styleCheckbox(table);
 
                         updateActionIcons(table);
@@ -168,7 +170,7 @@
                     }, 0);
                 },
 
-                
+
                 caption: "Instructor Listing",
                 defaultSearch: true
 
@@ -176,38 +178,41 @@
 
 
             });
-            $(window).triggerHandler("resize.jqGrid");//trigger window resize to make the grid get the correct size
-             function styleSearchForm(form) {
-                 var dialog = form.closest(".ui-jqdialog");
-                 var buttons = dialog.find(".EditTable");
-                 buttons.find(".EditButton a[id*='_reset']").addClass("btn btn-sm btn-info").find(".ui-icon").attr("class", "ace-icon fa fa-retweet");
-                 buttons.find(".EditButton a[id*='_query']").addClass("btn btn-sm btn-inverse").find(".ui-icon").attr("class", "ace-icon fa fa-comment-o");
-                 buttons.find(".EditButton a[id*='_search']").addClass("btn btn-sm btn-purple").find(".ui-icon").attr("class", "ace-icon fa fa-search");
-             }
+            $(window).triggerHandler("resize.jqGrid"); //trigger window resize to make the grid get the correct size
+            function styleSearchForm(form) {
+                var dialog = form.closest(".ui-jqdialog");
+                var buttons = dialog.find(".EditTable");
+                buttons.find(".EditButton a[id*='_reset']").addClass("btn btn-sm btn-info").find(".ui-icon").attr("class", "ace-icon fa fa-retweet");
+                buttons.find(".EditButton a[id*='_query']").addClass("btn btn-sm btn-inverse").find(".ui-icon").attr("class", "ace-icon fa fa-comment-o");
+                buttons.find(".EditButton a[id*='_search']").addClass("btn btn-sm btn-purple").find(".ui-icon").attr("class", "ace-icon fa fa-search");
+            }
 
-             function styleSearchFilters(form) {
-                 form.find(".delete-rule").val("X");
-                 form.find(".add-rule").addClass("btn btn-xs btn-primary");
-                 form.find(".add-group").addClass("btn btn-xs btn-success");
-                 form.find(".delete-group").addClass("btn btn-xs btn-danger");
-             }
-             $(gridSelector).jqGrid('navGrid', pagerSelector, { add: false, edit: false, del: false, search: true, refresh: true },
-                        {}, {}, {}, { multipleSearch: true, multipleGroup: true, showQuery: true });
-            $(document).one("ajaxloadstart.page", function (e) {
+            function styleSearchFilters(form) {
+                form.find(".delete-rule").val("X");
+                form.find(".add-rule").addClass("btn btn-xs btn-primary");
+                form.find(".add-group").addClass("btn btn-xs btn-success");
+                form.find(".delete-group").addClass("btn btn-xs btn-danger");
+            }
+
+            $(gridSelector).jqGrid('navGrid', pagerSelector, { add: false, edit: false, del: false, search: true, refresh: true },
+            {}, {}, {}, { multipleSearch: true, multipleGroup: true, showQuery: true });
+            $(document).one("ajaxloadstart.page", function(e) {
                 $.jgrid.gridDestroy(gridSelector);
                 $(".ui-jqdialog").remove();
             });
+
             function doSearch() {
                 var searchtext = $("#SearchText").val();
                 var area = $("#AreaId").val();
                 var url = baseUrl + "GetInstructors?searchtext=" + searchtext + "&area=" + area;
                 $(gridSelector).jqGrid("setGridParam", { datatype: 'json', url: url, page: 1 }).trigger("reloadGrid");
             }
-            $("#SearchText").keyup(function () {
+
+            $("#SearchText").keyup(function() {
                 doSearch();
             });
-            
-            $("#searchbtn").click(function () {
+
+            $("#searchbtn").click(function() {
                 doSearch();
             });
         });

@@ -174,22 +174,29 @@ namespace AutogearWeb.Repositories
         public async Task<IList<TblInstructor>> GetInstructorList(string searchtext,string area)
         {
             var results = TblInstructors;
-            if (!string.IsNullOrEmpty(searchtext))
-                results =
-                    results.Where(
-                        s =>
-                            ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
-                            (s.InstructorNumber.Contains(searchtext)));
-            if (!string.IsNullOrEmpty(area))
+            try
             {
-                var areas = DataContext.InstructorAreas.Where(v => v.AreaId == Convert.ToInt32(area)).ToList();
-                results = (from p in results
-                    from q in areas
-                    where p.InstructorId == q.InstructorID
-                    select p);
+                
+                if (!string.IsNullOrEmpty(searchtext))
+                    results =
+                        results.Where(
+                            s =>
+                                ((s.FirstName + " " + s.LastName).Contains(searchtext)) ||
+                                (s.InstructorNumber.Contains(searchtext)));
+                if (!string.IsNullOrEmpty(area))
+                {
+                    int areaid = Convert.ToInt32(area);
+                    var areas =
+                        DataContext.InstructorAreas.Where(v => v.AreaId == areaid).Select(s => s.InstructorID).ToList();
+                    results = results.Where(s => areas.Contains(s.InstructorId));
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // ignored
             }
             return await results.ToListAsync();
-            
         }
 
         public Boolean CheckIsAnyAppointmentsForInsturcotrOrStudent(BookingAppointment appointment)
