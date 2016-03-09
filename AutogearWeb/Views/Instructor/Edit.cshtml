@@ -158,15 +158,19 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 @section scripts{
-@Scripts.Render("~/bundles/jqueryUI");
+    @Scripts.Render("~/bundles/jqueryUI");
     @Scripts.Render("~/bundles/jqueryval");
-@Scripts.Render("~/bundles/chosenjs");
+    @Scripts.Render("~/bundles/chosenjs");
     <script>
         $(function() {
             var baseUrl = "/Api/AutogearApi/";
             var postalCode = $("#PostalCode");
             var suburbNames = $("#SuburbName");
-            $(".chosen-select").chosen();
+            $(".chosen-select").chosen().on("change", function(event) {
+                if (event.target == this) {
+                    $("#AreaNames").val($(this).val());
+                }
+            });
             $(".chosen-select-deselect").chosen({ allow_single_deselect: true });
             $.getJSON(baseUrl + "GetSubUrbs", { postCode: $("#PostalCode").val() }).then(function(data) {
                 // postalCodes = data;
@@ -180,10 +184,10 @@
                 });
             });
             $("#SuburbName").change(function() {
-                $.getJSON(baseUrl + "GetPostCodes", { suburbName: $(this).val() }).then(function (data) {
+                $.getJSON(baseUrl + "GetPostCodes", { suburbName: $(this).val() }).then(function(data) {
                     //    postalCodes = data;
                     postalCode.autocomplete({
-                        source: function (request, response) {
+                        source: function(request, response) {
                             var results = $.ui.autocomplete.filter(data, request.term);
                             response(results.slice(0, 4));
                         },

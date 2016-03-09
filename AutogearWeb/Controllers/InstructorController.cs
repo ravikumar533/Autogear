@@ -202,7 +202,7 @@ namespace AutogearWeb.Controllers
             var model = _instructorRepo.GetInstructorModelByNumber(instructorId);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             var areas = _instructorRepo.GetAreasList(model.AreaIds);
-            model.Areas = new SelectList(areas, "Value", "Text");
+            model.Areas = new MultiSelectList(areas, "Value", "Text",_instructorRepo.GetAreas(instructorId));
             var suburb = _postalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
             {

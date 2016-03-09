@@ -167,7 +167,11 @@
     @Scripts.Render("~/bundles/chosenjs");
     <script>
         $(function() {
-            $(".chosen-select").chosen();
+            $(".chosen-select").chosen().on("change", function (event) {
+                if (event.target == this) {
+                    $("#AreaNames").val($(this).val());
+                }
+            });;
             //  var postalCodes = [], suburbNames = [];
             var baseUrl = "/Api/AutogearApi/";
 

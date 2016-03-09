@@ -117,7 +117,7 @@ namespace AutogearWeb.Models
         public string PostalCode { get; set; }
         public string SuburbName { get; set; }
         public int SuburbId { get; set; }
-        public SelectList Areas { get; set; }
+        public MultiSelectList Areas { get; set; }
         public bool Status { get; set; }
         public string CreatedUser { get; set; }
         public string AreaNames { get; set; }

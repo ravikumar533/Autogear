@@ -624,7 +624,7 @@ namespace AutogearWeb.Repositories
             };
             DataContext.Instructors.Add(instructor);
             SaveInDatabase();
-            foreach (var iarea in model.AreaIds.Split(','))
+            foreach (var iarea in model.AreaNames.Split(','))
             {
                 // Instructor Area
                 var instructorArea = new InstructorArea
@@ -638,6 +638,10 @@ namespace AutogearWeb.Repositories
           
         }
 
+        public IEnumerable<int> GetAreas(string instructorId)
+        {
+            return DataContext.InstructorAreas.Where(s => s.InstructorID == instructorId).Select(s => s.AreaId);
+        }
         public void SaveInstructorArea(TblInstructorArea model)
         {
             var instructorarea =
@@ -679,7 +683,7 @@ namespace AutogearWeb.Repositories
                 var instructorAreas =
                     DataContext.InstructorAreas.Where(v => v.InstructorID == instructor.InstructorId).ToList();
                 SaveInDatabase();
-                var instructorareas = model.AreaIds.Split(',');
+                var instructorareas = model.AreaNames.Split(',');
                 foreach (var area in instructorAreas)
                 {
                     if (instructorareas.FirstOrDefault(s => s == area.AreaId.ToString()) == null)
