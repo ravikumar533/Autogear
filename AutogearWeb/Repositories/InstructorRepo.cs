@@ -380,7 +380,7 @@ namespace AutogearWeb.Repositories
             var model = new InstructorModel();
             if (instructor != null)
             {
-
+                model.InstructorId = instructor.InstructorId;
                 model.FirstName = instructor.FirstName;
                 model.LastName = instructor.LastName;
                 model.InstructorNumber = instructor.InstructorNumber;
@@ -388,7 +388,7 @@ namespace AutogearWeb.Repositories
                 model.Mobile = instructor.Mobile;
                 model.Phone = instructor.Phone;
                 model.Status = instructor.Status;
-                model.AreaIds = instructor.AreaIds;
+                //model.AreaIds = instructor.AreaIds();
                 model.AreaNames = instructor.AreaIds;
                 if (!string.IsNullOrEmpty(instructor.Gender))
                     model.Gender = Convert.ToInt32(instructor.Gender);
@@ -640,7 +640,7 @@ namespace AutogearWeb.Repositories
 
         public IEnumerable<int> GetAreas(string instructorId)
         {
-            return DataContext.InstructorAreas.Where(s => s.InstructorID == instructorId).Select(s => s.AreaId);
+            return DataContext.InstructorAreas.Where(s => s.InstructorID == instructorId).Select(s => s.AreaId).ToList();
         }
         public void SaveInstructorArea(TblInstructorArea model)
         {
@@ -667,7 +667,7 @@ namespace AutogearWeb.Repositories
                 instructor.Status = model.Status;
                 instructor.Modified_Date = DateTime.Now;
                 instructor.Modified_By = model.CreatedUser;
-                instructor.Areas = model.AreaIds;
+                //instructor.Areas = model.AreaIds;
                 var instructorAddress = DataContext.Addresses.FirstOrDefault(s => s.AddressId == instructor.AddressId);
                 if (instructorAddress != null)
                 {
@@ -771,7 +771,7 @@ namespace AutogearWeb.Repositories
         {
             return await TblArea.ToListAsync();
         }
-        public IList<SelectListItem> GetAreasList(string areaIds)
+        public IList<SelectListItem> GetAreasList()
         {
             var areas = new List<SelectListItem> { new SelectListItem { Value = "", Text = "" } };
             
@@ -779,7 +779,7 @@ namespace AutogearWeb.Repositories
             {
                 areas.Add(new SelectListItem { Value = area.AreaId.ToString(), Text = area.Name  });
             }
-            if (!string.IsNullOrEmpty(areaIds))
+            /*if (!string.IsNullOrEmpty(areaIds))
             {
                 string[] areaNames = areaIds.Split(',');
                 foreach (var areaname in areaNames)
@@ -788,7 +788,7 @@ namespace AutogearWeb.Repositories
                     if (option != null)
                         option.Selected = true;
                 }
-            }
+            }*/
             return areas;
         }
 

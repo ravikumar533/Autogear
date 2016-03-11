@@ -111,7 +111,7 @@
                     <div class="col-md-7">
                         <div class="widget-body">
                             <div class="widget-main padding-2">
-                                @Html.DropDownListFor(model => model.AreaIds, Model.Areas, new { multiple = "", @class = "chosen-select form-control ", data_placeholder = "Choose a Area..." })
+                                @Html.ListBoxFor(model => model.AreaIds, Model.Areas, new { multiple = "", @class = "chosen-select form-control ", data_placeholder = "Choose a Area..." })
                                 @Html.ValidationMessageFor(model => model.Areas, "", new {@class = "text-danger"})
                             </div>
                         </div>

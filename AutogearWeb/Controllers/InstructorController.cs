@@ -40,7 +40,7 @@ namespace AutogearWeb.Controllers
         // GET: Instructor
         public ActionResult Index()
         {
-            ViewBag.Areas = new SelectList(_instructorRepo.GetAreasList(string.Empty), "Value", "Text");
+            ViewBag.Areas = new SelectList(_instructorRepo.GetAreasList(), "Value", "Text");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace AutogearWeb.Controllers
             var model = new RegisterViewModel
             {
                 GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text"),
-                Areas = new MultiSelectList(_instructorRepo.GetAreasList(string.Empty), "Value", "Text"),
+                Areas = new MultiSelectList(_instructorRepo.GetAreasList(), "Value", "Text"),
                 Status = true
             };
             return View(model);
@@ -201,8 +201,8 @@ namespace AutogearWeb.Controllers
             
             var model = _instructorRepo.GetInstructorModelByNumber(instructorId);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
-            var areas = _instructorRepo.GetAreasList(model.AreaIds);
-            model.Areas = new MultiSelectList(areas, "Value", "Text",_instructorRepo.GetAreas(instructorId));
+            var areas = _instructorRepo.GetAreasList();
+            model.Areas = new MultiSelectList(areas, "Value", "Text",_instructorRepo.GetAreas(model.InstructorId));
             var suburb = _postalRepo.GetSuburbById(model.SuburbId);
             if (suburb != null)
             {
@@ -244,7 +244,7 @@ namespace AutogearWeb.Controllers
             }
             model = _instructorRepo.GetInstructorModelByNumber(model.InstructorNumber);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
-            model.Areas = new SelectList(_instructorRepo.GetAreasList(model.AreaNames), "Value", "Text");
+            model.Areas = new SelectList(_instructorRepo.GetAreasList(), "Value", "Text");
           
             return View(model);
         }

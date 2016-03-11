@@ -112,7 +112,7 @@ namespace AutogearWeb.Models
         public string AddressLine2 { get; set; }
        
         [Display(Name = "Areas")]
-         public string AreaIds { get; set; }
+         public string[] AreaIds { get; set; }
 
         public string PostalCode { get; set; }
         public string SuburbName { get; set; }

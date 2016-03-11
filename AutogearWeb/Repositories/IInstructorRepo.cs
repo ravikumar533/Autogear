@@ -51,7 +51,7 @@ namespace AutogearWeb.Repositories
         void UpdateArea(string currentUser, AreaModel areaDetails);
         void UpdateInstructorLeave(string currentUser, InstructorLeaveModel updateLeave);
         IEnumerable<int> GetAreas(string instructorId);
-        IList<SelectListItem> GetAreasList(string areaIds);
+        IList<SelectListItem> GetAreasList();
         List<Last7DaysInstructorHours> GetLast7DaysInstructorHour();
         IList<SelectListItem> GetInstructorNames(string instructorId);
 

@@ -135,7 +135,7 @@
             jQuery(gridSelector).jqGrid({
                 url: baseUrl + "GetInstructors?searchtext=&area=",
                 datatype: "json",
-                height: 250,
+                height: 275,
                 loadonce: true,
                 colNames: ["ID", "First Name", "Last Name", "Email", "Phone"],
                 colModel: [
@@ -147,7 +147,7 @@
                 ],
 
                 viewrecords: true,
-                rowNum: 5,
+                rowNum: 10,
                 rowList: [5, 10, 15, 20],
                 pager: pagerSelector,
                 altRows: false,
