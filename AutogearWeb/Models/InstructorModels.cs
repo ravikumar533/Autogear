@@ -121,6 +121,7 @@ namespace AutogearWeb.Models
         public bool Status { get; set; }
         public string CreatedUser { get; set; }
         public string AreaNames { get; set; }
+        public bool SaveStatus { get; set; }
     }
 
     public class PackageModel

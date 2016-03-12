@@ -211,6 +211,7 @@ namespace AutogearWeb.Controllers
                 if (state != null)
                     model.SuburbName += "," + state.Name + "," + model.PostalCode;
             }
+            model.SaveStatus = false;
             return View(model);
         }
         [HttpPost]
@@ -218,6 +219,7 @@ namespace AutogearWeb.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(InstructorModel model)
         {
+            bool status = false;
             if (ModelState.IsValid)
             {
                 if (!string.IsNullOrEmpty(model.Password))
@@ -241,11 +243,12 @@ namespace AutogearWeb.Controllers
                     model.SuburbId = suburb.SuburbId;
                 }
                 _instructorRepo.UpdateInstructor(model);
+                status = true;
             }
             model = _instructorRepo.GetInstructorModelByNumber(model.InstructorNumber);
             model.GendersList = new SelectList(_autogearRepo.GenderListItems(), "Value", "Text");
             model.Areas = new SelectList(_instructorRepo.GetAreasList(), "Value", "Text");
-          
+            model.SaveStatus = status;
             return View(model);
         }
         public ActionResult Lesson()
