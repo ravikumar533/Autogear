@@ -324,6 +324,110 @@ namespace AutogearWeb.Repositories
             }
             return studentModel;
         }
+        public StudentModel GetStudentById(int studentId)
+        {
+            var student = TblStudents.FirstOrDefault(s => s.StudentId == studentId);
+            var packages = GetPackages();
+            var studentModel = new StudentModel
+            {
+                StatesList = GetStateList(),
+                LearningPackages = packages,
+                DrivingPackages = packages
+            };
+            if (student != null)
+            {
+                // student Info 
+                studentModel.StudentId = student.StudentId;
+                studentModel.FirstName = student.FirstName;
+                studentModel.LastName = student.LastName;
+                studentModel.Email = student.Email;
+                studentModel.Gender = student.Gender;
+                studentModel.StartDate = student.StartDate;
+                studentModel.Status = student.Status;
+                studentModel.StudentNumber = student.StudentNumber;
+
+                //Student Address
+                var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
+                if (studentAddress != null)
+                {
+                    studentModel.Address1 = studentAddress.Address1;
+                    studentModel.Address2 = studentAddress.Address2;
+                    studentModel.Mobile = studentAddress.Mobile;
+                    studentModel.PostalCode = studentAddress.PostalCode.ToString();
+                    var subUrb = DataContext.Suburbs.SingleOrDefault(s => s.SuburbId == studentAddress.SuburbId);
+                    if (subUrb != null)
+                    {
+                        studentModel.SuburbName = subUrb.Suburb_Name;
+                        studentModel.SuburbId = subUrb.SuburbId;
+                    }
+                }
+
+                //Student License
+                var studentLicense = TblStudentLicenses.FirstOrDefault(s => s.StudentId == student.StudentId);
+                if (studentLicense != null)
+                {
+                    studentModel.LicenseNumber = studentLicense.LicenseNumber;
+                    studentModel.LicensePassedDate = studentLicense.LicensePassedDate;
+                    studentModel.ExpiryDate = studentLicense.ExpiryDate;
+                    studentModel.ClassName = studentLicense.ClassName;
+                    studentModel.Remarks = studentLicense.Remarks;
+                    studentModel.IsInternationalLicensed = studentLicense.IsInternationalLicensed;
+                    studentModel.Country = studentLicense.Country;
+                    var instructor = DataContext.Instructor_Student.SingleOrDefault(s => s.StudentId == student.StudentId);
+                    if (instructor != null)
+                    {
+                        studentModel.InstructorRemarks = instructor.Remarks;
+                        var instructorDetails = DataContext.Instructors.SingleOrDefault(s => s.InstructorId == instructor.InstructorId);
+                        if (instructorDetails != null)
+                        {
+                            studentModel.InstructorNumber = instructorDetails.InstructorNumber;
+                        }
+                    }
+                }
+
+                var studentBookings = TblStudentBookings.Where(s => s.StudentId == student.StudentId && s.Type == "Learning").ToList();
+                if (studentBookings.Count > 0)
+                {
+                    var firstBooking = studentBookings[0];
+                    var lastBooking = studentBookings[studentBookings.Count - 1];
+                    studentModel.BookingStartDate = firstBooking.StartDate;
+                    studentModel.BookingEndDate = lastBooking.EndDate;
+                    studentModel.PickupLocation = firstBooking.PickupLocation;
+                    studentModel.StartTime = firstBooking.StartTime;
+                    studentModel.StopTime = firstBooking.StopTime;
+                    studentModel.DropLocation = firstBooking.DropLocation;
+                    studentModel.PackageDisacount = firstBooking.Discount;
+                    var package = packages.SingleOrDefault(s => s.Value == firstBooking.PackageId.ToString());
+                    if (package != null)
+                    {
+                        if (!string.IsNullOrEmpty(package.Value))
+                            studentModel.PackageId = Convert.ToInt32(package.Value);
+                        studentModel.PackageDetails = package.Text;
+                    }
+
+                }
+
+                var studentDrivingTestBooking = TblStudentBookings.FirstOrDefault(s => s.StudentId == student.StudentId && s.Type == "Driving");
+                if (studentDrivingTestBooking != null)
+                {
+                    studentModel.DrivingTestDate = studentDrivingTestBooking.BookingDate;
+                    studentModel.DrivingTestPickupLocation = studentDrivingTestBooking.PickupLocation;
+                    studentModel.DrivingTestStartTime = studentDrivingTestBooking.StartTime;
+                    studentModel.DrivingTestStopTime = studentDrivingTestBooking.StopTime;
+                    studentModel.DrivingTestDropLocation = studentDrivingTestBooking.DropLocation;
+                    studentModel.DrivingTestPackageDisacount = studentDrivingTestBooking.Discount;
+                    var package = packages.SingleOrDefault(s => s.Value == studentDrivingTestBooking.PackageId.ToString());
+                    if (package != null)
+                    {
+                        if (!string.IsNullOrEmpty(package.Value))
+                            studentModel.DrivingTestPackageId = Convert.ToInt32(package.Value);
+                        studentModel.DrivingTestPackageDetails = package.Text;
+                    }
+                }
+
+            }
+            return studentModel;
+        }
         public void SaveStudentAppointment(BookingAppointment bookingAppointment, string currentUser)
         {
             

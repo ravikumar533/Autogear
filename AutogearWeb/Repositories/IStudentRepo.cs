@@ -31,5 +31,6 @@ namespace AutogearWeb.Repositories
         void SaveExistingStudent(string currentUser, StudentModel studentModel);
         List<Last7DaysRegisterDetails> GetStudentRegisterDetails();
         IList<SelectListItem> GetInstructorStudents(string instructorId);
+        StudentModel GetStudentById(int studentId);
     }
 }

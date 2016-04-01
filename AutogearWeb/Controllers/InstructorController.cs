@@ -134,13 +134,19 @@ namespace AutogearWeb.Controllers
                 {
                     return Json(new Status { StatusName = "Error", Message = "Instructor or Student are booked in this timings" });
                 }
+                var instructor = new Instructor();
                 if (!string.IsNullOrEmpty(model.InstructorNumber))
                     {
-                        var instructor = _instructorRepo.GetInstructorById(model.InstructorNumber);
+                        instructor = _instructorRepo.GetInstructorById(model.InstructorNumber);
                         if (instructor != null)
                             model.InstructorId = instructor.InstructorId;
                     }
+                    var student = _studentRepo.GetStudentById(model.StudentId);
                     _studentRepo.SaveStudentAppointment(model, currentUser);
+                    string startdate = Convert.ToDateTime(model.StartDate).ToString("dd/MM/yyyy");
+                    string enddate = Convert.ToDateTime(model.EndDate).ToString("dd/MM/yyyy");
+                    EmailAPI.SendEmailToStudent(student.FirstName, startdate + " " + model.StartTime, enddate + " " + model.StopTime, model.PickupLocation, instructor.FirstName + " " + instructor.LastName, model.MobileNumber, instructor.Email
+                        , student.Email);
                     return Json(new Status {StatusName = "Success", Message = ""});
                 
                 
