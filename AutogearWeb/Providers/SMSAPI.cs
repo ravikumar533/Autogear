@@ -9,7 +9,20 @@ namespace AutogearWeb.Providers
 {
     public class SMSAPI
     {
-        public string SendSMS(string message, List<string> phonenumbers)
+        public static void SendSMStoStudent(string studentName, string fromdate, string todate, string pickuplocation, string instructorName, string instructorMobileNumber, string studentMobileNumber)
+        {
+            string studentMessage = string.Format("Lesson Confirmation - from {0} to {1}. Instructor Name: {2}. Instructor Number : {3}", fromdate, todate, instructorName, instructorMobileNumber);
+            string instructorMessage = string.Format("Lesson Confirmation - from {0} to {1}. Student Name: {2}. Student Number : {3}", fromdate, todate, studentName, studentMobileNumber);
+            List<string> studentnumbers = new List<string>();
+            studentnumbers.Add(studentMobileNumber);
+            List<string> instructornumbers = new List<string>();
+            instructornumbers.Add(instructorMobileNumber);
+
+            SendSMS(studentMessage, studentnumbers);
+            SendSMS(instructorMessage, instructornumbers);
+
+        }
+        public static string SendSMS(string message, List<string> phonenumbers)
         {
             try
             {
@@ -42,7 +55,7 @@ namespace AutogearWeb.Providers
             }
         }
 
-        private string GetPhoneNumbers(List<string> phonenumbers)
+        private static string GetPhoneNumbers(List<string> phonenumbers)
         {
             string phnNumbers = string.Empty;
             foreach (string phonenumber in phonenumbers)

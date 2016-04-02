@@ -22,7 +22,7 @@ namespace AutogearWeb.Providers
 
             string instructorMessage = string.Format("<b>Dear {0},</b><br><br>A new lesson is booked form <b>{1}</b> to <b>{2}</b>.<br>Student Name : <b>{3}</b><br>Student Mobile : <b>{4}</b><br>Pickup Location : <b>{5}</b><br> Pls confirm booking before the lesson.<br><br><h4>Roy Nanayakkara,<br>Autogear Driving School <br>Phone: (02) 9868 6242 <br>Mobile: 0432 835 525 <br>Email: info@autogeardrivingschool.com.au<br>www.autogeardrivingschool.com.au</h4>", instructorName, fromdate, todate, studentName, mobileNumber, pickuplocation);
             List<string> instructorEmails = new List<string>();
-            instructorEmails.Add("nagendrareddy.d@gmail.com");
+            instructorEmails.Add(instructorEmail);
             Thread instructorEmailThread = new Thread(() => SendEmail(instructorEmails, emailSubject, instructorMessage));
             instructorEmailThread.Start();      
             return string.Empty;
