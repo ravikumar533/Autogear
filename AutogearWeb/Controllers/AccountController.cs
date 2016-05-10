@@ -319,7 +319,10 @@ namespace AutogearWeb.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Dashboard", "Admin");
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("Dashboard", "Admin");
+            else
+                return RedirectToAction("Calendar", "Instructor");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

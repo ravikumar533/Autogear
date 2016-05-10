@@ -840,6 +840,8 @@
       <LastGenOutput>AutogearModel.cs</LastGenOutput>
     </Content>
     <Content Include="Log4net.config" />
+    <None Include="Properties\PublishProfiles\adminautogear %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\adminautogear.pubxml" />
     <None Include="Properties\PublishProfiles\Autogear %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\Autogear.pubxml" />
     <None Include="Properties\PublishProfiles\AutogearAdmin %282%29.pubxml" />
