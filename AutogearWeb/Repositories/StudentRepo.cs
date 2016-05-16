@@ -461,6 +461,14 @@ namespace AutogearWeb.Repositories
                     bookingDetails.PickupLocation = bookingAppointment.PickupLocation;
                     bookingDetails.Type = bookingAppointment.BookingType;
                     bookingDetails.Remarks = bookingAppointment.RemarksForInstructor;
+                    if(GetBookingsCountByStudentId(bookingAppointment.StudentId) == 0)
+                    {
+                        bookingDetails.IsFirst = true;
+                    }
+                    else
+                    {
+                        bookingDetails.IsFirst = false;                         
+                    }
                     if (bookingAppointment.BookingType == "Canceled")
                     {
                         bookingDetails.CancelledReason = bookingAppointment.CancelReason;
@@ -503,6 +511,12 @@ namespace AutogearWeb.Repositories
 
             }
             return bookingDetailsById;
+        }
+
+        public int GetBookingsCountByStudentId(int studentId)
+        {
+            var bookingcount = _tblBookings.Count(s => s.StudentId == studentId);
+            return bookingcount;
         }
 
         public void SaveStudent(StudentModel studentModel,string currentUser)

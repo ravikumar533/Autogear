@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AutogearDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AutogearDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -128,6 +128,7 @@
           <Property Name="EndDate" Type="datetime" />
           <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="IsFirst" Type="bit" />
         </EntityType>
         <EntityType Name="Instructor_Leaves">
           <Key>
@@ -165,7 +166,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InstructorID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="InstructorID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Instructors">
@@ -973,6 +974,7 @@
           <NavigationProperty Name="Package_Details" Relationship="AutogearDBModel.FK_Bookings_Package_Details" FromRole="Booking" ToRole="Package_Details" />
           <NavigationProperty Name="RTA" Relationship="AutogearDBModel.FK_Bookings_RTAs" FromRole="Booking" ToRole="RTA" />
           <NavigationProperty Name="Student" Relationship="AutogearDBModel.FK_Bookings_Students" FromRole="Booking" ToRole="Student" />
+          <Property Name="IsFirst" Type="Boolean" />
         </EntityType>
         <EntityType Name="Instructor_Leaves">
           <Key>
@@ -1444,7 +1446,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InstructorID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="InstructorID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AreaId" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
@@ -1554,6 +1556,7 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="AutogearDBModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="IsFirst" ColumnName="IsFirst" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />

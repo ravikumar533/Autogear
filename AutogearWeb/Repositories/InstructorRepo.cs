@@ -67,8 +67,8 @@ namespace AutogearWeb.Repositories
                                            PickupLocation =s.PickupLocation,
                                            PackageId = s.PackageId,
                                            Discount = s.Discount,
-                                           Type = s.Type
-                                           
+                                           Type = s.Type,
+                                           IsFirst = s.IsFirst
                                        });
                 return _tblBookings;
             }
@@ -246,8 +246,10 @@ namespace AutogearWeb.Repositories
                             Start = startTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             End = stopTime.ToString("yyyy-MM-dd'T'HH:mm:ss"),
                             Title = student.FirstName + " " + student.LastName,
-                            ClassName = booking.Type == "Learning" ? "label-success" : "label-important"
+                            ClassName = (bool)booking.IsFirst ? "label-primary" : booking.Type == "Learning" ? "label-success" : "label-important",
+                            
                         });
+                        
                     }
                 }
             }

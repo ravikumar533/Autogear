@@ -39,6 +39,7 @@ namespace AutogearWeb.EFModels
         public Nullable<System.DateTime> EndDate { get; set; }
         public string MobileNumber { get; set; }
         public string Remarks { get; set; }
+        public Nullable<bool> IsFirst { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }

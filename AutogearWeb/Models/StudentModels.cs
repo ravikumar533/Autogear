@@ -49,6 +49,7 @@ namespace AutogearWeb.Models
         public DateTime? EndDate { get; set; }
         public string Type { get; set; }
         public string Discount { get; set; }
+        public bool? IsFirst { get; set; }
     }
 
     public class TblStudentLicense
