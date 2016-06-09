@@ -224,12 +224,19 @@ namespace AutogearWeb.Repositories
                 flag = true;
             return flag;
         }
-        public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId)
+        public async Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId,string start,string end)
         {
             var instuctorBookings = new List<InstructorBooking>();
             var tblInstructorLeaves = TblInstructorLeaves.Where(s => s.InstructorId == instructorId).ToList();
             var tblInstructorBookings =
                 TblBookings.Where(b => b.StartDate != null && b.EndDate != null && b.InstructorId == instructorId && b.Type !="Canceled").ToList();
+            if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
+            {
+                DateTime sd = Convert.ToDateTime(start).AddDays(-1);
+                DateTime ed = Convert.ToDateTime(end).AddDays(1);
+                tblInstructorBookings =
+                    tblInstructorBookings.Where(s => s.StartDate > sd && s.EndDate < ed).ToList();
+            }
             foreach (var booking in tblInstructorBookings)
             {
                 var student = DataContext.Students.FirstOrDefault(s => s.Id == booking.StudentId);
@@ -254,31 +261,31 @@ namespace AutogearWeb.Repositories
                 }
             }
             // Fetch Instructor Leaves
-            foreach (var leave in tblInstructorLeaves)
-            {
-                if (leave.StartDate != null && leave.EndDate != null)
-                {
-                    var startDate = leave.StartDate.Value;
-                    var endDate = leave.EndDate.Value;
-                    var starttime = leave.StartTime ?? new TimeSpan(6,0,0);
-                    var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
-                    for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
-                    {
-                        var bookingDate = startDate.AddDays(j);
+            //foreach (var leave in tblInstructorLeaves)
+            //{
+            //    if (leave.StartDate != null && leave.EndDate != null)
+            //    {
+            //        var startDate = leave.StartDate.Value;
+            //        var endDate = leave.EndDate.Value;
+            //        var starttime = leave.StartTime ?? new TimeSpan(6,0,0);
+            //        var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
+            //        for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
+            //        {
+            //            var bookingDate = startDate.AddDays(j);
                         
-                            instuctorBookings.Add(
-                                new InstructorBooking
-                                {
-                                    Id = 0,
-                                    Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,starttime.Hours,starttime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                                    End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,endtime.Hours,endtime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-                                    Title = leave.LeaveReason,
-                                    ClassName = "label-warning"
-                                }
-                                );
-                    }
-                }
-            }
+            //                instuctorBookings.Add(
+            //                    new InstructorBooking
+            //                    {
+            //                        Id = 0,
+            //                        Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,starttime.Hours,starttime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+            //                        End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,endtime.Hours,endtime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+            //                        Title = leave.LeaveReason,
+            //                        ClassName = "label-warning"
+            //                    }
+            //                    );
+            //        }
+            //    }
+            //}
 
             return await Task.Run(() => instuctorBookings);
         }

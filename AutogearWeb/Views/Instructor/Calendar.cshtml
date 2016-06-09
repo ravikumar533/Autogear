@@ -60,11 +60,10 @@
                 maxTime: "20:15:00",
 
                 //defaultDate: "2016-02-12",
-                firstDay:new Date().getDay(),
+                firstDay: new Date().getDay(),
                 selectable: true,
                 selectHelper: true,
-                select: function (start, end, jsEvent) {
-                    console.log(jsEvent);
+                select: function(start, end, jsEvent) {
                     var currentDate = moment();
                     if (currentDate.diff(start) < 0) {
                         $.ajax({
@@ -190,14 +189,13 @@
                                 modal.find("#cancelAppointment").click(function(ev) {
                                     modal.find(".cancelAppointment").fadeIn();
                                     modal.find("#cancelAppointment").fadeOut();
-                                    modal.find("#BookingType").val("Canceled").trigger("chosen:updated");                                    
+                                    modal.find("#BookingType").val("Canceled").trigger("chosen:updated");
                                 });
                                 modal.find("#BookingType").change(function() {
                                     if ($(this).val() == "Canceled") {
                                         modal.find(".cancelAppointment").fadeIn();
                                         modal.find("#cancelAppointment").fadeOut();
-                                    }
-                                    else {
+                                    } else {
                                         modal.find(".cancelAppointment").fadeOut();
                                         modal.find("#cancelAppointment").fadeIn();
                                     }
@@ -226,31 +224,41 @@
                 viewrecords:
                     true,
                 rowNum: 10,
+                loading: function( isLoading, view ) {
+                    if(isLoading) {// isLoading gives boolean value
+                        $('.loader').fadeIn();
+                    } else {
+                        $('.loader').fadeOut();
+                    }
+                },
                 views: {
-                    
                     week: {
                         columnFormat: "ddd D/M"
                     }
                 }
             });
 
-        function fetchCalendarEvents(instructorName) {
-            $.ajax({
-                type: "GET",
-                url: "/Api/AutogearApi/GetBookingEvents",
-                data: { instructorNumber: instructorName },
-                dataType: "json"
-            }).success(function(data) {
-                calendar.fullCalendar("removeEvents");
-                calendar.fullCalendar("addEventSource", data);
+            function fetchCalendarEvents(instructorName) {
+                $.ajax({
+                    type: "GET",
+                    beforeSend: function() {
+                        $('.loader').fadeIn();
+                    },
+                    url: "/Api/AutogearApi/GetBookingEvents",
+                    data: { instructorNumber: instructorName },
+                    dataType: "json"
+                }).success(function (data) {
+                    $('.loader').fadeOut();
+                    calendar.fullCalendar("removeEvents");
+                    calendar.fullCalendar("addEventSource", data);
+                });
+            }
+
+            $("#InstructorName").change(function() {
+                fetchCalendarEvents($(this).val());
             });
-        }
+            //$('#calendar').fullCalendar('gotoDate', "2016-02-24");
 
-        $("#InstructorName").change(function() {
-            fetchCalendarEvents($(this).val());
         });
-        //$('#calendar').fullCalendar('gotoDate', "2016-02-24");
-
-    });
     </script>
 }

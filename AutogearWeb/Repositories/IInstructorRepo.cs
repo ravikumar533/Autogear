@@ -17,7 +17,7 @@ namespace AutogearWeb.Repositories
         IQueryable<TblBooking> TblBookings { get; set; }
         IQueryable<TblInstructorArea> TblInstuctorAreas { get; set; }
         Task<IList<TblInstructor>> GetInstructorList(string searchtext,string area); // Fetch List
-        Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId);
+        Task<IList<InstructorBooking>> GetInstructorBookingEvents(string instructorId,string start,string end);
         Task<IList<InstructorBooking>> GetInstructorsDayEvents(DateTime date);
         Task<IList<StudentList>> GetStudentEvents(string currentUser); //Fetch Student List
         IList<SelectListItem>  GetInstructorNames(); // Fetch Instructor Names
