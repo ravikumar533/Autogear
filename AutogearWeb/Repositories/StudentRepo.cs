@@ -495,6 +495,7 @@ namespace AutogearWeb.Repositories
                     bookingDetails.PickupLocation = bookingAppointment.PickupLocation;
                     bookingDetails.Type = bookingAppointment.BookingType;
                     bookingDetails.Remarks = bookingAppointment.RemarksForInstructor;
+                    bookingDetails.DrivingTestStatus = bookingAppointment.DrivingTestStatus;
                     if(GetBookingsCountByStudentId(bookingAppointment.StudentId) == 0)
                     {
                         bookingDetails.IsFirst = true;

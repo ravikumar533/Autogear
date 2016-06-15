@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Mvc;
 
 namespace AutogearWeb.Models
@@ -39,6 +40,7 @@ namespace AutogearWeb.Models
         public SelectList InstructorList { get; set; }
         public SelectList StudentList { get; set; }
         public SelectList DrivingTypeList { get; set; }
+        public SelectList DrivingTestStatusList { get; set; }
         [Display(Name = "Pickup Location")]
         public string PickupLocation { get; set; }
         [Display(Name = "Mobile Number")]
@@ -47,7 +49,8 @@ namespace AutogearWeb.Models
         [Display(Name = "Booking Type")]
         public string BookingType { get; set; }
         [Display(Name = "Reason For Cancelation")]
-        public string CancelReason { get; set; }    
+        public string CancelReason { get; set; }
+        public string DrivingTestStatus { get; set; }
     }
 }
 
