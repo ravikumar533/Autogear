@@ -137,7 +137,17 @@
                                 $('.modal-backdrop').remove();
                             });
                             modal.find("#StudentId").change(function () {
-                                alert("");
+                                $.ajax({
+                                    url: baseUrl + "GetPickupandMobile",
+                                    method: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        studentNumber: modal.find("#StudentId").val()
+                                    }
+                                }).success(function (data) {
+                                    modal.find("#PickupLocation").val(data[0]);
+                                    modal.find("#MobileNumber").val(data[1]);
+                                });
                             });
                         });
                     } else {
@@ -217,7 +227,7 @@
                                     modal.remove();
                                     $('body').removeClass('modal-open');
                                     $('.modal-backdrop').remove();
-                                });
+                                });                                
                             });
                         } else {
                             //$("#leaveModal").modal("show").on("hidden", function() {

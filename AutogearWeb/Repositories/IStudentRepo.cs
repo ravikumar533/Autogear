@@ -32,6 +32,6 @@ namespace AutogearWeb.Repositories
         List<Last7DaysRegisterDetails> GetStudentRegisterDetails();
         IList<SelectListItem> GetInstructorStudents(string instructorId);
         StudentModel GetStudentById(int studentId);
-        List<string> GetStudentPickUpLocationAndMobile(string studentNumber);
+        List<string> GetStudentPickUpLocationAndMobile(int studentNumber);
     }
 }

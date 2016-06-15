@@ -243,7 +243,7 @@ namespace AutogearWeb.Repositories
                 studentModel.StartDate = student.StartDate;
                 studentModel.Status = student.Status;
                 studentModel.StudentNumber = student.StudentNumber;
-                
+                studentModel.PickupLocation = student.PickupLocation;
                 //Student Address
                 var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
                 if (studentAddress != null)
@@ -290,7 +290,7 @@ namespace AutogearWeb.Repositories
                     var lastBooking = studentBookings[studentBookings.Count - 1];
                     studentModel.BookingStartDate = firstBooking.StartDate;
                     studentModel.BookingEndDate = lastBooking.EndDate;
-                    studentModel.PickupLocation = firstBooking.PickupLocation;
+                    //studentModel.PickupLocation = firstBooking.PickupLocation;
                     studentModel.StartTime = firstBooking.StartTime;
                     studentModel.StopTime = firstBooking.StopTime;
                     studentModel.DropLocation = firstBooking.DropLocation;
@@ -337,11 +337,11 @@ namespace AutogearWeb.Repositories
             else
                 return string.Empty;
         }
-        public List<string> GetStudentPickUpLocationAndMobile(string studentNumber)
+        public List<string> GetStudentPickUpLocationAndMobile(int studentNumber)
         {
             List<string> results = new List<string>();
 
-            var student = TblStudents.FirstOrDefault(s => s.StudentNumber == studentNumber);
+            var student = TblStudents.FirstOrDefault(s => s.StudentId == studentNumber);
             if(!string.IsNullOrEmpty(student.PickupLocation))
             {
                 results.Add(student.PickupLocation);
