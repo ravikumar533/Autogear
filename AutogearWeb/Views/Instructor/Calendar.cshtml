@@ -118,9 +118,9 @@
                                 success: function(data) {
                                     if (data["StatusName"] == "Success") {
                                         if ($("#InstructorName").length > 0)
-                                            fetchCalendarEvents($("#InstructorName").val());
+                                            fetchCalendarEvents($("#InstructorName").val(), startDate,endDate);
                                         else
-                                            fetchCalendarEvents(modal.find("#InstructorNumber").val());
+                                            fetchCalendarEvents(modal.find("#InstructorNumber").val(), startDate, endDate);
                                         modal.modal("hide");
                                     } else {
                                         modal.find("#appointmentError").show();
@@ -196,9 +196,9 @@
                                     success: function(data) {
                                         //document.location.reload();
                                         if ($("#InstructorName").length > 0)
-                                            fetchCalendarEvents($("#InstructorName").val());
+                                            fetchCalendarEvents($("#InstructorName").val(), startDate, endDate);
                                         else
-                                            fetchCalendarEvents(modal.find("#InstructorNumber").val());
+                                            fetchCalendarEvents(modal.find("#InstructorNumber").val(), startDate, endDate);
                                         modal.modal("hide");
                                     },
                                     error: function(data) {
@@ -259,14 +259,14 @@
                 complete: function () { alert('complete'); }
             });
 
-            function fetchCalendarEvents(instructorName) {
+            function fetchCalendarEvents(instructorName, startDate, endDate) {
                 $.ajax({
                     type: "GET",
                     beforeSend: function() {
                         $('.loader').fadeIn();
                     },
                     url: "/Api/AutogearApi/GetBookingEvents",
-                    data: { instructorNumber: instructorName },
+                    data: { instructorNumber: instructorName,start:startDate,end:endDate },
                     dataType: "json"
                 }).success(function (data) {
                     $('.loader').fadeOut();
@@ -275,8 +275,15 @@
                 });
             }
 
-            $("#InstructorName").change(function() {
-                fetchCalendarEvents($(this).val());
+            $("#InstructorName").change(function () {
+                var moment = $('#Calendar').fullCalendar('getDate');
+                
+                var localdate = moment.format("YYYY-MM-DD");
+                moment.add(6, "days");
+                var enddate = moment.format("YYYY-MM-DD");
+                
+                
+                fetchCalendarEvents($(this).val(), localdate, enddate);
             });
             //$('#calendar').fullCalendar('gotoDate', "2016-02-24");
 
