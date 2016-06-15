@@ -127,6 +127,7 @@ namespace AutogearWeb.Controllers
         [HttpPost]
         public ActionResult SaveAppointment(BookingAppointment model)
         {
+            Console.WriteLine("Test");
             var currentUser = Request.GetOwinContext().Authentication.User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
@@ -147,7 +148,7 @@ namespace AutogearWeb.Controllers
                     string enddate = Convert.ToDateTime(model.EndDate).ToString("dd/MM/yyyy");
                     //EmailAPI.SendEmailToStudent(student.FirstName, startdate + " " + model.StartTime, enddate + " " + model.StopTime, model.PickupLocation, instructor.FirstName + " " + instructor.LastName, model.MobileNumber, instructor.Email
                     //    , student.Email);
-                    SMSAPI.SendSMStoStudent(student.FirstName, startdate + " " + model.StartTime, enddate + " " + model.StopTime, model.PickupLocation, instructor.FirstName + " " + instructor.LastName, instructor.Mobile, model.MobileNumber);
+                    //SMSAPI.SendSMStoStudent(student.FirstName, startdate + " " + model.StartTime, enddate + " " + model.StopTime, model.PickupLocation, instructor.FirstName + " " + instructor.LastName, instructor.Mobile, model.MobileNumber);
                     return Json(new Status {StatusName = "Success", Message = ""});
                 
                 

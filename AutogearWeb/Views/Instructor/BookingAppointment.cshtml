@@ -25,7 +25,7 @@
                                         <div class="col-md-8">
                                             <div class="widget-body">
                                                 <div class="widget-main padding-2">
-                                                    @Html.DropDownListFor(model => model.StudentId, Model.StudentList, new {@class = "chosen-select form-control", data_placeholder = "Choose a Student..."})
+                                                    @Html.DropDownList("StudentId", Model.StudentList, new { @class = "chosen-select form-control", data_placeholder = "Choose a Student...", onchange = "MyFunction()" })
                                                 </div>
                                             </div>
                                             @Html.ValidationMessageFor(model => model.StudentId, "", new {@class = "text-danger"})
@@ -200,3 +200,19 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script>
+        $(document.body).on('change', '#StudentId', function () {
+            alert('Change Happened');
+        });
+        $(function () {
+            function MyFunction() {
+                alert('Changed');                
+            }
+            $("#StudentId").change(function () {
+                alert("1");                
+            });
+        });
+    </script>
+}

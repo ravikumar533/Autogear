@@ -50,7 +50,8 @@ namespace AutogearWeb.Repositories
                             CreatedDate = student.CreatedDate,
                             StudentNumber = student.StudentNumber,
                             PhoneNumber = studentAddress.Mobile,
-                            InstructorId = instructorStudent.InstructorId
+                            InstructorId = instructorStudent.InstructorId,
+                            PickupLocation = student.PickupLocation
                         });
                 return _tblStudents;
 
@@ -190,7 +191,8 @@ namespace AutogearWeb.Repositories
 
         public async Task<IList<string>> GetStudentNames()
         {
-            return await TblStudents.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
+            var students1 = TblStudents.Where(x => x.Status);
+            return await students1.Select(s => s.FirstName + " " + s.LastName).ToListAsync();
         }
 
         public IList<SelectListItem> GetStudents()
@@ -323,6 +325,38 @@ namespace AutogearWeb.Repositories
                 
             }
             return studentModel;
+        }
+        public string GetStudentMobile(string studentNumber)
+        {
+            var student = TblStudents.FirstOrDefault(s => s.StudentNumber == studentNumber);
+            var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
+            if (studentAddress != null)
+            {
+                return studentAddress.Mobile;
+            }
+            else
+                return string.Empty;
+        }
+        public List<string> GetStudentPickUpLocationAndMobile(string studentNumber)
+        {
+            List<string> results = new List<string>();
+
+            var student = TblStudents.FirstOrDefault(s => s.StudentNumber == studentNumber);
+            if(!string.IsNullOrEmpty(student.PickupLocation))
+            {
+                results.Add(student.PickupLocation);
+            }
+            // if no pickup location then get address
+            var studentAddress = TblStudentAddresses.FirstOrDefault(s => s.AddressId == student.AddressId);
+            if (studentAddress != null)
+            {
+                if (string.IsNullOrEmpty(student.PickupLocation))
+                {
+                    results.Add(studentAddress.Address1 + " " + studentAddress.Address2 + " " + studentAddress.PostalCode);
+                }
+                results.Add(studentAddress.Mobile);
+            }
+            return results;
         }
         public StudentModel GetStudentById(int studentId)
         {
@@ -564,7 +598,8 @@ namespace AutogearWeb.Repositories
                     CreatedDate = DateTime.Now,
                     StartDate = studentModel.StartDate,
                     AddressId = studentAddress.AddressId,
-                    StudentNumber = "SID" + DateTime.Now.Year.ToString() + studentNumber
+                    StudentNumber = "SID" + DateTime.Now.Year.ToString() + studentNumber,
+                    PickupLocation = studentModel.PickupLocation
                 };
                 DataContext.Students.Add(student);
                 DataContext.SaveChanges();
@@ -686,6 +721,7 @@ namespace AutogearWeb.Repositories
             studentDetails.Status = studentModel.Status;
             studentDetails.Gender = studentModel.Gender;
             studentDetails.AddressId = addressDetails.AddressId;
+            studentDetails.PickupLocation = studentModel.PickupLocation;
             if (studentDetails.Id == 0)
             {
                 DataContext.Students.Add(studentDetails);

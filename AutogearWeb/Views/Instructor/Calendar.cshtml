@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Calendar";
 }
+<style>
+
+</style>
+
 @if (Model.IsUserAdmin)
 {
     <div class="row form-horizontal">
@@ -18,9 +22,10 @@
     <div class="row">
         <div class="col-lg-12">&nbsp;</div>
     </div>
+    
 
-
-        }
+}
+<div class="loading"></div>
 <div id="Calendar"></div>
 <div id="appointmentDialog"></div>
 
@@ -32,8 +37,10 @@
     @Scripts.Render("~/bundles/chosenjs")
     @Scripts.Render("~/bundles/jqueryUI")
     @Scripts.Render("~/bundles/Fullcalendar")
+    
     <script>
-        $(function() {
+        $(function () {
+           
             $(".chosen-select").chosen();
             var modalDialog = "";
             var studentData = "";
@@ -129,6 +136,9 @@
                                 modal.remove();
                                 $('body').removeClass('modal-open');
                                 $('.modal-backdrop').remove();
+                            });
+                            modal.find("#StudentId").change(function () {
+                                alert("");
                             });
                         });
                     } else {
@@ -231,18 +241,23 @@
                     week: {
                         columnFormat: "ddd D/M"
                     }
-                }
+                },
+                complete: function () { alert('complete'); }
             });
 
         function fetchCalendarEvents(instructorName) {
+            $('.loading').css("display", "block");
             $.ajax({
                 type: "GET",
                 url: "/Api/AutogearApi/GetBookingEvents",
                 data: { instructorNumber: instructorName },
                 dataType: "json"
-            }).success(function(data) {
+            }).success(function (data) {                
                 calendar.fullCalendar("removeEvents");
                 calendar.fullCalendar("addEventSource", data);
+            })
+            .complete(function () {
+                $('.loading').css("display", "none");
             });
         }
 

@@ -258,6 +258,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="AddressId" Type="int" />
           <Property Name="StudentNumber" Type="nvarchar" MaxLength="12" />
+          <Property Name="PickupLocation" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Suburbs">
           <Key>
@@ -1118,6 +1119,7 @@
           <NavigationProperty Name="Bookings" Relationship="AutogearDBModel.FK_Bookings_Students" FromRole="Student" ToRole="Booking" />
           <NavigationProperty Name="Instructor_Student" Relationship="AutogearDBModel.FK_Instructor_Student_Students" FromRole="Student" ToRole="Instructor_Student" />
           <NavigationProperty Name="Student_License" Relationship="AutogearDBModel.FK_Student_License_Students" FromRole="Student" ToRole="Student_License" />
+          <Property Name="PickupLocation" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Suburb">
           <Key>
@@ -1698,6 +1700,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="AutogearDBModel.Student">
               <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="PickupLocation" ColumnName="PickupLocation" />
                 <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

@@ -450,6 +450,7 @@
     <Content Include="assets\images\sort_desc_disabled.png" />
     <Content Include="assets\images\spritemap%402x.png" />
     <Content Include="assets\images\spritemap.png" />
+    <Content Include="assets\img\ajax-loader.gif" />
     <Content Include="assets\img\clear.png" />
     <Content Include="assets\img\glyphicons-halflings-white.png" />
     <Content Include="assets\img\glyphicons-halflings.png" />

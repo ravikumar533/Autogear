@@ -34,6 +34,7 @@ namespace AutogearWeb.EFModels
         public string Email { get; set; }
         public Nullable<int> AddressId { get; set; }
         public string StudentNumber { get; set; }
+        public string PickupLocation { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

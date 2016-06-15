@@ -20,6 +20,7 @@ namespace AutogearWeb.Models
         public DateTime? CreatedDate { get; set; }
         public string PhoneNumber { get; set; }
         public string InstructorId { get; set; }
+        public string PickupLocation { get; set; }
     }
 
     public class TblStudentAddress
@@ -89,8 +90,7 @@ namespace AutogearWeb.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        [Required]
+                
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -112,14 +112,14 @@ namespace AutogearWeb.Models
         public string InstructorNumber { get; set; }
         [Display(Name = "Instructor Remarks")]
         public string InstructorRemarks { get; set; }
-        [Required]
+        
         [Display(Name = "License Number")]
         public string LicenseNumber { get; set; }
         [Display(Name = "Expiry Date")]
         public DateTime? ExpiryDate { get; set; }
         [Display(Name="State Name")]
         public int StateId { get; set; }
-        [Required]
+        
         [Display(Name="Address1")]
         public string Address1 { get; set; }
         [Display(Name = "Address2")]
