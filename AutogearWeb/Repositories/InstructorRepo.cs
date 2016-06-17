@@ -68,7 +68,8 @@ namespace AutogearWeb.Repositories
                                            PackageId = s.PackageId,
                                            Discount = s.Discount,
                                            Type = s.Type,
-                                           IsFirst = s.IsFirst
+                                           IsFirst = s.IsFirst,
+                                           DrivingTestStatus = s.DrivingTestStatus
                                        });
                 return _tblBookings;
             }
@@ -215,12 +216,12 @@ namespace AutogearWeb.Repositories
                         s.StudentId == appointment.StudentId && s.Type != "Canceled" &&
                         ((appointment.StartDate >= s.StartDate && appointment.StartDate <= s.EndDate) || (appointment.EndDate>= s.StartDate && appointment.EndDate <= s.EndDate))&&
                         ((appointment.StartTime >= s.StartTime && appointment.StartTime <= s.StopTime) || (appointment.StopTime >= s.StartTime && appointment.StopTime <= s.StopTime))).ToList();
-            var leaves =
-                TblInstructorLeaves.Where(
-                    s => s.InstructorId == instructor.InstructorId && 
-                        ( (appointment.StartDate <= s.StartDate && s.EndDate >= appointment.StartDate)||(appointment.EndDate>=s.StartDate&&appointment.EndDate<=s.EndDate))
-                    ).ToList();
-            if (instructorBookings.Count > 0 || studentBookings.Count > 0 || leaves.Count > 0)
+            //var leaves =
+            //    TblInstructorLeaves.Where(
+            //        s => s.InstructorId == instructor.InstructorId && 
+            //            ( (appointment.StartDate <= s.StartDate && s.EndDate >= appointment.StartDate)||(appointment.EndDate>=s.StartDate&&appointment.EndDate<=s.EndDate))
+            //        ).ToList();
+            if (instructorBookings.Count > 0 || studentBookings.Count > 0)// || leaves.Count > 0)
                 flag = true;
             return flag;
         }
@@ -261,31 +262,31 @@ namespace AutogearWeb.Repositories
                 }
             }
             // Fetch Instructor Leaves
-            //foreach (var leave in tblInstructorLeaves)
-            //{
-            //    if (leave.StartDate != null && leave.EndDate != null)
-            //    {
-            //        var startDate = leave.StartDate.Value;
-            //        var endDate = leave.EndDate.Value;
-            //        var starttime = leave.StartTime ?? new TimeSpan(6,0,0);
-            //        var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
-            //        for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
-            //        {
-            //            var bookingDate = startDate.AddDays(j);
-                        
-            //                instuctorBookings.Add(
-            //                    new InstructorBooking
-            //                    {
-            //                        Id = 0,
-            //                        Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,starttime.Hours,starttime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-            //                        End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day,endtime.Hours,endtime.Minutes,00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
-            //                        Title = leave.LeaveReason,
-            //                        ClassName = "label-warning"
-            //                    }
-            //                    );
-            //        }
-            //    }
-            //}
+            foreach (var leave in tblInstructorLeaves)
+            {
+                if (leave.StartDate != null && leave.EndDate != null)
+                {
+                    var startDate = leave.StartDate.Value;
+                    var endDate = leave.EndDate.Value;
+                    var starttime = leave.StartTime ?? new TimeSpan(6, 0, 0);
+                    var endtime = leave.StopTime ?? new TimeSpan(20, 0, 0);
+                    for (var j = 0; j < endDate.Subtract(startDate).Days + 1; j++)
+                    {
+                        var bookingDate = startDate.AddDays(j);
+
+                        instuctorBookings.Add(
+                            new InstructorBooking
+                            {
+                                Id = 0,
+                                Start = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day, starttime.Hours, starttime.Minutes, 00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                End = new DateTime(bookingDate.Year, bookingDate.Month, bookingDate.Day, endtime.Hours, endtime.Minutes, 00).ToString("yyyy-MM-dd'T'HH:mm:ss"),
+                                Title = leave.LeaveReason,
+                                ClassName = "label-warning"
+                            }
+                            );
+                    }
+                }
+            }
 
             return await Task.Run(() => instuctorBookings);
         }
@@ -466,7 +467,7 @@ namespace AutogearWeb.Repositories
                 bookingAppointment.EndDate = booking.EndDate;
                 bookingAppointment.PickupLocation = booking.PickupLocation;
                 bookingAppointment.BookingType = booking.Type;
-                
+                bookingAppointment.DrivingTestStatus = booking.DrivingTestStatus;
             }
             return bookingAppointment;
         }

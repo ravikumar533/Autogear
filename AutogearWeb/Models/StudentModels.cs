@@ -51,6 +51,7 @@ namespace AutogearWeb.Models
         public string Type { get; set; }
         public string Discount { get; set; }
         public bool? IsFirst { get; set; }
+        public string DrivingTestStatus { get; set; }
     }
 
     public class TblStudentLicense

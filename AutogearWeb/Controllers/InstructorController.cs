@@ -200,6 +200,7 @@ namespace AutogearWeb.Controllers
                 appointment.StudentList = bookingId == 0 ? new SelectList(_studentRepo.GetInstructorStudents(User.Identity.GetUserId()), "Value", "Text") : new SelectList(_studentRepo.GetStudents(), "Value", "Text", appointment.StudentId);
                 appointment.InstructorList = new SelectList(_instructorRepo.GetInstructorNames(User.Identity.GetUserId()), "Value", "Text", instructornumber);
             }
+            appointment.DrivingTypeList = new SelectList(drivingTypeItems, "Value", "Text", appointment.BookingType);
             appointment.DrivingTestStatusList = bookingId == 0 ? new SelectList(_autogearRepo.DrivingTestStatusItems(), "Value", "Text") : new SelectList(_autogearRepo.DrivingTestStatusItems(), "Value", "Text", appointment.DrivingTestStatus);
             return View(appointment);
         }
