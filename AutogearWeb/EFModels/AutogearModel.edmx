@@ -255,7 +255,7 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="Email" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="300" />
           <Property Name="AddressId" Type="int" />
           <Property Name="StudentNumber" Type="nvarchar" MaxLength="12" />
           <Property Name="PickupLocation" Type="nvarchar" MaxLength="1000" />
@@ -1110,7 +1110,7 @@
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="AddressId" Type="Int32" />
           <Property Name="StudentNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Address" Relationship="AutogearDBModel.FK_Students_Address" FromRole="Student" ToRole="Address" />

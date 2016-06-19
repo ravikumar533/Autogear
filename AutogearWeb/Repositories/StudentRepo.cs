@@ -550,7 +550,7 @@ namespace AutogearWeb.Repositories
 
         public int GetBookingsCountByStudentId(int studentId)
         {
-            var bookingcount = _tblBookings.Count(s => s.StudentId == studentId);
+            var bookingcount = _tblBookings.Where(s => s.StudentId == studentId).Count();
             return bookingcount;
         }
 
@@ -643,44 +643,49 @@ namespace AutogearWeb.Repositories
                         };
                         DataContext.Instructor_Student.Add(instructorStudent);
                         DataContext.SaveChanges();
-                        var studentBooking = new Booking
+                        if (studentModel.BookingStartDate != null)
                         {
-                            StudentId = student.Id,
-                            PackageId = studentModel.PackageId,
-                            CreatedDate = DateTime.Now,
-                            BookingDate = DateTime.Now,
-                            StartDate = studentModel.BookingStartDate,
-                            EndDate = studentModel.BookingEndDate,
-                            InstructorId = instructor.InstructorId,
-                            StartTime = studentModel.StartTime,
-                            EndTime = studentModel.StopTime,
-                            Discount = studentModel.PackageDisacount,
-                            PickupLocation = studentModel.PickupLocation,
-                            DropLocation = studentModel.DropLocation,
-                            CreatedBy = currentUser,
-                            Type = "Learning"
-                        };
-                        DataContext.Bookings.Add(studentBooking);
-                        DataContext.SaveChanges();
-                     
-                        // Driving Test Information
-                        var studentDrivingBooking = new Booking
+                            var studentBooking = new Booking
+                            {
+                                StudentId = student.Id,
+                                PackageId = studentModel.PackageId,
+                                CreatedDate = DateTime.Now,
+                                BookingDate = DateTime.Now,
+                                StartDate = studentModel.BookingStartDate,
+                                EndDate = studentModel.BookingEndDate,
+                                InstructorId = instructor.InstructorId,
+                                StartTime = studentModel.StartTime,
+                                EndTime = studentModel.StopTime,
+                                Discount = studentModel.PackageDisacount,
+                                PickupLocation = studentModel.PickupLocation,
+                                DropLocation = studentModel.DropLocation,
+                                CreatedBy = currentUser,
+                                Type = "Learning"
+                            };
+                            DataContext.Bookings.Add(studentBooking);
+                            DataContext.SaveChanges();
+                        }
+                        if (studentModel.DrivingTestPackageId != null)
                         {
-                            StudentId = student.Id,
-                            PackageId = studentModel.DrivingTestPackageId,
-                            CreatedDate = DateTime.Now,
-                            BookingDate = studentModel.DrivingTestDate,
-                            InstructorId = instructor.InstructorId,
-                            StartTime = studentModel.DrivingTestStartTime,
-                            EndTime = studentModel.DrivingTestStopTime,
-                            Discount = studentModel.DrivingTestPackageDisacount,
-                            PickupLocation = studentModel.DrivingTestPickupLocation,
-                            DropLocation = studentModel.DrivingTestDropLocation,
-                            CreatedBy = currentUser,
-                            Type = "Driving"
-                        };
-                        DataContext.Bookings.Add(studentDrivingBooking);
-                        DataContext.SaveChanges();
+                            // Driving Test Information
+                            var studentDrivingBooking = new Booking
+                            {
+                                StudentId = student.Id,
+                                PackageId = studentModel.DrivingTestPackageId,
+                                CreatedDate = DateTime.Now,
+                                BookingDate = studentModel.DrivingTestDate,
+                                InstructorId = instructor.InstructorId,
+                                StartTime = studentModel.DrivingTestStartTime,
+                                EndTime = studentModel.DrivingTestStopTime,
+                                Discount = studentModel.DrivingTestPackageDisacount,
+                                PickupLocation = studentModel.DrivingTestPickupLocation,
+                                DropLocation = studentModel.DrivingTestDropLocation,
+                                CreatedBy = currentUser,
+                                Type = "Driving"
+                            };
+                            DataContext.Bookings.Add(studentDrivingBooking);
+                            DataContext.SaveChanges();
+                        }
                     }
                    
                 }
